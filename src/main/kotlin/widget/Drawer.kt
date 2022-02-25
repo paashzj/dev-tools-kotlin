@@ -43,7 +43,7 @@ import kotlinx.coroutines.launch
 import module.NavigationEnum
 
 @Composable
-fun DrawContent(idx: MutableState<NavigationEnum>) {
+fun DrawContent(idx: MutableState<NavigationEnum>, scope: CoroutineScope, scaffoldState: ScaffoldState) {
     Column {
         Image(
             painter = painterResource("png/drawer_head.png"),
@@ -56,6 +56,7 @@ fun DrawContent(idx: MutableState<NavigationEnum>) {
         TextButton(
             onClick = {
                 idx.value = NavigationEnum.Home
+                closeDrawer(scope, scaffoldState)
             },
             modifier = Modifier.size(width = 400.dp, height = 50.dp),
             content = {
@@ -64,12 +65,52 @@ fun DrawContent(idx: MutableState<NavigationEnum>) {
         )
         TextButton(
             onClick = {
+                idx.value = NavigationEnum.Command
+                closeDrawer(scope, scaffoldState)
+            },
+            modifier = Modifier.size(width = 400.dp, height = 50.dp),
+            content = {
+                Text("Command")
+            }
+        )
+        TextButton(
+            onClick = {
+                idx.value = NavigationEnum.Convert
+                closeDrawer(scope, scaffoldState)
+            },
+            modifier = Modifier.size(width = 400.dp, height = 50.dp),
+            content = {
+                Text("Convert")
+            }
+        )
+        TextButton(
+            onClick = {
+                idx.value = NavigationEnum.Simulator
+                closeDrawer(scope, scaffoldState)
+            },
+            modifier = Modifier.size(width = 400.dp, height = 50.dp),
+            content = {
+                Text("Simulator")
+            }
+        )
+        TextButton(
+            onClick = {
                 idx.value = NavigationEnum.AboutAuthor
+                closeDrawer(scope, scaffoldState)
             },
             modifier = Modifier.size(width = 400.dp, height = 50.dp)
         ) {
             Text("AboutAuthor")
         }
+    }
+}
+
+private fun closeDrawer(
+    scope: CoroutineScope,
+    scaffoldState: ScaffoldState
+) {
+    scope.launch {
+        scaffoldState.drawerState.close()
     }
 }
 

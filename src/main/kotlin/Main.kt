@@ -33,8 +33,11 @@ import constat.PixelConst
 import module.NavigationEnum
 import widget.DrawContent
 import widget.TopBar
+import widget.command.CommandScreen
+import widget.convert.ConvertScreen
 import widget.general.AboutAuthorScreen
 import widget.general.HomeScreen
+import widget.simulator.SimulatorScreen
 
 fun main() = application {
     val navigationIdx = mutableStateOf(NavigationEnum.Home)
@@ -51,13 +54,22 @@ fun main() = application {
             drawerBackgroundColor = MaterialTheme.colors.background,
             drawerShape = drawerShape(),
             drawerContent = {
-                DrawContent(navigationIdx)
+                DrawContent(navigationIdx, coroutineScope, scaffoldState)
             },
         ) {
             MaterialTheme {
                 when (navigationIdx.value) {
                     NavigationEnum.Home -> {
                         HomeScreen()
+                    }
+                    NavigationEnum.Command -> {
+                        CommandScreen()
+                    }
+                    NavigationEnum.Convert -> {
+                        ConvertScreen()
+                    }
+                    NavigationEnum.Simulator -> {
+                        SimulatorScreen()
                     }
                     NavigationEnum.AboutAuthor -> {
                         AboutAuthorScreen()

@@ -18,62 +18,14 @@
 package widget.general
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.sp
-import module.ToolEnum
-import widget.command.Command
-import widget.component.RowPaddingButton
-import widget.convert.Convert
-import widget.simulator.Simulator
-
-val idx = mutableStateOf(ToolEnum.Command)
 
 @Composable
 fun HomeScreen() {
     Column {
-        Head(idx)
-        when (idx.value) {
-            ToolEnum.Command -> {
-                Command()
-            }
-            ToolEnum.Convert -> {
-                Convert()
-            }
-            ToolEnum.Simulator -> {
-                Simulator()
-            }
-        }
-    }
-}
-
-@Composable
-fun Head(idx: MutableState<ToolEnum>) {
-    Row {
-        Text("Tool List", fontSize = 50.sp)
-        RowPaddingButton(
-            onClick = {
-                idx.value = ToolEnum.Command
-            },
-        ) {
-            Text(text = "command")
-        }
-        RowPaddingButton(
-            onClick = {
-                idx.value = ToolEnum.Convert
-            },
-        ) {
-            Text(text = "convert")
-        }
-        RowPaddingButton(
-            onClick = {
-                idx.value = ToolEnum.Simulator
-            },
-        ) {
-            Text(text = "simulator")
-        }
+        Text("Welcome to Tool List, This is Home&Config Page", fontSize = 50.sp)
+        Text("To explore tools, click the drawer", fontSize = 30.sp)
     }
 }

@@ -17,6 +17,7 @@
 
 package widget.command
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -29,14 +30,16 @@ import widget.component.RowPaddingButton
 val idx = mutableStateOf(CommandEnum.Kafka)
 
 @Composable
-fun Command() {
-    Head(idx)
-    when (idx.value) {
-        CommandEnum.Kafka -> {
-            CommandKafka()
-        }
-        CommandEnum.Pulsar -> {
-            CommandPulsar()
+fun CommandScreen() {
+    Column {
+        Head(idx)
+        when (idx.value) {
+            CommandEnum.Kafka -> {
+                CommandKafka()
+            }
+            CommandEnum.Pulsar -> {
+                CommandPulsar()
+            }
         }
     }
 }

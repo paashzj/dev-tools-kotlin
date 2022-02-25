@@ -19,5 +19,8 @@ package module
 
 enum class NavigationEnum {
     AboutAuthor,
+    Command,
+    Convert,
+    Simulator,
     Home,
 }

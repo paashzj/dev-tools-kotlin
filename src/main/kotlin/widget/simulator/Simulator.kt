@@ -17,6 +17,7 @@
 
 package widget.simulator
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -29,11 +30,13 @@ import widget.component.RowPaddingButton
 val idx = mutableStateOf(SimulatorEnum.Kafka)
 
 @Composable
-fun Simulator() {
-    Head(idx)
-    when (idx.value) {
-        SimulatorEnum.Kafka -> {
-            SimulatorKafka()
+fun SimulatorScreen() {
+    Column {
+        Head(idx)
+        when (idx.value) {
+            SimulatorEnum.Kafka -> {
+                SimulatorKafka()
+            }
         }
     }
 }

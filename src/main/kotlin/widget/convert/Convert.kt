@@ -17,6 +17,7 @@
 
 package widget.convert
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -29,14 +30,16 @@ import widget.component.RowPaddingButton
 val idx = mutableStateOf(ConvertEnum.Base64)
 
 @Composable
-fun Convert() {
-    Head(idx)
-    when (idx.value) {
-        ConvertEnum.Base64 -> {
-            ConvertBase64()
-        }
-        ConvertEnum.Url -> {
-            ConvertURL()
+fun ConvertScreen() {
+    Column {
+        Head(idx)
+        when (idx.value) {
+            ConvertEnum.Base64 -> {
+                ConvertBase64()
+            }
+            ConvertEnum.Url -> {
+                ConvertURL()
+            }
         }
     }
 }

@@ -15,19 +15,16 @@
  * limitations under the license.
  */
 
-package widget.general
+package widget.config
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.sp
-import widget.config.Config
 
 @Composable
-fun HomeScreen() {
+fun Config() {
     Column {
-        Text("Welcome to Tool List, This is Home&Config Page", fontSize = 50.sp)
-        Text("To explore tools, click the drawer", fontSize = 30.sp)
-        Config()
+        Text("Config", fontSize = 40.sp)
     }
 }

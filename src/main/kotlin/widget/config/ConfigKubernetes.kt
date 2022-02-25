@@ -17,8 +17,58 @@
 
 package widget.config
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import module.config.KubernetesConfig
+
+val showKubernetesCreateDialog = mutableStateOf(false)
 
 @Composable
 fun ConfigKubernetes() {
+    Column {
+        if (showKubernetesCreateDialog.value) {
+            Dialog(
+                onCloseRequest = {
+                    showKubernetesCreateDialog.value = false
+                },
+                title = "Add kubernetes instance",
+            ) {
+                val editElem = remember {
+                    mutableStateOf(
+                        KubernetesConfig(
+                            name = "default",
+                            host = "localhost",
+                            port = 22,
+                            username = "root",
+                            password = "toor",
+                            rootPassword = null,
+                        )
+                    )
+                }
+                MaterialTheme {
+                    OutlinedTextField(
+                        value = editElem.value.name,
+                        onValueChange = {
+                            editElem.value.name = it
+                        },
+                        label = { Text("config name") }
+                    )
+                }
+            }
+        }
+        Button(onClick = {
+            showKubernetesCreateDialog.value = true
+        }) {
+            Text("add kubernetes")
+        }
+        Text("kubernetes list:", fontSize = 30.sp)
+    }
 }

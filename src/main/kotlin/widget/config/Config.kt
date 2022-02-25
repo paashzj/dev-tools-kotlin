@@ -26,10 +26,6 @@ import androidx.compose.ui.unit.sp
 import module.ConfigEnum
 import widget.component.RowPaddingButton
 
-val components = arrayOf(
-    "kubernetes",
-)
-
 val idx = mutableStateOf(ConfigEnum.Kubernetes)
 
 @Composable

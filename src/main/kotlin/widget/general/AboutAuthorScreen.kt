@@ -32,6 +32,7 @@ import module.Author
 
 val authors = arrayOf(
     Author("goflutterjava", "KeLe He", "goflutterjava@gmail.com"),
+    Author("lovehzj", "TingTing Wang", "1922919664@qq.com"),
 )
 
 @OptIn(ExperimentalFoundationApi::class)

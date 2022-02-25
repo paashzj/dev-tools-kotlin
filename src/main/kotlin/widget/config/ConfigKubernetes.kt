@@ -17,38 +17,8 @@
 
 package widget.config
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.unit.sp
-import module.ConfigEnum
-import widget.component.RowPaddingButton
-
-val components = arrayOf(
-    "kubernetes",
-)
-
-val idx = mutableStateOf(ConfigEnum.Kubernetes)
 
 @Composable
-fun Config() {
-    Column {
-        Row {
-            Text("Config", fontSize = 40.sp)
-            RowPaddingButton(
-                onClick = {
-                    idx.value = ConfigEnum.Kubernetes
-                },
-            ) {
-                Text(text = "kubernetes")
-            }
-        }
-        when (idx.value) {
-            ConfigEnum.Kubernetes -> {
-                ConfigKubernetes()
-            }
-        }
-    }
+fun ConfigKubernetes() {
 }

@@ -43,7 +43,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: package msi
-        run: gradle build packageMsi
+        run: gradle build packageMsi -x checkstyleMain -x checkstyleTest
       - name: rename msi
         run: Move-Item build/compose/binaries/main/msi/dev-tools-kotlin-1.0.0.msi dev-tools-kotlin.msi
       - uses: dev-drprasad/delete-tag-and-release@v0.2.0

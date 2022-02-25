@@ -17,7 +17,7 @@
 # under the License.
 #
 
-name: checkstyle
+name: checkstyle kotlin
 on:
   pull_request:
     branches:

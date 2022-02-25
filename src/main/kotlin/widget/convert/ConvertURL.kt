@@ -23,10 +23,10 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
 import util.UrlUtil
 
 @Composable
@@ -41,7 +41,7 @@ fun ConvertURL() {
             onValueChange = {
                 urlCode = it
             },
-            label = { Text("url code")}
+            label = { Text("url code") }
         )
         Row {
             TextButton(onClick = {
@@ -58,12 +58,11 @@ fun ConvertURL() {
         }
 
         OutlinedTextField(
-        value = urlDecode,
-        onValueChange = {
-            urlDecode = it
-        },
-            label = { Text("url decode")}
+            value = urlDecode,
+            onValueChange = {
+                urlDecode = it
+            },
+            label = { Text("url decode") }
         )
     }
-
 }

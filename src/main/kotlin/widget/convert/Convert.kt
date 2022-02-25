@@ -35,6 +35,9 @@ fun Convert() {
         ConvertEnum.Base64 -> {
             ConvertBase64()
         }
+        ConvertEnum.Url -> {
+            ConvertURL()
+        }
     }
 }
 
@@ -48,6 +51,13 @@ fun Head(idx: MutableState<ConvertEnum>) {
             },
         ) {
             Text(text = "base64")
+        }
+        RowPaddingButton(
+            onClick = {
+                idx.value = ConvertEnum.Url
+            }
+        ) {
+            Text("url")
         }
     }
 }

@@ -15,9 +15,15 @@
  * limitations under the license.
  */
 
-package module
+package util
 
-enum class ConvertEnum {
-    Base64,
-    Url,
+import java.net.URLDecoder
+import java.net.URLEncoder
+
+class UrlUtil {
+
+    companion object {
+        fun urlEncode(str: String): String = URLEncoder.encode(str, "utf8")
+        fun urlDecode(str: String): String = URLDecoder.decode(str, "utf8")
+    }
 }

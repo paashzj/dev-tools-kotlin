@@ -22,5 +22,5 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun SimulatorKafka() {
-    Text("todo")
+    Text("ak")
 }

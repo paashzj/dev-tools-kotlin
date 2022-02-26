@@ -17,8 +17,52 @@
 
 package widget.config
 
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import com.github.shoothzj.dev.module.config.KubernetesConfig
+import com.github.shoothzj.dev.storage.StorageK8s
 
 @Composable
 fun ConfigKubernetes() {
+    val dialogState = mutableStateOf(false)
+    val errorState = mutableStateOf("")
+    val kubernetes = mutableStateOf(StorageK8s.getInstance().listContent())
+    val editKubernetesName = mutableStateOf("default")
+    val editKubernetesHost = mutableStateOf("localhost")
+    val editKubernetesPort = mutableStateOf(22)
+    val editKubernetesUsername = mutableStateOf("root")
+    val editKubernetesPassword = mutableStateOf("")
+    val editKubernetesRootPassword = mutableStateOf("")
+    ConfigBase(
+        "kubernetes",
+        dialogState,
+        errorState,
+        dialogInputContent = {
+            ConfigItemString(editKubernetesName, "config name")
+            ConfigItemString(editKubernetesHost, "config host")
+            ConfigItemPort(editKubernetesPort, "config port", errorState)
+            ConfigItemString(editKubernetesUsername, "ssh username")
+            ConfigItemString(editKubernetesPassword, "ssh password")
+            ConfigItemString(editKubernetesRootPassword, "ssh root password(if you need to switch root)")
+        },
+        dialogConfirm = {
+            StorageK8s.getInstance().saveConfig(
+                KubernetesConfig(
+                    editKubernetesName.value,
+                    editKubernetesHost.value,
+                    editKubernetesPort.value,
+                    editKubernetesUsername.value,
+                    editKubernetesPassword.value,
+                    editKubernetesRootPassword.value,
+                )
+            )
+            kubernetes.value = StorageK8s.getInstance().listContent()
+        },
+        content = {
+            repeat(kubernetes.value.size) { it ->
+                Text(kubernetes.value[it])
+            }
+        }
+    )
 }

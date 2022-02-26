@@ -15,17 +15,24 @@
  * limitations under the license.
  */
 
-package constat
+package widget.config
 
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpSize
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 
-class PixelConst {
-
-    companion object {
-        val widthDp = Dp(1200f)
-        val heightDp = Dp(800f)
-        val appSize = DpSize(widthDp, heightDp)
-        val configErrorDialogSize = DpSize(widthDp / 3, heightDp / 5)
-    }
+@Composable
+fun ConfigItemPort(inputState: MutableState<Int>, desc: String, errorState: MutableState<String>) {
+    OutlinedTextField(
+        value = inputState.value.toString(),
+        onValueChange = {
+            try {
+                inputState.value = it.toInt()
+            } catch (e: Exception) {
+                errorState.value = "port show be 1 ~ 65535"
+            }
+        },
+        label = { Text(desc) }
+    )
 }

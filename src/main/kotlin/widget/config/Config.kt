@@ -26,10 +26,6 @@ import androidx.compose.ui.unit.sp
 import module.ConfigEnum
 import widget.component.RowPaddingButton
 
-val components = arrayOf(
-    "kubernetes",
-)
-
 val idx = mutableStateOf(ConfigEnum.Kubernetes)
 
 @Composable
@@ -44,10 +40,20 @@ fun Config() {
             ) {
                 Text(text = "kubernetes")
             }
+            RowPaddingButton(
+                onClick = {
+                    idx.value = ConfigEnum.Nginx
+                },
+            ) {
+                Text(text = "nginx")
+            }
         }
         when (idx.value) {
             ConfigEnum.Kubernetes -> {
                 ConfigKubernetes()
+            }
+            ConfigEnum.Nginx -> {
+                ConfigNginx()
             }
         }
     }

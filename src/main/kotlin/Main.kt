@@ -38,9 +38,11 @@ import widget.convert.ConvertScreen
 import widget.general.AboutAuthorScreen
 import widget.general.HomeScreen
 import widget.simulator.SimulatorScreen
+import widget.trouble.TroubleShootScreen
+
+val navigationIdx = mutableStateOf(NavigationEnum.Home)
 
 fun main() = application {
-    val navigationIdx = mutableStateOf(NavigationEnum.Home)
     Window(
         onCloseRequest = ::exitApplication,
         title = "dev tools",
@@ -70,6 +72,9 @@ fun main() = application {
                     }
                     NavigationEnum.Simulator -> {
                         SimulatorScreen()
+                    }
+                    NavigationEnum.TroubleShoot -> {
+                        TroubleShootScreen()
                     }
                     NavigationEnum.AboutAuthor -> {
                         AboutAuthorScreen()

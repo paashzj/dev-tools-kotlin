@@ -17,11 +17,6 @@
 
 package module
 
-enum class NavigationEnum {
-    AboutAuthor,
-    Command,
-    Convert,
-    Simulator,
-    TroubleShoot,
-    Home,
+enum class TroubleEnum {
+    NginxHttp,
 }

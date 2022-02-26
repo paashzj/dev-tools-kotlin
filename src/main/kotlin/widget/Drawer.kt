@@ -95,6 +95,16 @@ fun DrawContent(idx: MutableState<NavigationEnum>, scope: CoroutineScope, scaffo
         )
         TextButton(
             onClick = {
+                idx.value = NavigationEnum.TroubleShoot
+                closeDrawer(scope, scaffoldState)
+            },
+            modifier = Modifier.size(width = 400.dp, height = 50.dp),
+            content = {
+                Text("Trouble Shoot")
+            }
+        )
+        TextButton(
+            onClick = {
                 idx.value = NavigationEnum.AboutAuthor
                 closeDrawer(scope, scaffoldState)
             },

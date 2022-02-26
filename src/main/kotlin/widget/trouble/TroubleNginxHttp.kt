@@ -15,13 +15,12 @@
  * limitations under the license.
  */
 
-package module
+package widget.trouble
 
-enum class NavigationEnum {
-    AboutAuthor,
-    Command,
-    Convert,
-    Simulator,
-    TroubleShoot,
-    Home,
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+
+@Composable
+fun SimulatorNginxHttp() {
+    Text("todo")
 }

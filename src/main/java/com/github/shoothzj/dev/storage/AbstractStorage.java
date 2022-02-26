@@ -33,7 +33,6 @@ import java.util.Map;
 
 @Slf4j
 public abstract class AbstractStorage<T extends BaseConfig> {
-    
     protected abstract String getConfigPath();
 
     public boolean saveConfig(T config) {

@@ -36,8 +36,8 @@ fun ConfigNginx() {
         dialogState,
         errorState,
         dialogInputContent = {
-            ConfigItemString(editNginxNamespace, "default")
-            ConfigItemString(editNginxDeployName, "nginx")
+            ConfigItemString(editNginxNamespace, "namespace")
+            ConfigItemString(editNginxDeployName, "deploy name")
         },
         dialogConfirm = {
             StorageNginx.getInstance().saveConfig(

@@ -40,10 +40,20 @@ fun Config() {
             ) {
                 Text(text = "kubernetes")
             }
+            RowPaddingButton(
+                onClick = {
+                    idx.value = ConfigEnum.Nginx
+                },
+            ) {
+                Text(text = "nginx")
+            }
         }
         when (idx.value) {
             ConfigEnum.Kubernetes -> {
                 ConfigKubernetes()
+            }
+            ConfigEnum.Nginx -> {
+                ConfigNginx()
             }
         }
     }

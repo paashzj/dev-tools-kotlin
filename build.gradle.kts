@@ -37,9 +37,19 @@ repositories {
 }
 
 dependencies {
+    annotationProcessor("org.projectlombok:lombok:1.18.22")
+    compileOnly("org.projectlombok:lombok:1.18.22")
     implementation(compose.desktop.currentOs)
     // middleware
     implementation("org.apache.kafka:kafka-clients:2.4.0")
+    // codec
+    implementation("com.github.shoothzj:java-tool:3.1.8")
+    // log
+    implementation("org.apache.logging.log4j:log4j-core:2.17.0")
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.17.0")
+    // test
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.22")
+    testCompileOnly("org.projectlombok:lombok:1.18.22")
     testImplementation(kotlin("test"))
 }
 

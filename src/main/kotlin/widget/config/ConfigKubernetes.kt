@@ -17,58 +17,52 @@
 
 package widget.config
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
-import module.config.KubernetesConfig
-
-val showKubernetesCreateDialog = mutableStateOf(false)
+import com.github.shoothzj.dev.module.config.KubernetesConfig
+import com.github.shoothzj.dev.storage.StorageK8s
 
 @Composable
 fun ConfigKubernetes() {
-    Column {
-        if (showKubernetesCreateDialog.value) {
-            Dialog(
-                onCloseRequest = {
-                    showKubernetesCreateDialog.value = false
-                },
-                title = "Add kubernetes instance",
-            ) {
-                val editElem = remember {
-                    mutableStateOf(
-                        KubernetesConfig(
-                            name = "default",
-                            host = "localhost",
-                            port = 22,
-                            username = "root",
-                            password = "toor",
-                            rootPassword = null,
-                        )
-                    )
-                }
-                MaterialTheme {
-                    OutlinedTextField(
-                        value = editElem.value.name,
-                        onValueChange = {
-                            editElem.value.name = it
-                        },
-                        label = { Text("config name") }
-                    )
-                }
+    val dialogState = mutableStateOf(false)
+    val errorState = mutableStateOf("")
+    val kubernetes = mutableStateOf(StorageK8s.getInstance().listContent())
+    val editKubernetesName = mutableStateOf("default")
+    val editKubernetesHost = mutableStateOf("localhost")
+    val editKubernetesPort = mutableStateOf(22)
+    val editKubernetesUsername = mutableStateOf("root")
+    val editKubernetesPassword = mutableStateOf("")
+    val editKubernetesRootPassword = mutableStateOf("")
+    ConfigBase(
+        "kubernetes",
+        dialogState,
+        errorState,
+        dialogInputContent = {
+            ConfigItemString(editKubernetesName, "config name")
+            ConfigItemString(editKubernetesHost, "config host")
+            ConfigItemPort(editKubernetesPort, "config port", errorState)
+            ConfigItemString(editKubernetesUsername, "ssh username")
+            ConfigItemString(editKubernetesPassword, "ssh password")
+            ConfigItemString(editKubernetesRootPassword, "ssh root password(if you need to switch root)")
+        },
+        dialogConfirm = {
+            StorageK8s.getInstance().saveConfig(
+                KubernetesConfig(
+                    editKubernetesName.value,
+                    editKubernetesHost.value,
+                    editKubernetesPort.value,
+                    editKubernetesUsername.value,
+                    editKubernetesPassword.value,
+                    editKubernetesRootPassword.value,
+                )
+            )
+            kubernetes.value = StorageK8s.getInstance().listContent()
+        },
+        content = {
+            repeat(kubernetes.value.size) { it ->
+                Text(kubernetes.value[it])
             }
         }
-        Button(onClick = {
-            showKubernetesCreateDialog.value = true
-        }) {
-            Text("add kubernetes")
-        }
-        Text("kubernetes list:", fontSize = 30.sp)
-    }
+    )
 }

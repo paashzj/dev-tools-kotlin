@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import com.github.shoothzj.dev.util.LogUtil
 import constat.PixelConst
 import module.NavigationEnum
 import widget.DrawContent
@@ -43,6 +44,7 @@ import widget.trouble.TroubleShootScreen
 val navigationIdx = mutableStateOf(NavigationEnum.Home)
 
 fun main() = application {
+    LogUtil.init()
     Window(
         onCloseRequest = ::exitApplication,
         title = "dev tools",

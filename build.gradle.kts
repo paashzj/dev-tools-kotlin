@@ -21,14 +21,15 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     // version same as kotlin-gradle-plugin
-    kotlin("jvm") version "1.5.31"
-    id("org.jetbrains.compose") version "1.0.0"
+    kotlin("jvm") version "1.6.10"
+    id("org.jetbrains.compose") version "1.1.0"
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
     checkstyle
 }
 
 group = "com.github.shoothzj"
 version = "1.0"
+
 
 repositories {
     google()

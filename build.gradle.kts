@@ -30,7 +30,6 @@ plugins {
 group = "com.github.shoothzj"
 version = "1.0"
 
-
 repositories {
     google()
     mavenCentral()
@@ -49,7 +48,7 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+    kotlinOptions.jvmTarget = "17"
 }
 
 compose.desktop {

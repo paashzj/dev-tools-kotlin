@@ -32,8 +32,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import com.github.shoothzj.dev.module.config.KubernetesConfig
-import com.github.shoothzj.dev.storage.StorageK8s
 import constat.PixelConst
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -61,7 +59,8 @@ fun ConfigBase(
                         }
                     }
                 },
-                text = { Text(errorTextState.value) })
+                text = { Text(errorTextState.value) }
+            )
         } else if (dialogState.value) {
             Dialog(
                 onCloseRequest = {

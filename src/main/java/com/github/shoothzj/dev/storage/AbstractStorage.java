@@ -21,6 +21,7 @@ package com.github.shoothzj.dev.storage;
 
 import com.github.shoothzj.dev.module.config.BaseConfig;
 import com.github.shoothzj.javatool.service.JacksonService;
+import com.google.common.annotations.VisibleForTesting;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 
@@ -85,6 +86,12 @@ public abstract class AbstractStorage<T extends BaseConfig> {
         } catch (Exception e) {
             return new HashMap<>();
         }
+    }
+
+    @VisibleForTesting
+    public Map<String, T> getConfigMap(String json) {
+        Map<String, T> result = deserialize(json);
+        return result == null ? new HashMap<>() : result;
     }
 
     protected abstract Map<String, T> deserialize(String json);

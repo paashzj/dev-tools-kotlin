@@ -47,16 +47,28 @@ fun ConfigKubernetes() {
             ConfigItemString(editKubernetesRootPassword, "ssh root password(if you need to switch root)")
         },
         dialogConfirm = {
-            StorageK8s.getInstance().saveConfig(
-                KubernetesConfig(
-                    editKubernetesName.value,
-                    editKubernetesHost.value,
-                    editKubernetesPort.value,
-                    editKubernetesUsername.value,
-                    editKubernetesPassword.value,
-                    editKubernetesRootPassword.value,
+            if (editKubernetesRootPassword.value == "") {
+                StorageK8s.getInstance().saveConfig(
+                    KubernetesConfig(
+                        editKubernetesName.value,
+                        editKubernetesHost.value,
+                        editKubernetesPort.value,
+                        editKubernetesUsername.value,
+                        editKubernetesPassword.value,
+                    )
                 )
-            )
+            } else {
+                StorageK8s.getInstance().saveConfig(
+                    KubernetesConfig(
+                        editKubernetesName.value,
+                        editKubernetesHost.value,
+                        editKubernetesPort.value,
+                        editKubernetesUsername.value,
+                        editKubernetesPassword.value,
+                        editKubernetesRootPassword.value,
+                    )
+                )
+            }
             kubernetes.value = StorageK8s.getInstance().listContent()
         },
         content = {

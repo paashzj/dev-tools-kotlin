@@ -1,4 +1,6 @@
 # dev-tools-kotlin
+[![codecov](https://codecov.io/gh/paashzj/dev-tools-kotlin/branch/main/graph/badge.svg?token=155QKNN7MQ)](https://codecov.io/gh/paashzj/dev-tools-kotlin)
+<br/>
 English | [🇨🇳中文](README_ZH.md)
 # 🚀 features
 ## 👁️ command lookup

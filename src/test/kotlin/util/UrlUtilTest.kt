@@ -20,17 +20,18 @@ package util
 import org.testng.Assert
 import org.testng.annotations.Test
 
-class Base64UtilTest {
+class UrlUtilTest {
 
     @Test
-    fun testBase64Encode() {
-        val res = Base64Util.encode("abcd")
-        Assert.assertEquals(res, "YWJjZA==")
+    fun testUrlEncode() {
+        val res = UrlUtil.urlEncode("http://baidu.com")
+        Assert.assertEquals(res, "http%3A%2F%2Fbaidu.com")
     }
 
     @Test
-    fun testBase64Decode() {
-        val res = Base64Util.decode("YWJjZA==")
-        Assert.assertEquals(res, "abcd")
+    fun testUrlDecode() {
+        val res = UrlUtil.urlDecode("http%3A%2F%2Fbaidu.com")
+        Assert.assertEquals(res, "http://baidu.com")
     }
+    
 }

@@ -25,6 +25,7 @@ plugins {
     id("org.jetbrains.compose") version "1.1.0"
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
     checkstyle
+    id("jacoco")
 }
 
 group = "com.github.shoothzj"
@@ -47,6 +48,7 @@ dependencies {
     // log
     implementation("org.apache.logging.log4j:log4j-core:2.17.0")
     implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.17.0")
+    implementation("org.jacoco:org.jacoco.core:0.8.7")
     // test
     testAnnotationProcessor("org.projectlombok:lombok:1.18.22")
     testCompileOnly("org.projectlombok:lombok:1.18.22")
@@ -80,5 +82,26 @@ ktlint {
         reporter(ReporterType.CHECKSTYLE)
         reporter(ReporterType.JSON)
         reporter(ReporterType.HTML)
+    }
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+}
+tasks.jacocoTestReport {
+    dependsOn(tasks.test) // tests are required to run before generating the report
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+    reportsDirectory.set(layout.buildDirectory.dir("customJacocoReportDir"))
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+        xml.outputLocation.set(layout.buildDirectory.file("jacocoXml/report.xml"))
+        csv.required.set(false)
+        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
     }
 }

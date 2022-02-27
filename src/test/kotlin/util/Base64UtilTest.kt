@@ -33,4 +33,16 @@ class Base64UtilTest {
         val res = Base64Util.decode("YWJjZA==")
         Assert.assertEquals(res, "abcd")
     }
+
+    @Test
+    fun testBase64EncodeBytes() {
+        val res = Base64Util.encode("abcd".toByteArray())
+        Assert.assertEquals(res, byteArrayOf(89, 87, 74, 106, 90, 65, 61, 61))
+    }
+
+    @Test
+    fun testBase64DecodeBytes() {
+        val res = Base64Util.decode("YWJjZA==".toByteArray())
+        Assert.assertEquals(res, byteArrayOf(97, 98, 99, 100))
+    }
 }

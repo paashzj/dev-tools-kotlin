@@ -19,10 +19,7 @@
 
 package com.github.shoothzj.dev.util;
 
-import com.github.shoothzj.javatool.util.RegexUtil;
 import com.github.shoothzj.sdk.net.Ipv4Util;
-
-import java.util.regex.Pattern;
 
 public class ValidateUtil {
 

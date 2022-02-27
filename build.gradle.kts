@@ -46,6 +46,7 @@ dependencies {
     // ssh
     implementation("com.github.mwiede:jsch:0.2.0")
     // codec
+    implementation("com.github.shoothzj:sdk-net:3.1.8")
     implementation("com.github.shoothzj:java-tool:3.1.8")
     // log
     implementation("org.apache.logging.log4j:log4j-core:2.17.0")

@@ -66,11 +66,11 @@ public class SimulatorKafka {
                     new KafkaConsumer<>(KfkConfig.getKfkConsumerConfiguration(url));
             consumer.subscribe(List.of(topic));
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1000));
-            String msg = "";
+            StringBuilder msg = new StringBuilder();
             if (records != null && records.count() > 0) {
                 for (ConsumerRecord<String, String> record : records) {
                     System.out.println(record.value());
-                    msg += record.value() + ",";
+                    msg.append(record.value()).append(",");
                 }
             }
             return msg.substring(0, msg.length() - 1);

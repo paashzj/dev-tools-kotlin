@@ -30,7 +30,6 @@ import com.github.shoothzj.dev.SimulatorKafka
 
 @Composable
 fun KafkaConsumer() {
-
     var host by remember { mutableStateOf("") }
     var port by remember { mutableStateOf("") }
     var topic by remember { mutableStateOf("") }
@@ -59,7 +58,7 @@ fun KafkaConsumer() {
             label = { Text("kafka topic") }
         )
         Button(onClick = {
-            var consumer = SimulatorKafka()
+            val consumer = SimulatorKafka()
             msg = consumer.consumer(host, port, topic)
         }) { Text("receive") }
         Text(msg)

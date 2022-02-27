@@ -43,6 +43,8 @@ dependencies {
     implementation(compose.desktop.currentOs)
     // middleware
     implementation("org.apache.kafka:kafka-clients:2.4.0")
+    // ssh
+    implementation("com.github.mwiede:jsch:0.2.0")
     // codec
     implementation("com.github.shoothzj:java-tool:3.1.8")
     // log

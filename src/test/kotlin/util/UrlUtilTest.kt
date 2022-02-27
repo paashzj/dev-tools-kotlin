@@ -33,5 +33,4 @@ class UrlUtilTest {
         val res = UrlUtil.urlDecode("http%3A%2F%2Fbaidu.com")
         Assert.assertEquals(res, "http://baidu.com")
     }
-    
 }

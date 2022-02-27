@@ -17,10 +17,50 @@
 
 package widget.simulator
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.unit.sp
+import module.MqPatternEnum
+import widget.component.RowPaddingButton
+
+val pattern = mutableStateOf(MqPatternEnum.Producer)
 
 @Composable
 fun SimulatorKafka() {
-    Text("todo")
+    Column {
+        Head(pattern)
+        when (pattern.value) {
+            MqPatternEnum.Producer -> {
+                KafkaProducer()
+            }
+            MqPatternEnum.Consumer -> {
+                KafkaConsumer()
+            }
+        }
+    }
+}
+
+@Composable
+fun Head(pattern: MutableState<MqPatternEnum>) {
+    Row {
+        Text("MqPattern List", fontSize = 30.sp)
+        RowPaddingButton(
+            onClick = {
+                pattern.value = MqPatternEnum.Producer
+            },
+        ) {
+            Text(text = "producer", fontSize = 12.sp)
+        }
+        RowPaddingButton(
+            onClick = {
+                pattern.value = MqPatternEnum.Consumer
+            },
+        ) {
+            Text(text = "consumer", fontSize = 12.sp)
+        }
+    }
 }

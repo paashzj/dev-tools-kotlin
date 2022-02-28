@@ -47,6 +47,13 @@ fun Config() {
             ) {
                 Text(text = "nginx")
             }
+            RowPaddingButton(
+                onClick = {
+                    idx.value = ConfigEnum.ZooKeeper
+                },
+            ) {
+                Text(text = "zookeeper")
+            }
         }
         when (idx.value) {
             ConfigEnum.Kubernetes -> {
@@ -54,6 +61,9 @@ fun Config() {
             }
             ConfigEnum.Nginx -> {
                 ConfigNginx()
+            }
+            ConfigEnum.ZooKeeper -> {
+                ConfigZooKeeper()
             }
         }
     }

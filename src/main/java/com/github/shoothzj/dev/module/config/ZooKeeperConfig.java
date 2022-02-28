@@ -24,21 +24,22 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class NginxConfig extends BaseConfig {
+public class ZooKeeperConfig extends BaseConfig {
 
     private String k8sName;
 
     private String namespace;
 
-    private String deployName;
+    private String statefulSetName;
 
-    public NginxConfig() {
+    public ZooKeeperConfig() {
     }
 
-    public NginxConfig(String name, String k8sName, String namespace, String deployName) {
+    public ZooKeeperConfig(String name, String k8sName, String namespace, String statefulSetName) {
         super(name);
         this.k8sName = k8sName;
         this.namespace = namespace;
-        this.deployName = deployName;
+        this.statefulSetName = statefulSetName;
     }
+
 }

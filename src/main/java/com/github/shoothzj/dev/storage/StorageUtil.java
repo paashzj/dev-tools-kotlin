@@ -37,11 +37,14 @@ public class StorageUtil {
 
     public static final String NGX_CONF_PATH = STORAGE_PREFIX + "nginx-conf.json";
 
+    public static final String ZK_CONF_PATH = STORAGE_PREFIX + "zookeeper-conf.json";
+
     static {
         File storageDir = new File(STORAGE_DIR);
         storageDir.mkdirs();
         FileUtil.ensureFileExists(K8S_CONF_PATH);
         FileUtil.ensureFileExists(NGX_CONF_PATH);
+        FileUtil.ensureFileExists(ZK_CONF_PATH);
     }
 
 }

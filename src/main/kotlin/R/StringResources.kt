@@ -29,6 +29,9 @@ interface Strings {
     val AppDescMessage: String
     val AppWelcomeMessage: String
     val aboutAuthor: String
+    val add: String
+    val addKubernetesInstance: String
+    val addNginxInstance: String
     val Commands: String
     val commandPage: String
     val componentList: String
@@ -36,13 +39,18 @@ interface Strings {
     val confirm: String
     val convertPage: String
     val decode: String
+    val deployName: String
     val devTools: String
     val dismiss: String
     val encode: String
     val homePage: String
+    val instance: String
+    val name: String
+    val namespace: String
     val Params: String
     val receive: String
     val SimulatorList: String
+    val statefulSetName: String
     val send: String
     val simulatorPage: String
     val TroubleScene: String
@@ -56,6 +64,12 @@ object EnStrings : Strings {
         get() = "Welcome to Tool List, This is Home&Dashboard Page"
     override val aboutAuthor: String
         get() = "about author"
+    override val add: String
+        get() = "add"
+    override val addKubernetesInstance: String
+        get() = "add kubernetes instance"
+    override val addNginxInstance: String
+        get() = "add nginx instance"
     override val Commands: String
         get() = "Commands"
     override val commandPage: String
@@ -70,6 +84,8 @@ object EnStrings : Strings {
         get() = "convert page"
     override val decode: String
         get() = "decode"
+    override val deployName: String
+        get() = "deploy name"
     override val devTools: String
         get() = "dev tools"
     override val dismiss: String
@@ -78,12 +94,20 @@ object EnStrings : Strings {
         get() = "encode"
     override val homePage: String
         get() = "home page"
+    override val instance: String
+        get() = "instance"
+    override val name: String
+        get() = "name"
+    override val namespace: String
+        get() = "namespace"
     override val Params: String
         get() = "Params"
     override val receive: String
         get() = "receive"
     override val SimulatorList: String
         get() = "Simulator List"
+    override val statefulSetName: String
+        get() = "statefulset name"
     override val send: String
         get() = "send"
     override val simulatorPage: String
@@ -98,9 +122,15 @@ object ChStrings : Strings {
     override val AppDescMessage: String
         get() = "发现更多工具，请点击侧边栏"
     override val AppWelcomeMessage: String
-        get() = "欢迎来到开发者工具集，此页面为主页面&dashboard界面"
+        get() = "欢迎来到开发者工具集の主页面&dashboard界面"
     override val aboutAuthor: String
         get() = "关于作者"
+    override val add: String
+        get() = "添加"
+    override val addKubernetesInstance: String
+        get() = "添加kubernetes实例"
+    override val addNginxInstance: String
+        get() = "添加Nginx实例"
     override val Commands: String
         get() = "命令"
     override val commandPage: String
@@ -115,6 +145,8 @@ object ChStrings : Strings {
         get() = "转换界面"
     override val decode: String
         get() = "解码"
+    override val deployName: String
+        get() = "部署名"
     override val devTools: String
         get() = "开发者工具集"
     override val dismiss: String
@@ -123,12 +155,20 @@ object ChStrings : Strings {
         get() = "编码"
     override val homePage: String
         get() = "主界面"
+    override val instance: String
+        get() = "实例"
+    override val name: String
+        get() = "名称"
+    override val namespace: String
+        get() = "命名空间"
     override val Params: String
         get() = "参数"
     override val receive: String
         get() = "接受"
     override val SimulatorList: String
         get() = "模拟器列表"
+    override val statefulSetName: String
+        get() = "状态实例名"
     override val send: String
         get() = "发送"
     override val simulatorPage: String

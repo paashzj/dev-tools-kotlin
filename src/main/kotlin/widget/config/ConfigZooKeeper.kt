@@ -20,45 +20,45 @@ package widget.config
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import com.github.shoothzj.dev.module.config.NginxConfig
+import com.github.shoothzj.dev.module.config.ZooKeeperConfig
 import com.github.shoothzj.dev.storage.StorageK8s
-import com.github.shoothzj.dev.storage.StorageNginx
+import com.github.shoothzj.dev.storage.StorageZooKeeper
 import widget.component.DropdownList
 
 @Composable
-fun ConfigNginx() {
+fun ConfigZooKeeper() {
     val dialogState = mutableStateOf(false)
     val errorState = mutableStateOf("")
-    val nginxList = mutableStateOf(StorageNginx.getInstance().listContent())
-    val editNginxName = mutableStateOf("default")
+    val zooKeeperList = mutableStateOf(StorageZooKeeper.getInstance().listContent())
+    val editZooKeeperName = mutableStateOf("default")
     val editK8sInstanceName = mutableStateOf("")
-    val editNginxNamespace = mutableStateOf("default")
-    val editNginxDeployName = mutableStateOf("nginx")
+    val editZooKeeperNamespace = mutableStateOf("default")
+    val editZooKeeperStatefulSetName = mutableStateOf("zookeeper")
     val kubernetes = StorageK8s.getInstance().listConfigNames()
     ConfigBase(
-        "nginx",
+        "zookeeper",
         dialogState,
         errorState,
         dialogInputContent = {
-            ConfigItemString(editNginxName, R.strings.name)
+            ConfigItemString(editZooKeeperName, R.strings.name)
             DropdownList(kubernetes, "k8s instance", editK8sInstanceName)
-            ConfigItemString(editNginxNamespace, R.strings.namespace)
-            ConfigItemString(editNginxDeployName, R.strings.deployName)
+            ConfigItemString(editZooKeeperNamespace, R.strings.namespace)
+            ConfigItemString(editZooKeeperStatefulSetName, R.strings.statefulSetName)
         },
         dialogConfirm = {
-            StorageNginx.getInstance().saveConfig(
-                NginxConfig(
-                    editNginxName.value,
+            StorageZooKeeper.getInstance().saveConfig(
+                ZooKeeperConfig(
+                    editZooKeeperName.value,
                     editK8sInstanceName.value,
-                    editNginxNamespace.value,
-                    editNginxDeployName.value,
+                    editZooKeeperNamespace.value,
+                    editZooKeeperStatefulSetName.value,
                 )
             )
-            nginxList.value = StorageNginx.getInstance().listContent()
+            zooKeeperList.value = StorageZooKeeper.getInstance().listContent()
         },
         content = {
-            repeat(nginxList.value.size) { it ->
-                Text(nginxList.value[it])
+            repeat(zooKeeperList.value.size) { it ->
+                Text(zooKeeperList.value[it])
             }
         }
     )

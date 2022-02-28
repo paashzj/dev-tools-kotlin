@@ -17,28 +17,30 @@
  * under the License.
  */
 
-package com.github.shoothzj.dev.module.config;
+package com.github.shoothzj.dev.storage;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.github.shoothzj.dev.module.config.ZooKeeperConfig;
+import com.github.shoothzj.javatool.service.JacksonService;
 
-@Setter
-@Getter
-public class NginxConfig extends BaseConfig {
+import java.util.Map;
 
-    private String k8sName;
+public class StorageZooKeeper extends AbstractStorage<ZooKeeperConfig> {
 
-    private String namespace;
+    private static final StorageZooKeeper INSTANCE = new StorageZooKeeper();
 
-    private String deployName;
-
-    public NginxConfig() {
+    public static StorageZooKeeper getInstance() {
+        return INSTANCE;
     }
 
-    public NginxConfig(String name, String k8sName, String namespace, String deployName) {
-        super(name);
-        this.k8sName = k8sName;
-        this.namespace = namespace;
-        this.deployName = deployName;
+    @Override
+    protected String getConfigPath() {
+        return StorageUtil.ZK_CONF_PATH;
+    }
+
+    @Override
+    protected Map<String, ZooKeeperConfig> deserialize(String json) {
+        return JacksonService.toRefer(json, new TypeReference<>() {
+        });
     }
 }

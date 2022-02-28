@@ -26,6 +26,8 @@ import lombok.Setter;
 @Getter
 public class NginxConfig extends BaseConfig {
 
+    private String k8sName;
+
     private String namespace;
 
     private String deployName;
@@ -33,8 +35,9 @@ public class NginxConfig extends BaseConfig {
     public NginxConfig() {
     }
 
-    public NginxConfig(String name, String namespace, String deployName) {
+    public NginxConfig(String name, String k8sName, String namespace, String deployName) {
         super(name);
+        this.k8sName = k8sName;
         this.namespace = namespace;
         this.deployName = deployName;
     }

@@ -21,7 +21,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import com.github.shoothzj.dev.module.config.NginxConfig
+import com.github.shoothzj.dev.storage.StorageK8s
 import com.github.shoothzj.dev.storage.StorageNginx
+import widget.component.DropdownList
 
 @Composable
 fun ConfigNginx() {
@@ -29,20 +31,25 @@ fun ConfigNginx() {
     val errorState = mutableStateOf("")
     val nginxList = mutableStateOf(StorageNginx.getInstance().listContent())
     val editNginxName = mutableStateOf("default")
+    val editK8sInstanceName = mutableStateOf("")
     val editNginxNamespace = mutableStateOf("default")
     val editNginxDeployName = mutableStateOf("nginx")
+    val kubernetes = StorageK8s.getInstance().listConfigNames()
     ConfigBase(
         "nginx",
         dialogState,
         errorState,
         dialogInputContent = {
-            ConfigItemString(editNginxNamespace, "namespace")
-            ConfigItemString(editNginxDeployName, "deploy name")
+            ConfigItemString(editNginxName, R.strings.name)
+            DropdownList(kubernetes, "k8s instance", editK8sInstanceName)
+            ConfigItemString(editNginxNamespace, R.strings.namespace)
+            ConfigItemString(editNginxDeployName, R.strings.deployName)
         },
         dialogConfirm = {
             StorageNginx.getInstance().saveConfig(
                 NginxConfig(
                     editNginxName.value,
+                    editK8sInstanceName.value,
                     editNginxNamespace.value,
                     editNginxDeployName.value,
                 )

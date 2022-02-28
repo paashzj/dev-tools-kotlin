@@ -55,7 +55,7 @@ fun ConfigBase(
                         Button(onClick = {
                             errorTextState.value = ""
                         }) {
-                            Text("Confirm")
+                            Text(R.strings.confirm)
                         }
                     }
                 },
@@ -66,7 +66,7 @@ fun ConfigBase(
                 onCloseRequest = {
                     dialogState.value = false
                 },
-                title = "Add kubernetes instance",
+                title = "${R.strings.add} $configName ${R.strings.instance}",
             ) {
                 MaterialTheme {
                     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
@@ -75,14 +75,14 @@ fun ConfigBase(
                             Button(onClick = {
                                 dialogState.value = false
                             }) {
-                                Text("Dismiss")
+                                Text(R.strings.dismiss)
                             }
                             Button(onClick = {
                                 dialogState.value = false
                                 dialogConfirm()
                                 // save the kubernetes config
                             }) {
-                                Text("Confirm")
+                                Text(R.strings.confirm)
                             }
                         }
                     }

@@ -17,6 +17,9 @@
 
 package widget.config
 
+import R.strings
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -58,7 +61,17 @@ fun ConfigZooKeeper() {
         },
         content = {
             repeat(zooKeeperList.value.size) { it ->
-                Text(zooKeeperList.value[it])
+                Row {
+                    Text(zooKeeperList.value[it])
+                    Button(
+                        onClick = {
+                            StorageZooKeeper.getInstance().deleteConfig(editZooKeeperName.value)
+                            zooKeeperList.value = StorageZooKeeper.getInstance().listContent()
+                        }
+                    ) {
+                        Text(strings.delete)
+                    }
+                }
             }
         }
     )

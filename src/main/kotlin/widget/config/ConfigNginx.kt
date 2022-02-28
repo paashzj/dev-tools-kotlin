@@ -17,6 +17,9 @@
 
 package widget.config
 
+import R.strings
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -58,7 +61,17 @@ fun ConfigNginx() {
         },
         content = {
             repeat(nginxList.value.size) { it ->
-                Text(nginxList.value[it])
+                Row {
+                    Text(nginxList.value[it])
+                    Button(
+                        onClick = {
+                            StorageNginx.getInstance().deleteConfig(editNginxName.value)
+                            nginxList.value = StorageNginx.getInstance().listContent()
+                        }
+                    ) {
+                        Text(strings.delete)
+                    }
+                }
             }
         }
     )

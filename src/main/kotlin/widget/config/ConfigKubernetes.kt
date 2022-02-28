@@ -17,6 +17,8 @@
 
 package widget.config
 
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -73,7 +75,17 @@ fun ConfigKubernetes() {
         },
         content = {
             repeat(kubernetes.value.size) { it ->
-                Text(kubernetes.value[it])
+                Row {
+                    Text(kubernetes.value[it])
+                    Button(
+                        onClick = {
+                            StorageK8s.getInstance().deleteConfig(editKubernetesName.value)
+                            kubernetes.value = StorageK8s.getInstance().listContent()
+                        }
+                    ) {
+                        Text(R.strings.delete)
+                    }
+                }
             }
         }
     )

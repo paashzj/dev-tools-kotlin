@@ -26,8 +26,8 @@ import widget.config.Config
 @Composable
 fun HomeScreen() {
     Column {
-        Text("Welcome to Tool List, This is Home&Config Page", fontSize = 50.sp)
-        Text("To explore tools, click the drawer", fontSize = 30.sp)
+        Text(R.strings.AppWelcomeMessage, fontSize = 50.sp)
+        Text(R.strings.AppDescMessage, fontSize = 30.sp)
         Config()
     }
 }

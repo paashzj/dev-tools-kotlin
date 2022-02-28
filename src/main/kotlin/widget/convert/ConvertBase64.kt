@@ -46,12 +46,12 @@ fun ConvertBase64() {
             TextButton(onClick = {
                 base64Text = Base64Util.encode(rawText)
             }) {
-                Text("Base64 encode")
+                Text(R.strings.encode)
             }
             TextButton(onClick = {
                 rawText = Base64Util.decode(base64Text)
             }) {
-                Text("Base64 decode")
+                Text(R.strings.decode)
             }
         }
         OutlinedTextField(

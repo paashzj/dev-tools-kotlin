@@ -47,7 +47,7 @@ fun CommandScreen() {
 @Composable
 fun Head(idx: MutableState<CommandEnum>) {
     Row {
-        Text("Component List", fontSize = 40.sp)
+        Text(R.strings.componentList, fontSize = 40.sp)
         RowPaddingButton(
             onClick = {
                 idx.value = CommandEnum.Kafka

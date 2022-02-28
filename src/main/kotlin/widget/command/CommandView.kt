@@ -33,7 +33,7 @@ import module.CommandParam
 @Composable
 fun CommandView(params: Array<CommandParam>, commandDto: CommandDto) {
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        Text("Params", fontSize = 40.sp)
+        Text(R.strings.Params, fontSize = 40.sp)
         repeat(params.size) { it ->
             val commandParam = params[it]
             Row {
@@ -46,7 +46,7 @@ fun CommandView(params: Array<CommandParam>, commandDto: CommandDto) {
                 )
             }
         }
-        Text("Commands", fontSize = 40.sp)
+        Text(R.strings.Commands, fontSize = 40.sp)
         repeat(commandDto.subCommandsList.size) { it ->
             val subCommands = commandDto.subCommandsList[it]
             Text(subCommands.category, fontSize = 30.sp)

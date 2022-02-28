@@ -67,7 +67,7 @@ fun KafkaProducer() {
         Button(onClick = {
             val client = SimulatorKafka()
             res = client.producer(host.value, port.value, topic, key, msg)
-        }) { Text("send") }
+        }) { Text(R.strings.send) }
         Text(res)
     }
 }

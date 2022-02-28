@@ -44,7 +44,7 @@ fun SimulatorScreen() {
 @Composable
 fun Head(idx: MutableState<SimulatorEnum>) {
     Row {
-        Text("Simulator List", fontSize = 40.sp)
+        Text(R.strings.SimulatorList, fontSize = 40.sp)
         RowPaddingButton(
             onClick = {
                 idx.value = SimulatorEnum.Kafka

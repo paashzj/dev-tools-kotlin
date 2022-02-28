@@ -50,7 +50,7 @@ fun KafkaConsumer() {
         Button(onClick = {
             val consumer = SimulatorKafka()
             msg = consumer.consumer(host.value, port.value, topic)
-        }) { Text("receive") }
+        }) { Text(R.strings.receive) }
         Text(msg)
     }
 }

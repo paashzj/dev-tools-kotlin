@@ -50,6 +50,7 @@ interface Strings {
     val Params: String
     val receive: String
     val SimulatorList: String
+    val statefulSetName: String
     val send: String
     val simulatorPage: String
     val TroubleScene: String
@@ -105,6 +106,8 @@ object EnStrings : Strings {
         get() = "receive"
     override val SimulatorList: String
         get() = "Simulator List"
+    override val statefulSetName: String
+        get() = "statefulset name"
     override val send: String
         get() = "send"
     override val simulatorPage: String
@@ -164,6 +167,8 @@ object ChStrings : Strings {
         get() = "接受"
     override val SimulatorList: String
         get() = "模拟器列表"
+    override val statefulSetName: String
+        get() = "状态实例名"
     override val send: String
         get() = "发送"
     override val simulatorPage: String

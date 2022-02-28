@@ -30,7 +30,7 @@ fun ConfigKubernetes() {
     val kubernetes = mutableStateOf(StorageK8s.getInstance().listContent())
     val editKubernetesName = mutableStateOf("default")
     val editKubernetesHost = mutableStateOf("localhost")
-    val editKubernetesPort = mutableStateOf(22)
+    val editKubernetesPort = mutableStateOf("22")
     val editKubernetesUsername = mutableStateOf("root")
     val editKubernetesPassword = mutableStateOf("")
     val editKubernetesRootPassword = mutableStateOf("")
@@ -40,8 +40,8 @@ fun ConfigKubernetes() {
         errorState,
         dialogInputContent = {
             ConfigItemString(editKubernetesName, "config name")
-            ConfigItemString(editKubernetesHost, "config host")
-            ConfigItemPort(editKubernetesPort, "config port", errorState)
+            ConfigItemHost(editKubernetesHost, "config host", mutableStateOf(""))
+            ConfigItemPort(editKubernetesPort, "config port", mutableStateOf(""))
             ConfigItemString(editKubernetesUsername, "ssh username")
             ConfigItemString(editKubernetesPassword, "ssh password")
             ConfigItemString(editKubernetesRootPassword, "ssh root password(if you need to switch root)")
@@ -52,7 +52,7 @@ fun ConfigKubernetes() {
                     KubernetesConfig(
                         editKubernetesName.value,
                         editKubernetesHost.value,
-                        editKubernetesPort.value,
+                        editKubernetesPort.value.toInt(),
                         editKubernetesUsername.value,
                         editKubernetesPassword.value,
                     )
@@ -62,7 +62,7 @@ fun ConfigKubernetes() {
                     KubernetesConfig(
                         editKubernetesName.value,
                         editKubernetesHost.value,
-                        editKubernetesPort.value,
+                        editKubernetesPort.value.toInt(),
                         editKubernetesUsername.value,
                         editKubernetesPassword.value,
                         editKubernetesRootPassword.value,

@@ -27,29 +27,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.github.shoothzj.dev.SimulatorKafka
+import widget.config.ConfigItemHost
+import widget.config.ConfigItemPort
 
 @Composable
 fun KafkaConsumer() {
-    var host by remember { mutableStateOf("") }
-    var port by remember { mutableStateOf("") }
+    val host = mutableStateOf("localhost")
+    val port = mutableStateOf("9092")
     var topic by remember { mutableStateOf("") }
     var msg by remember { mutableStateOf("") }
 
     Column {
-        OutlinedTextField(
-            value = host,
-            onValueChange = {
-                host = it
-            },
-            label = { Text("kafka host") }
-        )
-        OutlinedTextField(
-            value = port,
-            onValueChange = {
-                port = it
-            },
-            label = { Text("kafka port") }
-        )
+        ConfigItemHost(host, "kafka host", mutableStateOf(""))
+        ConfigItemPort(port, "kafka port", mutableStateOf(""))
         OutlinedTextField(
             value = topic,
             onValueChange = {
@@ -59,7 +49,7 @@ fun KafkaConsumer() {
         )
         Button(onClick = {
             val consumer = SimulatorKafka()
-            msg = consumer.consumer(host, port, topic)
+            msg = consumer.consumer(host.value, port.value, topic)
         }) { Text("receive") }
         Text(msg)
     }

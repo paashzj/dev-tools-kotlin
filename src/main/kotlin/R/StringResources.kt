@@ -26,6 +26,8 @@ val strings = when (Locale.getDefault().language) {
 }
 
 interface Strings {
+    val AppDescMessage: String
+    val AppWelcomeMessage: String
     val aboutAuthor: String
     val Commands: String
     val commandPage: String
@@ -48,6 +50,10 @@ interface Strings {
 }
 
 object EnStrings : Strings {
+    override val AppDescMessage: String
+        get() = "To explore tools, click the drawer"
+    override val AppWelcomeMessage: String
+        get() = "Welcome to Tool List, This is Home&Dashboard Page"
     override val aboutAuthor: String
         get() = "about author"
     override val Commands: String
@@ -89,6 +95,10 @@ object EnStrings : Strings {
 }
 
 object ChStrings : Strings {
+    override val AppDescMessage: String
+        get() = "发现更多工具，请点击侧边栏"
+    override val AppWelcomeMessage: String
+        get() = "欢迎来到开发者工具集，此页面为主页面&dashboard界面"
     override val aboutAuthor: String
         get() = "关于作者"
     override val Commands: String

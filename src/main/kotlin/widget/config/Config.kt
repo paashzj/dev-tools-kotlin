@@ -32,7 +32,7 @@ val idx = mutableStateOf(ConfigEnum.Kubernetes)
 fun Config() {
     Column {
         Row {
-            Text("Config", fontSize = 40.sp)
+            Text(R.strings.config, fontSize = 40.sp)
             RowPaddingButton(
                 onClick = {
                     idx.value = ConfigEnum.Kubernetes

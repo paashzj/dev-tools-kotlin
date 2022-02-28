@@ -47,13 +47,13 @@ fun ConvertURL() {
             TextButton(onClick = {
                 urlDecode = UrlUtil.urlEncode(urlCode)
             }) {
-                Text("encode")
+                Text(R.strings.encode)
             }
 
             TextButton(onClick = {
                 urlCode = UrlUtil.urlDecode(urlDecode)
             }) {
-                Text("decode")
+                Text(R.strings.decode)
             }
         }
 

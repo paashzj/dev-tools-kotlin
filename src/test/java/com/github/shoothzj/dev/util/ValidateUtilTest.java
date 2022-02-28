@@ -19,28 +19,34 @@
 
 package com.github.shoothzj.dev.util;
 
-import com.github.shoothzj.sdk.net.Ipv4Util;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
-public class ValidateUtil {
+public class ValidateUtilTest {
 
-    public static boolean isNotHost(String host) {
-        return !isHost(host);
+    @Test
+    public void invalidHostname() {
+        Assert.assertTrue(ValidateUtil.isNotHost("localhost.abc"));
     }
 
-    public static boolean isHost(String host) {
-        return Ipv4Util.isValidIp(host) || host.equals("localhost");
+    @Test
+    public void invalidIp() {
+        Assert.assertTrue(ValidateUtil.isNotHost("256.256.256.256"));
     }
 
-    public static boolean isNotPort(String port) {
-        return !isPort(port);
+    @Test
+    public void invalidPortNotNumber() {
+        Assert.assertTrue(ValidateUtil.isNotPort("abcd"));
     }
 
-    public static boolean isPort(String port) {
-        try {
-            int aux = Integer.parseInt(port);
-            return aux > 0 && aux < 65536;
-        } catch (Exception e) {
-            return false;
-        }
+    @Test
+    public void invalidPortMinus() {
+        Assert.assertTrue(ValidateUtil.isNotPort("-1"));
     }
+
+    @Test
+    public void invalidPortBig() {
+        Assert.assertTrue(ValidateUtil.isNotPort("65536"));
+    }
+
 }

@@ -43,7 +43,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: package dmg
-        run: gradle build packageDmg -x checkstyleMain -x checkstyleTest -x test
+        run: gradle packageDmg -x checkstyleMain -x checkstyleTest -x test
       - name: rename dmg
         run: mv build/compose/binaries/main/dmg/dev-tools-kotlin-1.0.0.dmg dev-tools-kotlin.dmg
       - uses: dev-drprasad/delete-tag-and-release@v0.2.0

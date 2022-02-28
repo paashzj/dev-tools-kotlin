@@ -60,7 +60,7 @@ fun DrawContent(idx: MutableState<NavigationEnum>, scope: CoroutineScope, scaffo
             },
             modifier = Modifier.size(width = 400.dp, height = 50.dp),
             content = {
-                Text("Home")
+                Text(R.strings.homePage)
             }
         )
         TextButton(
@@ -70,7 +70,7 @@ fun DrawContent(idx: MutableState<NavigationEnum>, scope: CoroutineScope, scaffo
             },
             modifier = Modifier.size(width = 400.dp, height = 50.dp),
             content = {
-                Text("Command")
+                Text(R.strings.commandPage)
             }
         )
         TextButton(
@@ -80,7 +80,7 @@ fun DrawContent(idx: MutableState<NavigationEnum>, scope: CoroutineScope, scaffo
             },
             modifier = Modifier.size(width = 400.dp, height = 50.dp),
             content = {
-                Text("Convert")
+                Text(R.strings.convertPage)
             }
         )
         TextButton(
@@ -90,7 +90,7 @@ fun DrawContent(idx: MutableState<NavigationEnum>, scope: CoroutineScope, scaffo
             },
             modifier = Modifier.size(width = 400.dp, height = 50.dp),
             content = {
-                Text("Simulator")
+                Text(R.strings.simulatorPage)
             }
         )
         TextButton(
@@ -100,7 +100,7 @@ fun DrawContent(idx: MutableState<NavigationEnum>, scope: CoroutineScope, scaffo
             },
             modifier = Modifier.size(width = 400.dp, height = 50.dp),
             content = {
-                Text("Trouble Shoot")
+                Text(R.strings.troubleShootPage)
             }
         )
         TextButton(
@@ -110,7 +110,7 @@ fun DrawContent(idx: MutableState<NavigationEnum>, scope: CoroutineScope, scaffo
             },
             modifier = Modifier.size(width = 400.dp, height = 50.dp)
         ) {
-            Text("AboutAuthor")
+            Text(R.strings.aboutAuthor)
         }
     }
 }
@@ -127,7 +127,7 @@ private fun closeDrawer(
 @Composable
 fun TopBar(scope: CoroutineScope, scaffoldState: ScaffoldState) {
     TopAppBar(
-        title = { Text(text = "dev-tools", fontSize = 18.sp) },
+        title = { Text(text = R.strings.devTools, fontSize = 18.sp) },
         navigationIcon = {
             IconButton(onClick = {
                 scope.launch {

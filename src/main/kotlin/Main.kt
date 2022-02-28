@@ -47,7 +47,7 @@ fun main() = application {
     LogUtil.init()
     Window(
         onCloseRequest = ::exitApplication,
-        title = "dev tools",
+        title = R.strings.devTools,
         state = rememberWindowState(size = PixelConst.appSize)
     ) {
         val scaffoldState = rememberScaffoldState()

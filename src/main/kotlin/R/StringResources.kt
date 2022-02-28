@@ -39,6 +39,7 @@ interface Strings {
     val confirm: String
     val convertPage: String
     val decode: String
+    val delete: String
     val deployName: String
     val devTools: String
     val dismiss: String
@@ -59,7 +60,7 @@ interface Strings {
 
 object EnStrings : Strings {
     override val AppDescMessage: String
-        get() = "To explore tools, click the drawer"
+        get() = "↖️To explore tools, click the drawer"
     override val AppWelcomeMessage: String
         get() = "Welcome to Tool List, This is Home&Dashboard Page"
     override val aboutAuthor: String
@@ -84,6 +85,8 @@ object EnStrings : Strings {
         get() = "convert page"
     override val decode: String
         get() = "decode"
+    override val delete: String
+        get() = "delete"
     override val deployName: String
         get() = "deploy name"
     override val devTools: String
@@ -107,7 +110,7 @@ object EnStrings : Strings {
     override val SimulatorList: String
         get() = "Simulator List"
     override val statefulSetName: String
-        get() = "statefulset name"
+        get() = "stateful set name"
     override val send: String
         get() = "send"
     override val simulatorPage: String
@@ -120,7 +123,7 @@ object EnStrings : Strings {
 
 object ChStrings : Strings {
     override val AppDescMessage: String
-        get() = "发现更多工具，请点击侧边栏"
+        get() = "↖️探索更多工具，请点击侧边栏"
     override val AppWelcomeMessage: String
         get() = "欢迎来到开发者工具集の主页面&dashboard界面"
     override val aboutAuthor: String
@@ -145,6 +148,8 @@ object ChStrings : Strings {
         get() = "转换界面"
     override val decode: String
         get() = "解码"
+    override val delete: String
+        get() = "删除"
     override val deployName: String
         get() = "部署名"
     override val devTools: String

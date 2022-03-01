@@ -17,22 +17,24 @@
  * under the License.
  */
 
-package com.github.shoothzj.dev.module;
+package com.github.shoothzj.dev.kafka;
 
+import org.apache.kafka.clients.CommonClientConfigs;
+import org.apache.kafka.common.config.SaslConfigs;
+import org.apache.kafka.common.security.auth.SecurityProtocol;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
 
-public class KfkConfig {
+public class KafkaConfFactory {
 
     /**
      * @param url example 127.0.0.1:9092
      * @return
      */
-    public static Properties getKfkProducerConfiguration(String url) {
-        Properties producerConfig = new Properties();
-        producerConfig.put("bootstrap.servers", url);
+    public static Properties acquireProducerConf(String url, String saslMechanism, String username, String password) {
+        Properties producerConfig = acquireConf(url, saslMechanism, username, password);
         producerConfig.put("transaction.timeout.ms", 3000);
         producerConfig.put("acks", "all");
         producerConfig.put("retries", 0);
@@ -46,9 +48,8 @@ public class KfkConfig {
      * @param url example 127.0.0.1:9092
      * @return
      */
-    public static Properties getKfkConsumerConfiguration(String url) {
-        Properties consumerConfig = new Properties();
-        consumerConfig.put("bootstrap.servers", url);
+    public static Properties acquireConsumerConf(String url, String saslMechanism, String username, String password) {
+        Properties consumerConfig = acquireConf(url, saslMechanism, username, password);
         consumerConfig.put("enable.auto.commit", "true");
         consumerConfig.put("auto.commit.interval.ms", "1000");
         consumerConfig.put("session.timeout.ms", "30000");
@@ -58,6 +59,21 @@ public class KfkConfig {
         consumerConfig.put("key.deserializer", StringDeserializer.class.getName());
         consumerConfig.put("value.deserializer", StringDeserializer.class.getName());
         return consumerConfig;
+    }
+
+    private static Properties acquireConf(String url, String saslMechanism, String username, String password) {
+        Properties props = new Properties();
+        props.put("bootstrap.servers", url);
+        if (saslMechanism.equals(SecurityProtocol.SASL_PLAINTEXT.name)) {
+            props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, SecurityProtocol.SASL_PLAINTEXT.name);
+            props.put(SaslConfigs.SASL_MECHANISM, "PLAIN");
+            String saslJaasConfig = String.format("""
+                    org.apache.kafka.common.security.plain.PlainLoginModule required\s
+                    username="%s"\s
+                    password="%s";""", username, password);
+            props.put(SaslConfigs.SASL_JAAS_CONFIG, saslJaasConfig);
+        }
+        return props;
     }
 
 }

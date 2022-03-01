@@ -18,24 +18,27 @@
 package widget.trouble.nginx
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import com.github.shoothzj.dev.storage.StorageK8s
 import com.github.shoothzj.dev.storage.StorageNginx
 import widget.component.DropdownList
-import widget.config.ConfigItemPort
-import widget.config.ConfigItemString
+import widget.config.ConfigGroupDeploy
+import widget.config.ConfigGroupKubernetes
 
 @Composable
 fun TroubleNginxHttp() {
     val nginxNameList = StorageNginx.getInstance().listConfigNames()
     DropdownList(nginxNameList, "nginx instance", editNginxInstanceName)
-    ConfigItemString(editKubernetesHost, "k8s host")
-    ConfigItemPort(editKubernetesPort, "k8s port", mutableStateOf(""))
-    ConfigItemString(editKubernetesUsername, "ssh username")
-    ConfigItemString(editKubernetesPassword, "ssh password")
-    ConfigItemString(editKubernetesRootPassword, "ssh root password(if you need to switch root)")
-    ConfigItemString(editNginxNamespace, R.strings.namespace)
-    ConfigItemString(editNginxDeployName, R.strings.deployName)
+    ConfigGroupKubernetes(
+        editKubernetesHost,
+        editKubernetesPort,
+        editKubernetesUsername,
+        editKubernetesPassword,
+        editKubernetesRootPassword
+    )
+    ConfigGroupDeploy(
+        editNginxNamespace,
+        editNginxDeployName,
+    )
     if (editNginxInstanceName.value != "") {
         val nginxConfig = StorageNginx.getInstance().getConfig(editNginxInstanceName.value)
         editNginxNamespace.value = nginxConfig.namespace

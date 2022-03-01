@@ -27,8 +27,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.github.shoothzj.dev.SimulatorKafka
-import widget.config.ConfigItemHost
-import widget.config.ConfigItemPort
+import widget.config.ConfigGroupKafkaRaw
 
 @Composable
 fun KafkaConsumer() {
@@ -38,8 +37,10 @@ fun KafkaConsumer() {
     var msg by remember { mutableStateOf("") }
 
     Column {
-        ConfigItemHost(host, "kafka host", mutableStateOf(""))
-        ConfigItemPort(port, "kafka port", mutableStateOf(""))
+        ConfigGroupKafkaRaw(
+            host,
+            port,
+        )
         OutlinedTextField(
             value = topic,
             onValueChange = {

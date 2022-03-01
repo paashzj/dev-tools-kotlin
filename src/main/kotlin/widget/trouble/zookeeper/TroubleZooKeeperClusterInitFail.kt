@@ -18,24 +18,27 @@
 package widget.trouble.zookeeper
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import com.github.shoothzj.dev.storage.StorageK8s
 import com.github.shoothzj.dev.storage.StorageZooKeeper
 import widget.component.DropdownList
-import widget.config.ConfigItemPort
-import widget.config.ConfigItemString
+import widget.config.ConfigGroupKubernetes
+import widget.config.ConfigGroupStatefulSet
 
 @Composable
 fun TroubleZooKeeperClusterInitFail() {
     val zooKeeperNameList = StorageZooKeeper.getInstance().listConfigNames()
     DropdownList(zooKeeperNameList, "zookeeper instance", editZooKeeperInstanceName)
-    ConfigItemString(editKubernetesHost, "k8s host")
-    ConfigItemPort(editKubernetesPort, "k8s port", mutableStateOf(""))
-    ConfigItemString(editKubernetesUsername, "ssh username")
-    ConfigItemString(editKubernetesPassword, "ssh password")
-    ConfigItemString(editKubernetesRootPassword, "ssh root password(if you need to switch root)")
-    ConfigItemString(editZooKeeperNamespace, R.strings.namespace)
-    ConfigItemString(editZooKeeperStatefulSetName, R.strings.statefulSetName)
+    ConfigGroupKubernetes(
+        editKubernetesHost,
+        editKubernetesPort,
+        editKubernetesUsername,
+        editKubernetesPassword,
+        editKubernetesRootPassword
+    )
+    ConfigGroupStatefulSet(
+        editZooKeeperNamespace,
+        editZooKeeperStatefulSetName,
+    )
     if (editZooKeeperInstanceName.value != "") {
         val zooKeeperConfig = StorageZooKeeper.getInstance().getConfig(editZooKeeperInstanceName.value)
         editZooKeeperNamespace.value = zooKeeperConfig.namespace

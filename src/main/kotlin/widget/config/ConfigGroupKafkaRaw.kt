@@ -21,14 +21,22 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import org.apache.kafka.common.security.auth.SecurityProtocol
+import widget.component.DropdownList
 
 @Composable
 fun ConfigGroupKafkaRaw(
     editKafkaHost: MutableState<String>,
     editKafkaPort: MutableState<String>,
+    editKafkaSaslMechanism: MutableState<String>,
+    editKafkaUsername: MutableState<String>,
+    editKafkaPassword: MutableState<String>,
 ) {
     Column {
         ConfigItemHost(editKafkaHost, "kafka host", mutableStateOf(""))
         ConfigItemPort(editKafkaPort, "kafka port", mutableStateOf(""))
+        DropdownList(arrayListOf("", SecurityProtocol.SASL_PLAINTEXT.name), "kafka sasl mechanism", editKafkaSaslMechanism)
+        ConfigItemString(editKafkaUsername, "kafka username")
+        ConfigItemString(editKafkaPassword, "kafka password")
     }
 }

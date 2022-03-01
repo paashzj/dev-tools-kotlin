@@ -26,13 +26,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.github.shoothzj.dev.SimulatorKafka
+import com.github.shoothzj.dev.simulator.KafkaClientSimulator
 import widget.config.ConfigGroupKafkaRaw
 
 @Composable
 fun KafkaConsumer() {
     val host = mutableStateOf("localhost")
     val port = mutableStateOf("9092")
+    val saslMechanism = mutableStateOf("")
+    val username = mutableStateOf("")
+    val password = mutableStateOf("")
     var topic by remember { mutableStateOf("") }
     var msg by remember { mutableStateOf("") }
 
@@ -40,6 +43,9 @@ fun KafkaConsumer() {
         ConfigGroupKafkaRaw(
             host,
             port,
+            saslMechanism,
+            username,
+            password,
         )
         OutlinedTextField(
             value = topic,
@@ -49,8 +55,8 @@ fun KafkaConsumer() {
             label = { Text("kafka topic") }
         )
         Button(onClick = {
-            val consumer = SimulatorKafka()
-            msg = consumer.consumer(host.value, port.value, topic)
+            val consumer = KafkaClientSimulator()
+            msg = consumer.consume(host.value, port.value, saslMechanism.value, username.value, password.value, topic)
         }) { Text(R.strings.receive) }
         Text(msg)
     }

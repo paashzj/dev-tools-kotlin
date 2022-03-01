@@ -17,22 +17,26 @@
  * under the License.
  */
 
-package com.github.shoothzj.dev;
+package com.github.shoothzj.dev.simulator;
 
-import com.github.shoothzj.dev.module.KfkConfig;
+import com.github.shoothzj.dev.kafka.KafkaConfFactory;
 import com.github.shoothzj.dev.util.ValidateUtil;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.List;
 
-public class SimulatorKafka {
+public class KafkaClientSimulator {
 
-    public String producer(String host, String port, String topic, String key, String msg) {
+    private static final Logger log = LoggerFactory.getLogger(KafkaClientSimulator.class);
+
+    public String produce(String host, String port, String saslMechanism, String username, String password, String topic, String key, String msg) {
         if (ValidateUtil.isNotHost(host)) {
             return String.format("host [%s] is illegal", host);
         }
@@ -42,18 +46,19 @@ public class SimulatorKafka {
         String url = String.format("%s:%s", host, port);
         try {
             KafkaProducer<String, String> producer =
-                    new KafkaProducer<>(KfkConfig.getKfkProducerConfiguration(url));
+                    new KafkaProducer<>(KafkaConfFactory.acquireProducerConf(url, saslMechanism, username, password));
             ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, msg);
             producer.send(record);
             return String.format("send message to kafka success. topic [%s], key [%s]",
                     topic, key);
         } catch (Exception e) {
+            log.error("kafka produce exception is ", e);
             return String.format("send message to kafka fail. topic [%s], key [%s], reason [%s]",
                     topic, key, e.getMessage());
         }
     }
 
-    public String consumer(String host, String port, String topic) {
+    public String consume(String host, String port, String saslMechanism, String username, String password, String topic) {
         if (ValidateUtil.isNotHost(host)) {
             return String.format("host [%s] is illegal", host);
         }
@@ -63,18 +68,19 @@ public class SimulatorKafka {
         String url = String.format("%s:%s", host, port);
         try {
             KafkaConsumer<String, String> consumer =
-                    new KafkaConsumer<>(KfkConfig.getKfkConsumerConfiguration(url));
+                    new KafkaConsumer<>(KafkaConfFactory.acquireConsumerConf(url, saslMechanism, username, password));
             consumer.subscribe(List.of(topic));
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1000));
             StringBuilder msg = new StringBuilder();
             if (records != null && records.count() > 0) {
                 for (ConsumerRecord<String, String> record : records) {
-                    System.out.println(record.value());
-                    msg.append(record.value()).append(",");
+                    log.info("topic {} record value is {}", topic, record.value());
+                    msg.append(record.value()).append(System.lineSeparator());
                 }
             }
             return msg.substring(0, msg.length() - 1);
         } catch (Exception e) {
+            log.error("kafka subscribe exception is ", e);
             return e.getMessage();
         }
     }

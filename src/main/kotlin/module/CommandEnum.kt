@@ -19,5 +19,6 @@ package module
 
 enum class CommandEnum {
     Kafka,
+    Kubernetes,
     Pulsar,
 }

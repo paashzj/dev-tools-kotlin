@@ -37,6 +37,9 @@ fun CommandScreen() {
             CommandEnum.Kafka -> {
                 CommandKafka()
             }
+            CommandEnum.Kubernetes -> {
+                CommandKubernetes()
+            }
             CommandEnum.Pulsar -> {
                 CommandPulsar()
             }
@@ -54,6 +57,13 @@ fun Head(idx: MutableState<CommandEnum>) {
             },
         ) {
             Text(text = "kafka")
+        }
+        RowPaddingButton(
+            onClick = {
+                idx.value = CommandEnum.Kubernetes
+            },
+        ) {
+            Text(text = "kubernetes")
         }
         RowPaddingButton(
             onClick = {

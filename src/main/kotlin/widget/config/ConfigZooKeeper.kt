@@ -44,8 +44,10 @@ fun ConfigZooKeeper() {
         dialogInputContent = {
             ConfigItemString(editZooKeeperName, R.strings.name)
             DropdownList(kubernetes, "k8s instance", editK8sInstanceName)
-            ConfigItemString(editZooKeeperNamespace, R.strings.namespace)
-            ConfigItemString(editZooKeeperStatefulSetName, R.strings.statefulSetName)
+            ConfigGroupStatefulSet(
+                editZooKeeperNamespace,
+                editZooKeeperStatefulSetName,
+            )
         },
         dialogConfirm = {
             StorageZooKeeper.getInstance().saveConfig(

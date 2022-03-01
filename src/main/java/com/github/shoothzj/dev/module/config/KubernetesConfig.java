@@ -19,11 +19,6 @@
 
 package com.github.shoothzj.dev.module.config;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Setter
-@Getter
 public class KubernetesConfig extends BaseConfig {
 
     private String host;
@@ -53,5 +48,29 @@ public class KubernetesConfig extends BaseConfig {
         this.sshStep.setPassword(password);
         this.sshStep.setSuUsername("root");
         this.sshStep.setSuPassword(rootPassword);
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public SshStep getSshStep() {
+        return sshStep;
+    }
+
+    public void setSshStep(SshStep sshStep) {
+        this.sshStep = sshStep;
     }
 }

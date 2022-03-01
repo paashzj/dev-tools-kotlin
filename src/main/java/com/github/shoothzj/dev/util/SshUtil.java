@@ -24,13 +24,15 @@ import com.github.shoothzj.javatool.util.CommonUtil;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.util.concurrent.TimeUnit;
 
-@Slf4j
 public class SshUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(SshUtil.class);
 
     public static SshShellResult execCommand(String host, int port,
                                              String username, String password, String command) throws Exception {

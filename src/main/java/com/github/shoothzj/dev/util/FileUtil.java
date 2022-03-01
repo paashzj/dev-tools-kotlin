@@ -19,13 +19,15 @@
 
 package com.github.shoothzj.dev.util;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 
-@Slf4j
 public class FileUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(FileUtil.class);
 
     public static void ensureFileExists(String path) {
         File file = new File(path);

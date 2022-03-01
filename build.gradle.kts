@@ -38,8 +38,6 @@ repositories {
 }
 
 dependencies {
-    annotationProcessor("org.projectlombok:lombok:1.18.22")
-    compileOnly("org.projectlombok:lombok:1.18.22")
     implementation(compose.desktop.currentOs)
     // middleware
     implementation("org.apache.kafka:kafka-clients:2.4.0")
@@ -53,8 +51,6 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.17.0")
     implementation("org.jacoco:org.jacoco.core:0.8.7")
     // test
-    testAnnotationProcessor("org.projectlombok:lombok:1.18.22")
-    testCompileOnly("org.projectlombok:lombok:1.18.22")
     testImplementation(kotlin("test"))
 }
 

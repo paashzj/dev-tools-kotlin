@@ -19,11 +19,6 @@
 
 package com.github.shoothzj.dev.module.config;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Setter
-@Getter
 public class NginxConfig extends BaseConfig {
 
     private String k8sName;
@@ -39,6 +34,30 @@ public class NginxConfig extends BaseConfig {
         super(name);
         this.k8sName = k8sName;
         this.namespace = namespace;
+        this.deployName = deployName;
+    }
+
+    public String getK8sName() {
+        return k8sName;
+    }
+
+    public void setK8sName(String k8sName) {
+        this.k8sName = k8sName;
+    }
+
+    public String getNamespace() {
+        return namespace;
+    }
+
+    public void setNamespace(String namespace) {
+        this.namespace = namespace;
+    }
+
+    public String getDeployName() {
+        return deployName;
+    }
+
+    public void setDeployName(String deployName) {
         this.deployName = deployName;
     }
 }

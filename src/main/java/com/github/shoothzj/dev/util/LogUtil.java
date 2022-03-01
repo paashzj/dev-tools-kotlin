@@ -19,12 +19,14 @@
 
 package com.github.shoothzj.dev.util;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.config.Configurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Slf4j
 public class LogUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(LogUtil.class);
 
     public static void init() {
         Configurator.setRootLevel(Level.INFO);

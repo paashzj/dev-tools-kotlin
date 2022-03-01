@@ -51,10 +51,13 @@ interface Strings {
     val Params: String
     val receive: String
     val SimulatorList: String
+    val sceneList: String
     val statefulSetName: String
     val send: String
     val simulatorPage: String
-    val TroubleScene: String
+    val TroubleComponent: String
+    val TroubleSceneNginxHttpRequestFail: String
+    val TroubleSceneZooKeeperClusterInitFail: String
     val troubleShootPage: String
 }
 
@@ -109,14 +112,20 @@ object EnStrings : Strings {
         get() = "receive"
     override val SimulatorList: String
         get() = "Simulator List"
+    override val sceneList: String
+        get() = "scene list"
     override val statefulSetName: String
         get() = "stateful set name"
     override val send: String
         get() = "send"
     override val simulatorPage: String
         get() = "simulator page"
-    override val TroubleScene: String
-        get() = "Trouble Scene"
+    override val TroubleComponent: String
+        get() = "Trouble Component"
+    override val TroubleSceneNginxHttpRequestFail: String
+        get() = "Nginx Http Request Fail"
+    override val TroubleSceneZooKeeperClusterInitFail: String
+        get() = "ZooKeeper Cluster Init Fail"
     override val troubleShootPage: String
         get() = "trouble shoot page"
 }
@@ -172,14 +181,20 @@ object ChStrings : Strings {
         get() = "接受"
     override val SimulatorList: String
         get() = "模拟器列表"
+    override val sceneList: String
+        get() = "场景列表"
     override val statefulSetName: String
         get() = "状态实例名"
     override val send: String
         get() = "发送"
     override val simulatorPage: String
         get() = "模拟器界面"
-    override val TroubleScene: String
-        get() = "问题定位场景"
+    override val TroubleComponent: String
+        get() = "问题定位组件"
+    override val TroubleSceneNginxHttpRequestFail: String
+        get() = "Nginx http请求失败"
+    override val TroubleSceneZooKeeperClusterInitFail: String
+        get() = "ZooKeeper 集群初始化失败"
     override val troubleShootPage: String
         get() = "问题定位界面"
 }

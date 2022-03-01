@@ -19,11 +19,6 @@
 
 package com.github.shoothzj.dev.module.config;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Setter
-@Getter
 public abstract class BaseConfig {
 
     protected String name;
@@ -32,6 +27,14 @@ public abstract class BaseConfig {
     }
 
     public BaseConfig(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 }

@@ -19,12 +19,9 @@
 
 package com.github.shoothzj.dev.module;
 
-import lombok.Data;
-
 /**
  * @author hezhangjian
  */
-@Data
 public class SshShellResult {
 
     private int returnCode;
@@ -34,6 +31,30 @@ public class SshShellResult {
     private String errorContent;
 
     public SshShellResult() {
+    }
+
+    public int getReturnCode() {
+        return returnCode;
+    }
+
+    public void setReturnCode(int returnCode) {
+        this.returnCode = returnCode;
+    }
+
+    public String getOutputContent() {
+        return outputContent;
+    }
+
+    public void setOutputContent(String outputContent) {
+        this.outputContent = outputContent;
+    }
+
+    public String getErrorContent() {
+        return errorContent;
+    }
+
+    public void setErrorContent(String errorContent) {
+        this.errorContent = errorContent;
     }
 
     @Override

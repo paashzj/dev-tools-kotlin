@@ -22,8 +22,9 @@ package com.github.shoothzj.dev.storage;
 import com.github.shoothzj.dev.module.config.BaseConfig;
 import com.github.shoothzj.javatool.service.JacksonService;
 import com.google.common.annotations.VisibleForTesting;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,8 +33,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 public abstract class AbstractStorage<T extends BaseConfig> {
+    private static final Logger log = LoggerFactory.getLogger(AbstractStorage.class);
+
     protected abstract String getConfigPath();
 
     public boolean saveConfig(T config) {

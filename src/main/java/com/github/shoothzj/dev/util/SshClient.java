@@ -24,7 +24,6 @@ import com.github.shoothzj.javatool.util.IoUtil;
 import com.jcraft.jsch.ChannelShell;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -32,7 +31,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-@Slf4j
 public class SshClient {
 
     private final JSch jSch;

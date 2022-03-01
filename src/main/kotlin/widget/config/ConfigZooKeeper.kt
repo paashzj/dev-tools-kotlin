@@ -17,7 +17,6 @@
 
 package widget.config
 
-import R.strings
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -69,7 +68,7 @@ fun ConfigZooKeeper() {
                             zooKeeperList.value = StorageZooKeeper.getInstance().listContent()
                         }
                     ) {
-                        Text(strings.delete)
+                        Text(R.strings.delete)
                     }
                 }
             }

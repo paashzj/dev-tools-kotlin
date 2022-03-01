@@ -44,8 +44,10 @@ fun ConfigNginx() {
         dialogInputContent = {
             ConfigItemString(editNginxName, R.strings.name)
             DropdownList(kubernetes, "k8s instance", editK8sInstanceName)
-            ConfigItemString(editNginxNamespace, R.strings.namespace)
-            ConfigItemString(editNginxDeployName, R.strings.deployName)
+            ConfigGroupDeploy(
+                editNginxNamespace,
+                editNginxDeployName,
+            )
         },
         dialogConfirm = {
             StorageNginx.getInstance().saveConfig(

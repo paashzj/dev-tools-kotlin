@@ -42,11 +42,13 @@ fun ConfigKubernetes() {
         errorState,
         dialogInputContent = {
             ConfigItemString(editKubernetesName, "config name")
-            ConfigItemHost(editKubernetesHost, "config host", mutableStateOf(""))
-            ConfigItemPort(editKubernetesPort, "config port", mutableStateOf(""))
-            ConfigItemString(editKubernetesUsername, "ssh username")
-            ConfigItemString(editKubernetesPassword, "ssh password")
-            ConfigItemString(editKubernetesRootPassword, "ssh root password(if you need to switch root)")
+            ConfigGroupKubernetes(
+                editKubernetesHost,
+                editKubernetesPort,
+                editKubernetesUsername,
+                editKubernetesPassword,
+                editKubernetesRootPassword
+            )
         },
         dialogConfirm = {
             if (editKubernetesRootPassword.value == "") {

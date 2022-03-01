@@ -17,7 +17,6 @@
 
 package module
 
-enum class TroubleEnum {
-    Nginx,
-    ZooKeeper,
+enum class TroubleZooKeeperEnum {
+    CLUSTER_INIT_FAIL,
 }

@@ -15,7 +15,7 @@
  * limitations under the license.
  */
 
-package widget.trouble
+package widget.trouble.nginx
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,45 +24,42 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.sp
-import module.TroubleEnum
+import module.TroubleNginxEnum
 import widget.component.RowPaddingButton
-import widget.trouble.nginx.TroubleNginx
-import widget.trouble.zookeeper.TroubleZooKeeper
 
-val idx = mutableStateOf(TroubleEnum.Nginx)
+val idx = mutableStateOf(TroubleNginxEnum.HTTP_REQUEST_FAIL)
+
+val editNginxInstanceName = mutableStateOf("")
+val editKubernetesHost = mutableStateOf("localhost")
+val editKubernetesPort = mutableStateOf("22")
+val editKubernetesUsername = mutableStateOf("root")
+val editKubernetesPassword = mutableStateOf("")
+val editKubernetesRootPassword = mutableStateOf("")
+val editNginxNamespace = mutableStateOf("default")
+val editNginxDeployName = mutableStateOf("nginx")
 
 @Composable
-fun TroubleShootScreen() {
+fun TroubleNginx() {
     Column {
         Head(idx)
         when (idx.value) {
-            TroubleEnum.Nginx -> {
-                TroubleNginx()
-            }
-            TroubleEnum.ZooKeeper -> {
-                TroubleZooKeeper()
+            TroubleNginxEnum.HTTP_REQUEST_FAIL -> {
+                TroubleNginxHttp()
             }
         }
     }
 }
 
 @Composable
-fun Head(idx: MutableState<TroubleEnum>) {
+fun Head(idx: MutableState<TroubleNginxEnum>) {
     Row {
-        Text(R.strings.TroubleComponent, fontSize = 40.sp)
+        Text(R.strings.sceneList, fontSize = 40.sp)
         RowPaddingButton(
             onClick = {
-                idx.value = TroubleEnum.Nginx
+                idx.value = TroubleNginxEnum.HTTP_REQUEST_FAIL
             },
         ) {
-            Text(text = "Nginx")
-        }
-        RowPaddingButton(
-            onClick = {
-                idx.value = TroubleEnum.ZooKeeper
-            },
-        ) {
-            Text(text = "ZooKeeper")
+            Text(text = R.strings.TroubleSceneNginxHttpRequestFail)
         }
     }
 }

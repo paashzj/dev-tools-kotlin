@@ -15,12 +15,8 @@
  * limitations under the license.
  */
 
-package widget.trouble
+package module
 
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-
-@Composable
-fun SimulatorNginxHttp() {
-    Text("todo")
+enum class TroubleNginxEnum {
+    HTTP_REQUEST_FAIL,
 }

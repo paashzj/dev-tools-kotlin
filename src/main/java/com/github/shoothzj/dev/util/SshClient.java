@@ -106,19 +106,20 @@ public class SshClient {
         outputStream.write((cmd + "\n").getBytes(StandardCharsets.UTF_8));
         outputStream.flush();
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < timeoutSeconds * 2; i++) {
+        long start = System.currentTimeMillis();
+        while (System.currentTimeMillis() - start < timeoutSeconds * 1000L) {
             String content = IoUtil.read2StringCharset(inputStream, StandardCharsets.UTF_8);
             stringBuilder.append(content);
             String aux = stringBuilder.toString();
             // output contains part of src cmd, continue
             if (cmd.contains(aux)) {
-                CommonUtil.sleep(TimeUnit.MILLISECONDS, 500);
+                CommonUtil.sleep(TimeUnit.MILLISECONDS, 100);
                 continue;
             }
             if (StringTool.anyLineMatch(aux, cmdEndPattern)) {
                 break;
             } else {
-                CommonUtil.sleep(TimeUnit.MILLISECONDS, 500);
+                CommonUtil.sleep(TimeUnit.MILLISECONDS, 100);
             }
         }
         String str = stringBuilder.toString();

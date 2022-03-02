@@ -31,7 +31,6 @@ import com.jcraft.jsch.Session;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -106,11 +105,7 @@ public class SshClient {
             }
         }
         List<String> strings = Arrays.asList(result.toString().split("\\n"));
-        ArrayList<String> res = new ArrayList<>();
-        if (strings.size() <= 2) {
-            return res;
-        }
-        return res.subList(1, strings.size() - 1);
+        return SshUtil.deleteFirstLastLine(strings);
     }
 
     public void close() {

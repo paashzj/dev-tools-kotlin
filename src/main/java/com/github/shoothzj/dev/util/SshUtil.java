@@ -28,6 +28,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class SshUtil {
@@ -70,6 +72,14 @@ public class SshUtil {
             }
         }
         return shellResult;
+    }
+
+    public static List<String> deleteFirstLastLine(List<String> strings) {
+        ArrayList<String> res = new ArrayList<>();
+        if (strings.size() <= 2) {
+            return res;
+        }
+        return strings.subList(1, strings.size() - 1);
     }
 
 }

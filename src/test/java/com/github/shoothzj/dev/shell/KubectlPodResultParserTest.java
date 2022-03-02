@@ -30,12 +30,12 @@ public class KubectlPodResultParserTest {
     @Test
     public void testParseKubectlPodResultSuccess() throws Exception {
         List<KubectlPodResult> kubectlPodResultList = KubectlPodResultParser.parseFull(List.of(
-                "NAME                         READY   STATUS    RESTARTS        AGE   IP" +
-                        "           NODE       NOMINATED NODE   READINESS GATES",
-                "network-7cf6bdcb86-pc2w2     1/1     Running   2 (3m48s ago)   50d" +
-                        "   172.17.0.4   minikube   <none>           <none>",
-                "zookeeper-54947bdd6b-xpnks   1/1     Running   2 (3m48s ago)   50d" +
-                        "   172.17.0.3   minikube   <none>           <none>"
+                "NAME                         READY   STATUS    RESTARTS        AGE   IP"
+                        + "           NODE       NOMINATED NODE   READINESS GATES",
+                "network-7cf6bdcb86-pc2w2     1/1     Running   2 (3m48s ago)   50d"
+                        + "   172.17.0.4   minikube   <none>           <none>",
+                "zookeeper-54947bdd6b-xpnks   1/1     Running   2 (3m48s ago)   50d"
+                        + "   172.17.0.3   minikube   <none>           <none>"
         ));
         Assert.assertEquals(kubectlPodResultList.size(), 2);
         KubectlPodResult networkPod = kubectlPodResultList.get(0);

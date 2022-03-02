@@ -92,7 +92,7 @@ public class FreeMemoryResult {
                 + ", memFreeBytes=" + memFreeBytes
                 + ", memSharedBytes=" + memSharedBytes
                 + ", memBufferCacheBytes=" + memBufferCacheBytes
-                + ", memAvailableBytes=" + memAvailableBytes +
-                '}';
+                + ", memAvailableBytes=" + memAvailableBytes
+                + '}';
     }
 }

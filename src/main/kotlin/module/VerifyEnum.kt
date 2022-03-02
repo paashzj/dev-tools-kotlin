@@ -17,13 +17,6 @@
 
 package module
 
-enum class NavigationEnum {
-    AboutAuthor,
-    Command,
-    Convert,
-    Kubernetes,
-    Simulator,
-    TroubleShoot,
-    Verify,
-    Home,
+enum class VerifyEnum {
+    Regex,
 }

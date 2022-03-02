@@ -9,3 +9,5 @@ English | [🇨🇳中文](README_ZH.md)
 ## 🔄 data convert
 - [x] base64 encode/decode
 - [x] url encode/decode
+## 🧐 verify
+- [x] regex match verify

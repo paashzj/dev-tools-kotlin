@@ -51,6 +51,7 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.17.0")
     implementation("org.jacoco:org.jacoco.core:0.8.7")
     // test
+    testImplementation("org.apache.sshd:sshd-core:2.8.0")
     testImplementation(kotlin("test"))
 }
 

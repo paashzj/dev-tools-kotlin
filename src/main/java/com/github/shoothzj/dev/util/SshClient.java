@@ -128,7 +128,7 @@ public class SshClient {
             str = str.substring(str.indexOf(session.getUserName()));
         }
         List<String> strings = Arrays.asList(str.split("\\n"));
-        log.info("why break str {}", str);
+        log.debug("execute over, result is {}", str);
         if (str.contains(cmd)) {
             return SshUtil.deleteFirstLastLine(strings);
         } else {

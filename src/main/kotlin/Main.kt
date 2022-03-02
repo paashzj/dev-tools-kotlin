@@ -42,6 +42,7 @@ import widget.general.HomeScreen
 import widget.kubernetes.KubernetesInstanceScreen
 import widget.simulator.SimulatorScreen
 import widget.trouble.TroubleShootScreen
+import widget.verify.VerifyScreen
 
 val navigationIdx = mutableStateOf(NavigationEnum.Home)
 val navigationContext: MutableState<Any> = mutableStateOf("")
@@ -83,6 +84,9 @@ fun main() = application {
                     }
                     NavigationEnum.TroubleShoot -> {
                         TroubleShootScreen()
+                    }
+                    NavigationEnum.Verify -> {
+                        VerifyScreen()
                     }
                     NavigationEnum.AboutAuthor -> {
                         AboutAuthorScreen()

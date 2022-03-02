@@ -37,6 +37,7 @@ interface Strings {
     val componentList: String
     val config: String
     val confirm: String
+    val content: String
     val convertPage: String
     val decode: String
     val delete: String
@@ -46,10 +47,14 @@ interface Strings {
     val encode: String
     val homePage: String
     val instance: String
+    val match: String
     val name: String
     val namespace: String
+    val notMatch: String
     val Params: String
     val receive: String
+    val regex: String
+    val regexExpression: String
     val SimulatorList: String
     val sceneList: String
     val statefulSetName: String
@@ -59,6 +64,8 @@ interface Strings {
     val TroubleSceneNginxHttpRequestFail: String
     val TroubleSceneZooKeeperClusterInitFail: String
     val troubleShootPage: String
+    val VerifyList: String
+    val verifyPage: String
 }
 
 object EnStrings : Strings {
@@ -84,6 +91,8 @@ object EnStrings : Strings {
         get() = "config"
     override val confirm: String
         get() = "confirm"
+    override val content: String
+        get() = "content"
     override val convertPage: String
         get() = "convert page"
     override val decode: String
@@ -102,14 +111,22 @@ object EnStrings : Strings {
         get() = "home page"
     override val instance: String
         get() = "instance"
+    override val match: String
+        get() = "match"
     override val name: String
         get() = "name"
     override val namespace: String
         get() = "namespace"
+    override val notMatch: String
+        get() = "not match"
     override val Params: String
         get() = "Params"
     override val receive: String
         get() = "receive"
+    override val regex: String
+        get() = "regex"
+    override val regexExpression: String
+        get() = "regex repression"
     override val SimulatorList: String
         get() = "Simulator List"
     override val sceneList: String
@@ -128,6 +145,10 @@ object EnStrings : Strings {
         get() = "ZooKeeper Cluster Init Fail"
     override val troubleShootPage: String
         get() = "trouble shoot page"
+    override val VerifyList: String
+        get() = "Verify List"
+    override val verifyPage: String
+        get() = "verify page"
 }
 
 object ChStrings : Strings {
@@ -153,6 +174,8 @@ object ChStrings : Strings {
         get() = "配置"
     override val confirm: String
         get() = "确认"
+    override val content: String
+        get() = "内容"
     override val convertPage: String
         get() = "转换界面"
     override val decode: String
@@ -171,14 +194,22 @@ object ChStrings : Strings {
         get() = "主界面"
     override val instance: String
         get() = "实例"
+    override val match: String
+        get() = "匹配"
     override val name: String
         get() = "名称"
     override val namespace: String
         get() = "命名空间"
+    override val notMatch: String
+        get() = "不匹配"
     override val Params: String
         get() = "参数"
     override val receive: String
         get() = "接受"
+    override val regex: String
+        get() = "正则"
+    override val regexExpression: String
+        get() = "正则表达式"
     override val SimulatorList: String
         get() = "模拟器列表"
     override val sceneList: String
@@ -197,4 +228,8 @@ object ChStrings : Strings {
         get() = "ZooKeeper 集群初始化失败"
     override val troubleShootPage: String
         get() = "问题定位界面"
+    override val VerifyList: String
+        get() = "验证列表"
+    override val verifyPage: String
+        get() = "验证界面"
 }

@@ -32,6 +32,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -104,15 +105,12 @@ public class SshClient {
                 CommonUtil.sleep(TimeUnit.SECONDS, 1);
             }
         }
-        String[] strings = result.toString().split("\\n");
+        List<String> strings = Arrays.asList(result.toString().split("\\n"));
         ArrayList<String> res = new ArrayList<>();
-        if (strings.length <= 2) {
+        if (strings.size() <= 2) {
             return res;
         }
-        for (int i = 1; i < strings.length - 1; i++) {
-            res.add(strings[i]);
-        }
-        return res;
+        return res.subList(1, strings.size() - 1);
     }
 
     public void close() {

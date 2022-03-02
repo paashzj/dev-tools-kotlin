@@ -68,9 +68,10 @@ fun ConfigZooKeeper() {
         content = {
             repeat(zooKeeperList.value.size) { it ->
                 Row {
-                    Box(modifier = Modifier.clickable {
-
-                    }) {
+                    Box(
+                        modifier = Modifier.clickable {
+                        }
+                    ) {
                         Text(zooKeeperList.value[it], modifier = Modifier.padding(15.dp))
                     }
                     Button(

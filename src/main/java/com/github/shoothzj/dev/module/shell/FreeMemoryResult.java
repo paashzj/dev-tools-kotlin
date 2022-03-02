@@ -86,13 +86,13 @@ public class FreeMemoryResult {
 
     @Override
     public String toString() {
-        return "FreeMemoryResult{" +
-                "memTotalBytes=" + memTotalBytes +
-                ", memUsedBytes=" + memUsedBytes +
-                ", memFreeBytes=" + memFreeBytes +
-                ", memSharedBytes=" + memSharedBytes +
-                ", memBufferCacheBytes=" + memBufferCacheBytes +
-                ", memAvailableBytes=" + memAvailableBytes +
+        return "FreeMemoryResult{"
+                + "memTotalBytes=" + memTotalBytes
+                + ", memUsedBytes=" + memUsedBytes
+                + ", memFreeBytes=" + memFreeBytes
+                + ", memSharedBytes=" + memSharedBytes
+                + ", memBufferCacheBytes=" + memBufferCacheBytes
+                + ", memAvailableBytes=" + memAvailableBytes +
                 '}';
     }
 }

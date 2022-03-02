@@ -86,10 +86,12 @@ fun ConfigKubernetes() {
         content = {
             repeat(kubernetes.value.size) { it ->
                 Row {
-                    Box(modifier = Modifier.clickable {
-                        navigationContext.value = StorageK8s.getInstance().getConfig(editKubernetesName.value)
-                        navigationIdx.value = NavigationEnum.Kubernetes
-                    }) {
+                    Box(
+                        modifier = Modifier.clickable {
+                            navigationContext.value = StorageK8s.getInstance().getConfig(editKubernetesName.value)
+                            navigationIdx.value = NavigationEnum.Kubernetes
+                        }
+                    ) {
                         Text(kubernetes.value[it], modifier = Modifier.padding(15.dp))
                     }
                     Button(

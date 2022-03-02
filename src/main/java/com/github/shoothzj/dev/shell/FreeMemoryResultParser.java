@@ -26,10 +26,10 @@ import java.util.List;
 
 public class FreeMemoryResultParser {
 
-    public static FreeMemoryResult parse(List<String> input) {
+    public static FreeMemoryResult parse(List<String> input) throws Exception {
         FreeMemoryResult freeMemoryResult = new FreeMemoryResult();
         if (input.size() < 3) {
-            return freeMemoryResult;
+            throw new Exception("free memory result should have 3 lines");
         }
         String[] fields = StringTool.fields(input.get(1));
         freeMemoryResult.setMemTotalBytes(Long.parseLong(fields[1]));

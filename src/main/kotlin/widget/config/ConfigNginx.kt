@@ -68,9 +68,10 @@ fun ConfigNginx() {
         content = {
             repeat(nginxList.value.size) { it ->
                 Row {
-                    Box(modifier = Modifier.clickable {
-
-                    }) {
+                    Box(
+                        modifier = Modifier.clickable {
+                        }
+                    ) {
                         Text(nginxList.value[it], modifier = Modifier.padding(15.dp))
                     }
                     Button(

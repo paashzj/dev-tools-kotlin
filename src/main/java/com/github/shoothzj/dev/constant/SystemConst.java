@@ -17,22 +17,10 @@
  * under the License.
  */
 
-package com.github.shoothzj.dev.util;
+package com.github.shoothzj.dev.constant;
 
-import org.jetbrains.annotations.NotNull;
+public class SystemConst {
 
-import java.util.Arrays;
-import java.util.regex.Pattern;
-
-public class StringTool {
-
-    public static boolean anyLineMatch(@NotNull String result, @NotNull Pattern pattern) {
-        return Arrays.stream(result.split("\\n")).anyMatch(s -> pattern.matcher(s).matches());
-    }
-
-    @NotNull
-    public static String[] fields(@NotNull String src) {
-        return src.split("\\s+");
-    }
+    public static final String USERNAME = System.getProperty("user.name");
 
 }

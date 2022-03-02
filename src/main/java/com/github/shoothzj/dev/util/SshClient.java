@@ -27,6 +27,8 @@ import com.github.shoothzj.javatool.util.IoUtil;
 import com.jcraft.jsch.ChannelShell;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -35,8 +37,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 public class SshClient {
+
+    private static final Logger log = LoggerFactory.getLogger(SshClient.class);
+
+    private static final Pattern cmdEndPattern = Pattern.compile("((.*#)|(.*])|(.*]\\$)|(.*\\(yes/no\\)\\?))\\s$");
 
     private final JSch jSch;
 
@@ -54,6 +61,7 @@ public class SshClient {
     }
 
     private void login(String host, int port, String username, String password) throws Exception {
+        log.info("login to host {} port {} as {}", host, port, username);
         session = jSch.getSession(username, host, port);
         session.setPassword(password);
         Properties properties = new Properties();
@@ -71,8 +79,12 @@ public class SshClient {
         return FreeMemoryResultParser.parse(result);
     }
 
-    public List<String> execute(String cmd, int timeoutSeconds) throws Exception {
-        return execute(cmd, "\\.*", timeoutSeconds);
+    public String executeOneLineReturn(String cmd, int timeoutSeconds) throws Exception {
+        List<String> stringList = execute(cmd, timeoutSeconds);
+        if (stringList.size() != 1) {
+            return "";
+        }
+        return stringList.get(0);
     }
 
     /**
@@ -86,26 +98,38 @@ public class SshClient {
      * ```
      * we need to delete the first and last line
      * @param cmd
-     * @param resultPattern
      * @param timeoutSeconds
      * @return
      * @throws Exception
      */
-    public List<String> execute(String cmd, String resultPattern, int timeoutSeconds) throws Exception {
+    public List<String> execute(String cmd, int timeoutSeconds) throws Exception {
         outputStream.write((cmd + "\n").getBytes(StandardCharsets.UTF_8));
         outputStream.flush();
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < timeoutSeconds * 2; i++) {
+        StringBuilder stringBuilder = new StringBuilder();
+        long start = System.currentTimeMillis();
+        while (System.currentTimeMillis() - start < timeoutSeconds * 1000L) {
             String content = IoUtil.read2StringCharset(inputStream, StandardCharsets.UTF_8);
-            result.append(content);
-            if (result.toString().matches(resultPattern)) {
+            stringBuilder.append(content);
+            String aux = stringBuilder.toString();
+            // output contains part of src cmd, continue
+            if (cmd.contains(aux)) {
+                CommonUtil.sleep(TimeUnit.MILLISECONDS, 100);
+                continue;
+            }
+            if (StringTool.anyLineMatch(aux, cmdEndPattern)) {
                 break;
             } else {
-                CommonUtil.sleep(TimeUnit.SECONDS, 1);
+                CommonUtil.sleep(TimeUnit.MILLISECONDS, 100);
             }
         }
-        List<String> strings = Arrays.asList(result.toString().split("\\n"));
-        return SshUtil.deleteFirstLastLine(strings);
+        String str = stringBuilder.toString();
+        List<String> strings = Arrays.asList(str.split("\\n"));
+        log.info("why break str {}", str);
+        if (str.contains(cmd)) {
+            return SshUtil.deleteFirstLastLine(strings);
+        } else {
+            return strings;
+        }
     }
 
     public void close() {

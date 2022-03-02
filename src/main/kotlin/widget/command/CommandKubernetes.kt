@@ -28,6 +28,8 @@ import module.SubCommands
 fun CommandKubernetes() {
     val params = arrayOf(
         CommandParam("namespace", "default"),
+        CommandParam("nodeName", "node-name"),
+        CommandParam("podName", "pod-name")
     )
     val subcommandsList = arrayOf(
         SubCommands(
@@ -37,6 +39,10 @@ fun CommandKubernetes() {
                     "get node list",
                     K8sCmdConst.GET_NODE_LIST
                 ),
+                Command(
+                    "describe node",
+                    String.format(K8sCmdConst.DESCRIBE_NODE, "${'$'}nodeName"),
+                ),
             )
         ),
         SubCommands(
@@ -45,7 +51,7 @@ fun CommandKubernetes() {
                 Command(
                     "get statefulset list",
                     String.format(K8sCmdConst.GET_STATEFUL_SET_LIST, "${'$'}namespace"),
-                )
+                ),
             )
         ),
         SubCommands(
@@ -54,7 +60,7 @@ fun CommandKubernetes() {
                 Command(
                     "get deploy list",
                     String.format(K8sCmdConst.GET_DEPLOY_LIST, "${'$'}namespace"),
-                )
+                ),
             )
         ),
         SubCommands(
@@ -63,7 +69,7 @@ fun CommandKubernetes() {
                 Command(
                     "get service list",
                     String.format(K8sCmdConst.GET_SERVICE_LIST, "${'$'}namespace"),
-                )
+                ),
             )
         ),
         SubCommands(
@@ -72,7 +78,11 @@ fun CommandKubernetes() {
                 Command(
                     "get pod list",
                     String.format(K8sCmdConst.GET_POD_LIST, "${'$'}namespace"),
-                )
+                ),
+                Command(
+                    "describe pod",
+                    String.format(K8sCmdConst.DESCRIBE_POD, "${'$'}podName", "${'$'}namespace"),
+                ),
             )
         ),
     )

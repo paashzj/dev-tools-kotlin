@@ -18,6 +18,7 @@
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.geometry.Rect
@@ -38,10 +39,12 @@ import widget.command.CommandScreen
 import widget.convert.ConvertScreen
 import widget.general.AboutAuthorScreen
 import widget.general.HomeScreen
+import widget.kubernetes.KubernetesInstanceScreen
 import widget.simulator.SimulatorScreen
 import widget.trouble.TroubleShootScreen
 
 val navigationIdx = mutableStateOf(NavigationEnum.Home)
+val navigationContext: MutableState<Any> = mutableStateOf("")
 
 fun main() = application {
     LogUtil.init()
@@ -71,6 +74,9 @@ fun main() = application {
                     }
                     NavigationEnum.Convert -> {
                         ConvertScreen()
+                    }
+                    NavigationEnum.Kubernetes -> {
+                        KubernetesInstanceScreen()
                     }
                     NavigationEnum.Simulator -> {
                         SimulatorScreen()

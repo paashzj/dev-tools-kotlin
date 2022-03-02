@@ -81,7 +81,7 @@ fun CommandKubernetes() {
                 ),
                 Command(
                     "describe pod",
-                    String.format(K8sCmdConst.DESCRIBE_POD, "${'$'}podName","${'$'}namespace"),
+                    String.format(K8sCmdConst.DESCRIBE_POD, "${'$'}podName", "${'$'}namespace"),
                 ),
             )
         ),

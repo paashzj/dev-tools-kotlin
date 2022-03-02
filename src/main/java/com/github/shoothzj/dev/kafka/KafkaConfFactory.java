@@ -30,11 +30,12 @@ import java.util.Properties;
 public class KafkaConfFactory {
 
     /**
-     * @param url example 127.0.0.1:9092
+     * @param host example 127.0.0.1
+     * @param port example 9092
      * @return
      */
-    public static Properties acquireProducerConf(String url, String saslMechanism, String username, String password) {
-        Properties producerConfig = acquireConf(url, saslMechanism, username, password);
+    public static Properties acquireProducerConf(String host, String port, String saslMechanism, String username, String password) {
+        Properties producerConfig = acquireConf(host, port, saslMechanism, username, password);
         producerConfig.put("transaction.timeout.ms", 3000);
         producerConfig.put("acks", "all");
         producerConfig.put("retries", 0);
@@ -45,11 +46,12 @@ public class KafkaConfFactory {
     }
 
     /**
-     * @param url example 127.0.0.1:9092
+     * @param host example 127.0.0.1
+     * @param port example 9092
      * @return
      */
-    public static Properties acquireConsumerConf(String url, String saslMechanism, String username, String password) {
-        Properties consumerConfig = acquireConf(url, saslMechanism, username, password);
+    public static Properties acquireConsumerConf(String host, String port, String saslMechanism, String username, String password) {
+        Properties consumerConfig = acquireConf(host, port, saslMechanism, username, password);
         consumerConfig.put("enable.auto.commit", "true");
         consumerConfig.put("auto.commit.interval.ms", "1000");
         consumerConfig.put("session.timeout.ms", "30000");
@@ -61,9 +63,9 @@ public class KafkaConfFactory {
         return consumerConfig;
     }
 
-    private static Properties acquireConf(String url, String saslMechanism, String username, String password) {
+    private static Properties acquireConf(String host, String port, String saslMechanism, String username, String password) {
         Properties props = new Properties();
-        props.put("bootstrap.servers", url);
+        props.put("bootstrap.servers", String.format("%s:%s", host, port));
         if (saslMechanism.equals(SecurityProtocol.SASL_PLAINTEXT.name)) {
             props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, SecurityProtocol.SASL_PLAINTEXT.name);
             props.put(SaslConfigs.SASL_MECHANISM, "PLAIN");

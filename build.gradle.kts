@@ -44,6 +44,9 @@ dependencies {
     // ssh
     implementation("com.github.mwiede:jsch:0.2.0")
     // codec
+    implementation("com.github.shoothzj:test-pulsar:3.1.8")
+    implementation("com.github.shoothzj:test-kafka:3.1.8")
+    implementation("com.github.shoothzj:test-zookeeper:3.1.8")
     implementation("com.github.shoothzj:sdk-net:3.1.8")
     implementation("com.github.shoothzj:java-tool:3.1.8")
     // log

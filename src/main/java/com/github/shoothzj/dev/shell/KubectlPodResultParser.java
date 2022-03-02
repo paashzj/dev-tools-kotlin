@@ -39,14 +39,11 @@ public class KubectlPodResultParser {
             KubectlPodResult kubectlPodResult = new KubectlPodResult();
             kubectlPodResult.setPodName(fields[0]);
             kubectlPodResult.setReady(fields[1].equals("1/1"));
-            if (fields[2].equals("ImagePullBackOff")) {
-                kubectlPodResult.setStatus(KubectlPodStatusEnum.ImagePullBackOff);
-            } else if (fields[2].equals("Running")) {
-                kubectlPodResult.setStatus(KubectlPodStatusEnum.Running);
-            } else if (fields[2].equals("Terminating")) {
-                kubectlPodResult.setStatus(KubectlPodStatusEnum.Terminating);
-            } else {
-                kubectlPodResult.setStatus(KubectlPodStatusEnum.Unknown);
+            switch (fields[2]) {
+                case "ImagePullBackOff" -> kubectlPodResult.setStatus(KubectlPodStatusEnum.ImagePullBackOff);
+                case "Running" -> kubectlPodResult.setStatus(KubectlPodStatusEnum.Running);
+                case "Terminating" -> kubectlPodResult.setStatus(KubectlPodStatusEnum.Terminating);
+                default -> kubectlPodResult.setStatus(KubectlPodStatusEnum.Unknown);
             }
             kubectlPodResult.setRestarts(Integer.parseInt(fields[3]));
             kubectlPodResult.setAge(fields[4]);

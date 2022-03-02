@@ -123,7 +123,7 @@ public class SshClient {
             }
         }
         String str = stringBuilder.toString();
-        // compat with centos
+        // compat with centos7
         if (str.contains("ast login")) {
             str = str.substring(str.indexOf(session.getUserName()));
         }

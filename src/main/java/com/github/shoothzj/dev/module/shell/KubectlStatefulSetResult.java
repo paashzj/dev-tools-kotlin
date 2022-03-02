@@ -19,55 +19,35 @@
 
 package com.github.shoothzj.dev.module.shell;
 
-public class KubectlPodResult {
+public class KubectlStatefulSetResult {
 
-    private String podName;
+    private String name;
 
-    private boolean isReady;
-
-    private KubectlPodStatusEnum status;
-
-    private String restarts;
+    private String ready;
 
     private String age;
 
-    private String ip;
+    private String containers;
 
-    private String node;
+    private String images;
 
-    public KubectlPodResult() {
+    public KubectlStatefulSetResult() {
     }
 
-    public String getPodName() {
-        return podName;
+    public String getName() {
+        return name;
     }
 
-    public void setPodName(String podName) {
-        this.podName = podName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public boolean isReady() {
-        return isReady;
+    public String getReady() {
+        return ready;
     }
 
-    public void setReady(boolean ready) {
-        isReady = ready;
-    }
-
-    public KubectlPodStatusEnum getStatus() {
-        return status;
-    }
-
-    public void setStatus(KubectlPodStatusEnum status) {
-        this.status = status;
-    }
-
-    public String getRestarts() {
-        return restarts;
-    }
-
-    public void setRestarts(String restarts) {
-        this.restarts = restarts;
+    public void setReady(String ready) {
+        this.ready = ready;
     }
 
     public String getAge() {
@@ -78,19 +58,19 @@ public class KubectlPodResult {
         this.age = age;
     }
 
-    public String getIp() {
-        return ip;
+    public String getContainers() {
+        return containers;
     }
 
-    public void setIp(String ip) {
-        this.ip = ip;
+    public void setContainers(String containers) {
+        this.containers = containers;
     }
 
-    public String getNode() {
-        return node;
+    public String getImages() {
+        return images;
     }
 
-    public void setNode(String node) {
-        this.node = node;
+    public void setImages(String images) {
+        this.images = images;
     }
 }

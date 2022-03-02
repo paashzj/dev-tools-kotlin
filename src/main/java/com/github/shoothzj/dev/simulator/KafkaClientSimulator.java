@@ -43,10 +43,9 @@ public class KafkaClientSimulator {
         if (ValidateUtil.isNotPort(port)) {
             return String.format("port [%s] is illegal", port);
         }
-        String url = String.format("%s:%s", host, port);
         try {
             KafkaProducer<String, String> producer =
-                    new KafkaProducer<>(KafkaConfFactory.acquireProducerConf(url, saslMechanism, username, password));
+                    new KafkaProducer<>(KafkaConfFactory.acquireProducerConf(host, port, saslMechanism, username, password));
             ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, msg);
             producer.send(record);
             return String.format("send message to kafka success. topic [%s], key [%s]",
@@ -65,10 +64,9 @@ public class KafkaClientSimulator {
         if (ValidateUtil.isNotPort(port)) {
             return String.format("port [%s] is illegal", port);
         }
-        String url = String.format("%s:%s", host, port);
         try {
             KafkaConsumer<String, String> consumer =
-                    new KafkaConsumer<>(KafkaConfFactory.acquireConsumerConf(url, saslMechanism, username, password));
+                    new KafkaConsumer<>(KafkaConfFactory.acquireConsumerConf(host, port, saslMechanism, username, password));
             consumer.subscribe(List.of(topic));
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1000));
             StringBuilder msg = new StringBuilder();

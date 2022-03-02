@@ -45,7 +45,7 @@ public class KubectlPodResultParser {
                 case "Terminating" -> kubectlPodResult.setStatus(KubectlPodStatusEnum.Terminating);
                 default -> kubectlPodResult.setStatus(KubectlPodStatusEnum.Unknown);
             }
-            kubectlPodResult.setRestarts(Integer.parseInt(fields[3]));
+            kubectlPodResult.setRestarts(fields[3]);
             kubectlPodResult.setAge(fields[4]);
             kubectlPodResult.setIp(fields[5]);
             kubectlPodResult.setNode(fields[6]);

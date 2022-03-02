@@ -42,10 +42,52 @@ fun Config() {
             }
             RowPaddingButton(
                 onClick = {
+                    idx.value = ConfigEnum.Bookkeeper
+                },
+            ) {
+                Text(text = "bookkeeper")
+            }
+            RowPaddingButton(
+                onClick = {
+                    idx.value = ConfigEnum.Cassandra
+                },
+            ) {
+                Text(text = "cassandra")
+            }
+            RowPaddingButton(
+                onClick = {
+                    idx.value = ConfigEnum.Minio
+                },
+            ) {
+                Text(text = "minio")
+            }
+            RowPaddingButton(
+                onClick = {
+                    idx.value = ConfigEnum.MySql
+                },
+            ) {
+                Text(text = "mysql")
+            }
+            RowPaddingButton(
+                onClick = {
                     idx.value = ConfigEnum.Nginx
                 },
             ) {
                 Text(text = "nginx")
+            }
+            RowPaddingButton(
+                onClick = {
+                    idx.value = ConfigEnum.Pulsar
+                },
+            ) {
+                Text(text = "pulsar")
+            }
+            RowPaddingButton(
+                onClick = {
+                    idx.value = ConfigEnum.Redis
+                },
+            ) {
+                Text(text = "redis")
             }
             RowPaddingButton(
                 onClick = {
@@ -64,6 +106,24 @@ fun Config() {
             }
             ConfigEnum.ZooKeeper -> {
                 ConfigZooKeeper()
+            }
+            ConfigEnum.Pulsar -> {
+                ConfigPulsar()
+            }
+            ConfigEnum.Bookkeeper -> {
+                ConfigBookkeeper()
+            }
+            ConfigEnum.Cassandra -> {
+                ConfigCassandra()
+            }
+            ConfigEnum.MySql -> {
+                ConfigMysql()
+            }
+            ConfigEnum.Minio -> {
+                ConfigMinio()
+            }
+            ConfigEnum.Redis -> {
+                ConfigRedis()
             }
         }
     }

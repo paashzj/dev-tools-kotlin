@@ -70,6 +70,7 @@ fun DropdownList(
                     Modifier.clickable { expanded = !expanded }
                 )
             },
+            singleLine = true,
         )
         DropdownMenu(
             expanded = expanded,

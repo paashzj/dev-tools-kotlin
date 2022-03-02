@@ -18,7 +18,13 @@
 package module
 
 enum class ConfigEnum {
+    Bookkeeper,
+    Cassandra,
     Kubernetes,
+    Minio,
+    MySql,
     Nginx,
+    Pulsar,
+    Redis,
     ZooKeeper,
 }

@@ -19,6 +19,8 @@
 
 package com.github.shoothzj.dev.util;
 
+import com.github.shoothzj.dev.module.shell.FreeMemoryResult;
+import com.github.shoothzj.dev.shell.FreeMemoryResultParser;
 import com.github.shoothzj.javatool.util.CommonUtil;
 import com.github.shoothzj.javatool.util.IoUtil;
 import com.jcraft.jsch.ChannelShell;
@@ -28,6 +30,8 @@ import com.jcraft.jsch.Session;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -43,8 +47,9 @@ public class SshClient {
 
     private OutputStream outputStream;
 
-    public SshClient(String host, int port, String username, String password) {
+    public SshClient(String host, int port, String username, String password) throws Exception {
         this.jSch = new JSch();
+        login(host, port, username, password);
     }
 
     private void login(String host, int port, String username, String password) throws Exception {
@@ -60,11 +65,32 @@ public class SshClient {
         outputStream = channel.getOutputStream();
     }
 
-    public String execute(String cmd, int timeoutSeconds) throws Exception {
+    public FreeMemoryResult freeMemory() throws Exception {
+        List<String> result = this.execute("free -m", 15);
+        return FreeMemoryResultParser.parse(result);
+    }
+
+    public List<String> execute(String cmd, int timeoutSeconds) throws Exception {
         return execute(cmd, "\\.*", timeoutSeconds);
     }
 
-    public String execute(String cmd, String resultPattern, int timeoutSeconds) throws Exception {
+    /**
+     * the output format is
+     * ```
+     *     [root@iZuf6e1qguryhi8gxdr2fqZ ~]# free -m
+     *                   total        used        free      shared  buff/cache   available
+     *     Mem:            759         160         215           1         383         464
+     *     Swap:             0           0           0
+     *     [root@iZuf6e1qguryhi8gxdr2fqZ ~]#
+     * ```
+     * we need to delete the first and last line
+     * @param cmd
+     * @param resultPattern
+     * @param timeoutSeconds
+     * @return
+     * @throws Exception
+     */
+    public List<String> execute(String cmd, String resultPattern, int timeoutSeconds) throws Exception {
         outputStream.write((cmd + "\n").getBytes(StandardCharsets.UTF_8));
         outputStream.flush();
         StringBuilder result = new StringBuilder();
@@ -77,7 +103,15 @@ public class SshClient {
                 CommonUtil.sleep(TimeUnit.SECONDS, 1);
             }
         }
-        return result.toString();
+        String[] strings = result.toString().split("\\n");
+        ArrayList<String> res = new ArrayList<>();
+        if (strings.length <= 2) {
+            return res;
+        }
+        for (int i = 1; i < strings.length - 1; i++) {
+            res.add(strings[i]);
+        }
+        return res;
     }
 
     public void close() {

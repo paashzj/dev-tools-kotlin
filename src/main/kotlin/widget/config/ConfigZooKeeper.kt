@@ -17,11 +17,16 @@
 
 package widget.config
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.github.shoothzj.dev.module.config.ZooKeeperConfig
 import com.github.shoothzj.dev.storage.StorageK8s
 import com.github.shoothzj.dev.storage.StorageZooKeeper
@@ -63,7 +68,11 @@ fun ConfigZooKeeper() {
         content = {
             repeat(zooKeeperList.value.size) { it ->
                 Row {
-                    Text(zooKeeperList.value[it])
+                    Box(modifier = Modifier.clickable {
+
+                    }) {
+                        Text(zooKeeperList.value[it], modifier = Modifier.padding(15.dp))
+                    }
                     Button(
                         onClick = {
                             StorageZooKeeper.getInstance().deleteConfig(editZooKeeperName.value)

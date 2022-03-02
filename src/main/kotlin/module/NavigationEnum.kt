@@ -21,6 +21,7 @@ enum class NavigationEnum {
     AboutAuthor,
     Command,
     Convert,
+    Kubernetes,
     Simulator,
     TroubleShoot,
     Home,

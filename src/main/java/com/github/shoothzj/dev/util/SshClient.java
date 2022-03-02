@@ -123,6 +123,10 @@ public class SshClient {
             }
         }
         String str = stringBuilder.toString();
+        // compat with centos7
+        if (str.contains("ast login")) {
+            str = str.substring(str.indexOf(session.getUserName()));
+        }
         List<String> strings = Arrays.asList(str.split("\\n"));
         log.info("why break str {}", str);
         if (str.contains(cmd)) {

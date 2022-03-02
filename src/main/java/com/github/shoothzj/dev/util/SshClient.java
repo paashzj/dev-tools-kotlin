@@ -19,6 +19,7 @@
 
 package com.github.shoothzj.dev.util;
 
+import com.github.shoothzj.dev.constant.LinuxCmdConst;
 import com.github.shoothzj.dev.module.shell.FreeMemoryResult;
 import com.github.shoothzj.dev.shell.FreeMemoryResultParser;
 import com.github.shoothzj.javatool.util.CommonUtil;
@@ -66,7 +67,7 @@ public class SshClient {
     }
 
     public FreeMemoryResult freeMemory() throws Exception {
-        List<String> result = this.execute("free -m", 15);
+        List<String> result = this.execute(LinuxCmdConst.FREE_MEMORY, 15);
         return FreeMemoryResultParser.parse(result);
     }
 

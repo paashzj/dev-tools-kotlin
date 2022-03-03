@@ -27,7 +27,7 @@ fun ConfigGroupDeploy(
     editDeployName: MutableState<String>,
 ) {
     Column {
-        ConfigItemString(editNamespace, R.strings.namespace)
-        ConfigItemString(editDeployName, R.strings.deployName)
+        ConfigItemString(editNamespace, R.strings.namespace, singleLine = true)
+        ConfigItemString(editDeployName, R.strings.deployName, singleLine = true)
     }
 }

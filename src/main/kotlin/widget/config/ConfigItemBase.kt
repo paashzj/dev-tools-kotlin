@@ -28,6 +28,7 @@ fun ConfigItemBase(
     desc: String,
     verify: (String) -> String,
     errorState: MutableState<String>,
+    singleLine: Boolean = false,
 ) {
     OutlinedTextField(
         value = inputState.value,
@@ -36,6 +37,7 @@ fun ConfigItemBase(
             errorState.value = verify(it)
         },
         isError = errorState.value != "",
-        label = { Text(if (errorState.value != "") errorState.value else desc) }
+        label = { Text(if (errorState.value != "") errorState.value else desc) },
+        singleLine = singleLine,
     )
 }

@@ -33,8 +33,8 @@ fun ConfigGroupKubernetes(
     Column {
         ConfigItemHost(editKubernetesHost, "config host", mutableStateOf(""))
         ConfigItemPort(editKubernetesPort, "config port", mutableStateOf(""))
-        ConfigItemString(editKubernetesUsername, "ssh username")
-        ConfigItemString(editKubernetesPassword, "ssh password")
-        ConfigItemString(editKubernetesRootPassword, "ssh root password(if you need to switch root)")
+        ConfigItemString(editKubernetesUsername, "ssh username", singleLine = true)
+        ConfigItemString(editKubernetesPassword, "ssh password", singleLine = true)
+        ConfigItemString(editKubernetesRootPassword, "ssh root password(if you need to switch root)", singleLine = true)
     }
 }

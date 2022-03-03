@@ -24,12 +24,19 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 
 @Composable
-fun ConfigItemString(inputState: MutableState<String>, desc: String, modifier: Modifier = Modifier,) {
+fun ConfigItemString(
+    inputState: MutableState<String>,
+    desc: String,
+    modifier: Modifier = Modifier,
+    singleLine: Boolean = false,
+) {
     OutlinedTextField(
         value = inputState.value,
         onValueChange = {
             inputState.value = it
         },
-        label = { Text(desc) }
+        label = { Text(desc) },
+        modifier = modifier,
+        singleLine = singleLine,
     )
 }

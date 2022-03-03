@@ -38,5 +38,6 @@ fun ConfigItemPort(inputState: MutableState<String>, desc: String, errorState: M
             }
         },
         errorState,
+        false,
     )
 }

@@ -129,11 +129,7 @@ public class SshClient {
         }
         List<String> strings = Arrays.asList(str.split("\\n"));
         log.debug("execute over, result is {}", str);
-        if (str.contains(cmd)) {
-            return SshUtil.deleteFirstLastLine(strings);
-        } else {
-            return strings;
-        }
+        return SshUtil.deleteFirstLastLine(strings);
     }
 
     public void close() {

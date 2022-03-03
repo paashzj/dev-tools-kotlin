@@ -15,11 +15,26 @@
  * limitations under the license.
  */
 
-package module
+package widget.command
 
-enum class CommandEnum {
-    Kafka,
-    Kubernetes,
-    Maven,
-    Pulsar,
+import androidx.compose.runtime.Composable
+import module.Command
+import module.CommandDto
+import module.SubCommands
+
+@Composable
+fun CommandMaven() {
+    val subcommandsList = arrayOf(
+        SubCommands(
+            "checkstyle",
+            arrayOf(
+                Command(
+                    "checkstyle",
+                    "mvn checkstyle:checkstyle"
+                ),
+            )
+        ),
+    )
+    val commandDto = CommandDto(subcommandsList)
+    CommandViewStatic(commandDto)
 }

@@ -22,9 +22,14 @@ package com.github.shoothzj.dev.util;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class StringTool {
+
+    public static boolean anyLineMatch(List<String> result, @NotNull Pattern pattern) {
+        return result.stream().anyMatch(s -> pattern.matcher(s).matches());
+    }
 
     public static boolean anyLineMatch(@NotNull String result, @NotNull Pattern pattern) {
         return Arrays.stream(result.split("\\n")).anyMatch(s -> pattern.matcher(s).matches());

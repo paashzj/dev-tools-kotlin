@@ -36,7 +36,7 @@ fun ConfigGroupKafkaRaw(
         ConfigItemHost(editKafkaHost, "kafka host", mutableStateOf(""))
         ConfigItemPort(editKafkaPort, "kafka port", mutableStateOf(""))
         DropdownList(arrayListOf("", SecurityProtocol.SASL_PLAINTEXT.name), "kafka sasl mechanism", editKafkaSaslMechanism)
-        ConfigItemString(editKafkaUsername, "kafka username")
-        ConfigItemString(editKafkaPassword, "kafka password")
+        ConfigItemString(editKafkaUsername, "kafka username", singleLine = true)
+        ConfigItemString(editKafkaPassword, "kafka password", singleLine = true)
     }
 }

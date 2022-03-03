@@ -27,7 +27,7 @@ fun ConfigGroupStatefulSet(
     editStatefulSetName: MutableState<String>,
 ) {
     Column {
-        ConfigItemString(editNamespace, R.strings.namespace)
-        ConfigItemString(editStatefulSetName, R.strings.statefulSetName)
+        ConfigItemString(editNamespace, R.strings.namespace, singleLine = true)
+        ConfigItemString(editStatefulSetName, R.strings.statefulSetName, singleLine = true)
     }
 }

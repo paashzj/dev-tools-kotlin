@@ -49,7 +49,7 @@ fun ConfigKubernetes() {
         dialogState,
         errorState,
         dialogInputContent = {
-            ConfigItemString(editKubernetesName, "config name")
+            ConfigItemString(editKubernetesName, "config name", singleLine = true)
             ConfigGroupKubernetes(
                 editKubernetesHost,
                 editKubernetesPort,

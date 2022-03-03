@@ -92,7 +92,7 @@ fun ConfigBase(
         Button(onClick = {
             dialogState.value = true
         }) {
-            Text("add $configName")
+            Text("${R.strings.add} $configName")
         }
         Text("$configName list:", fontSize = 30.sp)
         content()

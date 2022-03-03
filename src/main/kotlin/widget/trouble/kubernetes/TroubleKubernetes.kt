@@ -15,7 +15,7 @@
  * limitations under the license.
  */
 
-package widget.trouble
+package widget.trouble.kubernetes
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,56 +24,40 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.sp
-import module.TroubleEnum
+import module.TroubleKubernetesEnum
 import widget.component.RowPaddingButton
-import widget.trouble.kubernetes.TroubleKubernetes
-import widget.trouble.nginx.TroubleNginx
-import widget.trouble.zookeeper.TroubleZooKeeper
 
-val idx = mutableStateOf(TroubleEnum.Kubernetes)
+val idx = mutableStateOf(TroubleKubernetesEnum.NODE_NOT_READY)
+
+val editKubernetesInstanceName = mutableStateOf("")
+val editKubernetesHost = mutableStateOf("localhost")
+val editKubernetesPort = mutableStateOf("22")
+val editKubernetesUsername = mutableStateOf("root")
+val editKubernetesPassword = mutableStateOf("")
+val editKubernetesRootPassword = mutableStateOf("")
 
 @Composable
-fun TroubleShootScreen() {
+fun TroubleKubernetes() {
     Column {
         Head(idx)
         when (idx.value) {
-            TroubleEnum.Kubernetes -> {
-                TroubleKubernetes()
-            }
-            TroubleEnum.Nginx -> {
-                TroubleNginx()
-            }
-            TroubleEnum.ZooKeeper -> {
-                TroubleZooKeeper()
+            TroubleKubernetesEnum.NODE_NOT_READY -> {
+                TroubleKubernetesNotReady()
             }
         }
     }
 }
 
 @Composable
-fun Head(idx: MutableState<TroubleEnum>) {
+fun Head(idx: MutableState<TroubleKubernetesEnum>) {
     Row {
-        Text(R.strings.TroubleComponent, fontSize = 40.sp)
+        Text(R.strings.sceneList, fontSize = 40.sp)
         RowPaddingButton(
             onClick = {
-                idx.value = TroubleEnum.Kubernetes
+                idx.value = TroubleKubernetesEnum.NODE_NOT_READY
             },
         ) {
-            Text(text = "Kubernetes")
-        }
-        RowPaddingButton(
-            onClick = {
-                idx.value = TroubleEnum.Nginx
-            },
-        ) {
-            Text(text = "Nginx")
-        }
-        RowPaddingButton(
-            onClick = {
-                idx.value = TroubleEnum.ZooKeeper
-            },
-        ) {
-            Text(text = "ZooKeeper")
+            Text(text = R.strings.TroubleSceneKubernetesNodeNotReady)
         }
     }
 }

@@ -15,19 +15,20 @@
  * limitations under the license.
  */
 
-package widget.trouble.nginx
+package widget.trouble.kubernetes
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import com.github.shoothzj.dev.storage.StorageK8s
-import com.github.shoothzj.dev.storage.StorageNginx
 import widget.component.DropdownList
-import widget.config.ConfigGroupDeploy
 import widget.config.ConfigGroupKubernetes
+import widget.config.ConfigItemString
 
 @Composable
-fun TroubleNginxHttp() {
-    val nginxNameList = StorageNginx.getInstance().listConfigNames()
-    DropdownList(nginxNameList, "nginx ${R.strings.instance}", editNginxInstanceName)
+fun TroubleKubernetesNotReady() {
+    val k8sNameList = StorageK8s.getInstance().listConfigNames()
+    val editKubernetesNodeName = mutableStateOf("")
+    DropdownList(k8sNameList, "kubernetes ${R.strings.instance}", editKubernetesInstanceName)
     ConfigGroupKubernetes(
         editKubernetesHost,
         editKubernetesPort,
@@ -35,15 +36,9 @@ fun TroubleNginxHttp() {
         editKubernetesPassword,
         editKubernetesRootPassword
     )
-    ConfigGroupDeploy(
-        editNginxNamespace,
-        editNginxDeployName,
-    )
-    if (editNginxInstanceName.value != "") {
-        val nginxConfig = StorageNginx.getInstance().getConfig(editNginxInstanceName.value)
-        editNginxNamespace.value = nginxConfig.namespace
-        editNginxDeployName.value = nginxConfig.deployName
-        val kubernetesConfig = StorageK8s.getInstance().getConfig(nginxConfig.k8sName)
+    ConfigItemString(editKubernetesNodeName, R.strings.kubernetesNodeName, singleLine = true)
+    if (editKubernetesInstanceName.value != "") {
+        val kubernetesConfig = StorageK8s.getInstance().getConfig(editKubernetesInstanceName.value)
         editKubernetesHost.value = kubernetesConfig.host
         editKubernetesPort.value = kubernetesConfig.port.toString()
         val sshStep = kubernetesConfig.sshStep

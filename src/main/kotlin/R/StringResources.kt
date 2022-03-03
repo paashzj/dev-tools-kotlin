@@ -47,6 +47,7 @@ interface Strings {
     val encode: String
     val homePage: String
     val instance: String
+    val kubernetesNodeName: String
     val match: String
     val name: String
     val namespace: String
@@ -61,6 +62,7 @@ interface Strings {
     val send: String
     val simulatorPage: String
     val TroubleComponent: String
+    val TroubleSceneKubernetesNodeNotReady: String
     val TroubleSceneNginxHttpRequestFail: String
     val TroubleSceneZooKeeperClusterInitFail: String
     val troubleShootPage: String
@@ -111,6 +113,8 @@ object EnStrings : Strings {
         get() = "home page"
     override val instance: String
         get() = "instance"
+    override val kubernetesNodeName: String
+        get() = "kubernetes node name"
     override val match: String
         get() = "match"
     override val name: String
@@ -139,6 +143,8 @@ object EnStrings : Strings {
         get() = "simulator page"
     override val TroubleComponent: String
         get() = "Trouble Component"
+    override val TroubleSceneKubernetesNodeNotReady: String
+        get() = "Kubernetes node not ready"
     override val TroubleSceneNginxHttpRequestFail: String
         get() = "Nginx Http Request Fail"
     override val TroubleSceneZooKeeperClusterInitFail: String
@@ -194,6 +200,8 @@ object ChStrings : Strings {
         get() = "主界面"
     override val instance: String
         get() = "实例"
+    override val kubernetesNodeName: String
+        get() = "kubernetes 节点名"
     override val match: String
         get() = "匹配"
     override val name: String
@@ -222,6 +230,8 @@ object ChStrings : Strings {
         get() = "模拟器界面"
     override val TroubleComponent: String
         get() = "问题定位组件"
+    override val TroubleSceneKubernetesNodeNotReady: String
+        get() = "Kubernetes 节点 Not Ready"
     override val TroubleSceneNginxHttpRequestFail: String
         get() = "Nginx http请求失败"
     override val TroubleSceneZooKeeperClusterInitFail: String

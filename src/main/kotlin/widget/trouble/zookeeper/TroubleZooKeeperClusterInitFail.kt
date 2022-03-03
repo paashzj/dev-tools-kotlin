@@ -27,7 +27,7 @@ import widget.config.ConfigGroupStatefulSet
 @Composable
 fun TroubleZooKeeperClusterInitFail() {
     val zooKeeperNameList = StorageZooKeeper.getInstance().listConfigNames()
-    DropdownList(zooKeeperNameList, "zookeeper instance", editZooKeeperInstanceName)
+    DropdownList(zooKeeperNameList, "zookeeper ${R.strings.instance}", editZooKeeperInstanceName)
     ConfigGroupKubernetes(
         editKubernetesHost,
         editKubernetesPort,

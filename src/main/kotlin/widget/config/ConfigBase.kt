@@ -32,7 +32,9 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.rememberDialogState
 import constat.PixelConst
+import constat.PixelConst.Companion.configDialogSize
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -66,6 +68,7 @@ fun ConfigBase(
                 onCloseRequest = {
                     dialogState.value = false
                 },
+                state = rememberDialogState(size = configDialogSize),
                 title = "${R.strings.add} $configName ${R.strings.instance}",
             ) {
                 MaterialTheme {

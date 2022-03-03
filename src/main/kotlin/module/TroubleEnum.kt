@@ -18,6 +18,7 @@
 package module
 
 enum class TroubleEnum {
+    Kubernetes,
     Nginx,
     ZooKeeper,
 }

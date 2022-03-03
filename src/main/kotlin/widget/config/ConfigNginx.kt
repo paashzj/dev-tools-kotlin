@@ -48,7 +48,7 @@ fun ConfigNginx() {
         errorState,
         dialogInputContent = {
             ConfigItemString(editNginxName, R.strings.name, singleLine = true)
-            DropdownList(kubernetes, "k8s instance", editK8sInstanceName)
+            DropdownList(kubernetes, "k8s ${R.strings.instance}", editK8sInstanceName)
             ConfigGroupDeploy(
                 editNginxNamespace,
                 editNginxDeployName,

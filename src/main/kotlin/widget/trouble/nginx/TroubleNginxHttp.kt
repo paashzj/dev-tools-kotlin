@@ -23,32 +23,39 @@ import com.github.shoothzj.dev.storage.StorageNginx
 import widget.component.DropdownList
 import widget.config.ConfigGroupDeploy
 import widget.config.ConfigGroupKubernetes
+import widget.trouble.TroubleShootBase
 
 @Composable
 fun TroubleNginxHttp() {
-    val nginxNameList = StorageNginx.getInstance().listConfigNames()
-    DropdownList(nginxNameList, "nginx ${R.strings.instance}", editNginxInstanceName)
-    ConfigGroupKubernetes(
-        editKubernetesHost,
-        editKubernetesPort,
-        editKubernetesUsername,
-        editKubernetesPassword,
-        editKubernetesRootPassword
+    TroubleShootBase(
+        content = {
+            val nginxNameList = StorageNginx.getInstance().listConfigNames()
+            DropdownList(nginxNameList, "nginx ${R.strings.instance}", editNginxInstanceName)
+            ConfigGroupKubernetes(
+                editKubernetesHost,
+                editKubernetesPort,
+                editKubernetesUsername,
+                editKubernetesPassword,
+                editKubernetesRootPassword
+            )
+            ConfigGroupDeploy(
+                editNginxNamespace,
+                editNginxDeployName,
+            )
+            if (editNginxInstanceName.value != "") {
+                val nginxConfig = StorageNginx.getInstance().getConfig(editNginxInstanceName.value)
+                editNginxNamespace.value = nginxConfig.namespace
+                editNginxDeployName.value = nginxConfig.deployName
+                val kubernetesConfig = StorageK8s.getInstance().getConfig(nginxConfig.k8sName)
+                editKubernetesHost.value = kubernetesConfig.host
+                editKubernetesPort.value = kubernetesConfig.port.toString()
+                val sshStep = kubernetesConfig.sshStep
+                editKubernetesUsername.value = sshStep.username
+                editKubernetesPassword.value = sshStep.password
+                editKubernetesRootPassword.value = if (sshStep.suPassword == null) "" else sshStep.suPassword
+            }
+        },
+        result = {
+        },
     )
-    ConfigGroupDeploy(
-        editNginxNamespace,
-        editNginxDeployName,
-    )
-    if (editNginxInstanceName.value != "") {
-        val nginxConfig = StorageNginx.getInstance().getConfig(editNginxInstanceName.value)
-        editNginxNamespace.value = nginxConfig.namespace
-        editNginxDeployName.value = nginxConfig.deployName
-        val kubernetesConfig = StorageK8s.getInstance().getConfig(nginxConfig.k8sName)
-        editKubernetesHost.value = kubernetesConfig.host
-        editKubernetesPort.value = kubernetesConfig.port.toString()
-        val sshStep = kubernetesConfig.sshStep
-        editKubernetesUsername.value = sshStep.username
-        editKubernetesPassword.value = sshStep.password
-        editKubernetesRootPassword.value = if (sshStep.suPassword == null) "" else sshStep.suPassword
-    }
 }

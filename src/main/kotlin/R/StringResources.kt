@@ -66,6 +66,7 @@ interface Strings {
     val TroubleSceneNginxHttpRequestFail: String
     val TroubleSceneZooKeeperClusterInitFail: String
     val troubleShootPage: String
+    val troubleShootResult: String
     val VerifyList: String
     val verifyPage: String
 }
@@ -151,6 +152,8 @@ object EnStrings : Strings {
         get() = "ZooKeeper Cluster Init Fail"
     override val troubleShootPage: String
         get() = "trouble shoot page"
+    override val troubleShootResult: String
+        get() = "trouble shoot result"
     override val VerifyList: String
         get() = "Verify List"
     override val verifyPage: String
@@ -238,6 +241,8 @@ object ChStrings : Strings {
         get() = "ZooKeeper 集群初始化失败"
     override val troubleShootPage: String
         get() = "问题定位界面"
+    override val troubleShootResult: String
+        get() = "问题定位结论"
     override val VerifyList: String
         get() = "验证列表"
     override val verifyPage: String

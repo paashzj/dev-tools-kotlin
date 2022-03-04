@@ -44,6 +44,10 @@ fun ConfigPulsar() {
     val editK8sInstanceName = mutableStateOf("")
     val editPulsarNamespace = mutableStateOf("default")
     val editPulsarDeployName = mutableStateOf("pulsar")
+    val editPulsarBrokerHttpHost = mutableStateOf("localhost")
+    val editPulsarBrokerHttpPort = mutableStateOf("8080")
+    val editPulsarFunctionHttpHost = mutableStateOf("localhost")
+    val editPulsarFunctionHttpPort = mutableStateOf("8080")
     val kubernetes = StorageK8s.getInstance().listConfigNames()
     ConfigBase(
         "pulsar",
@@ -56,6 +60,10 @@ fun ConfigPulsar() {
                 editPulsarNamespace,
                 editPulsarDeployName,
             )
+            ConfigItemHost(editPulsarBrokerHttpHost, "", mutableStateOf(""))
+            ConfigItemHost(editPulsarBrokerHttpPort, "", mutableStateOf(""))
+            ConfigItemHost(editPulsarFunctionHttpHost, "", mutableStateOf(""))
+            ConfigItemHost(editPulsarFunctionHttpPort, "", mutableStateOf(""))
         },
         dialogConfirm = {
             StoragePulsar.getInstance().saveConfig(
@@ -64,6 +72,10 @@ fun ConfigPulsar() {
                     editK8sInstanceName.value,
                     editPulsarNamespace.value,
                     editPulsarDeployName.value,
+                    editPulsarBrokerHttpHost.value,
+                    editPulsarBrokerHttpPort.value.toInt(),
+                    editPulsarFunctionHttpHost.value,
+                    editPulsarFunctionHttpPort.value.toInt(),
                 )
             )
             pulsarList.value = StoragePulsar.getInstance().listContent()

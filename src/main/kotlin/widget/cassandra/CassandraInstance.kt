@@ -15,21 +15,21 @@
  * limitations under the license.
  */
 
-package widget.kubernetes
+package widget.cassandra
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.sp
-import com.github.shoothzj.dev.module.config.KubernetesConfig
+import com.github.shoothzj.dev.module.config.CassandraConfig
 import navigationContext
 import widget.TopBar
 
 @Composable
-fun KubernetesInstanceScreen() {
+fun CassandraInstanceScreen() {
     Column {
-        val k8sConfig: KubernetesConfig = navigationContext.value as KubernetesConfig
+        val cassandraConfig: CassandraConfig = navigationContext.value as CassandraConfig
         TopBar()
-        Text(text = "kubernetes ${k8sConfig.name}", fontSize = 40.sp)
+        Text(text = "cassandra ${cassandraConfig.name}", fontSize = 40.sp)
     }
 }

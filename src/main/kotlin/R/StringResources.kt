@@ -32,6 +32,7 @@ interface Strings {
     val add: String
     val addKubernetesInstance: String
     val addNginxInstance: String
+    val backHome: String
     val Commands: String
     val commandPage: String
     val componentList: String
@@ -84,6 +85,8 @@ object EnStrings : Strings {
         get() = "add kubernetes instance"
     override val addNginxInstance: String
         get() = "add nginx instance"
+    override val backHome: String
+        get() = "back home"
     override val Commands: String
         get() = "Commands"
     override val commandPage: String
@@ -173,6 +176,8 @@ object ChStrings : Strings {
         get() = "添加kubernetes实例"
     override val addNginxInstance: String
         get() = "添加Nginx实例"
+    override val backHome: String
+        get() = "回到主页"
     override val Commands: String
         get() = "命令"
     override val commandPage: String

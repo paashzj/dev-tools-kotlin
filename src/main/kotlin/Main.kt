@@ -35,14 +35,22 @@ import constat.PixelConst
 import module.NavigationEnum
 import widget.DrawContent
 import widget.TopBar
+import widget.bookkeeper.BookkeeperInstanceScreen
+import widget.cassandra.CassandraInstanceScreen
 import widget.command.CommandScreen
 import widget.convert.ConvertScreen
 import widget.general.AboutAuthorScreen
 import widget.general.HomeScreen
 import widget.kubernetes.KubernetesInstanceScreen
+import widget.minio.MinioInstanceScreen
+import widget.mysql.MysqlInstanceScreen
+import widget.nginx.NginxInstanceScreen
+import widget.pulsar.PulsarInstanceScreen
+import widget.redis.RedisInstanceScreen
 import widget.simulator.SimulatorScreen
 import widget.trouble.TroubleShootScreen
 import widget.verify.VerifyScreen
+import widget.zookeeper.ZooKeeperInstanceScreen
 
 val navigationIdx = mutableStateOf(NavigationEnum.Home)
 val navigationContext: MutableState<Any> = mutableStateOf("")
@@ -78,6 +86,30 @@ fun main() = application {
                     }
                     NavigationEnum.Kubernetes -> {
                         KubernetesInstanceScreen()
+                    }
+                    NavigationEnum.Bookkeeper -> {
+                        BookkeeperInstanceScreen()
+                    }
+                    NavigationEnum.Cassandra -> {
+                        CassandraInstanceScreen()
+                    }
+                    NavigationEnum.Minio -> {
+                        MinioInstanceScreen()
+                    }
+                    NavigationEnum.Mysql -> {
+                        MysqlInstanceScreen()
+                    }
+                    NavigationEnum.Nginx -> {
+                        NginxInstanceScreen()
+                    }
+                    NavigationEnum.Pulsar -> {
+                        PulsarInstanceScreen()
+                    }
+                    NavigationEnum.Redis -> {
+                        RedisInstanceScreen()
+                    }
+                    NavigationEnum.Zookeeper -> {
+                        ZooKeeperInstanceScreen()
                     }
                     NavigationEnum.Simulator -> {
                         SimulatorScreen()

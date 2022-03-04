@@ -15,21 +15,24 @@
  * limitations under the license.
  */
 
-package widget.kubernetes
+package widget
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.sp
-import com.github.shoothzj.dev.module.config.KubernetesConfig
-import navigationContext
-import widget.TopBar
+import module.NavigationEnum
+import navigationIdx
+import widget.component.RowPaddingButton
 
 @Composable
-fun KubernetesInstanceScreen() {
-    Column {
-        val k8sConfig: KubernetesConfig = navigationContext.value as KubernetesConfig
-        TopBar()
-        Text(text = "kubernetes ${k8sConfig.name}", fontSize = 40.sp)
+fun TopBar() {
+    Row {
+        RowPaddingButton(
+            onClick = {
+                navigationIdx.value = NavigationEnum.Home
+            },
+        ) {
+            Text(text = R.strings.backHome)
+        }
     }
 }

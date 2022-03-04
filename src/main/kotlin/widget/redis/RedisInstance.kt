@@ -15,21 +15,21 @@
  * limitations under the license.
  */
 
-package widget.kubernetes
+package widget.redis
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.sp
-import com.github.shoothzj.dev.module.config.KubernetesConfig
+import com.github.shoothzj.dev.module.config.RedisConfig
 import navigationContext
 import widget.TopBar
 
 @Composable
-fun KubernetesInstanceScreen() {
+fun RedisInstanceScreen() {
     Column {
-        val k8sConfig: KubernetesConfig = navigationContext.value as KubernetesConfig
+        val redisConfig: RedisConfig = navigationContext.value as RedisConfig
         TopBar()
-        Text(text = "kubernetes ${k8sConfig.name}", fontSize = 40.sp)
+        Text(text = "redis ${redisConfig.name}", fontSize = 40.sp)
     }
 }

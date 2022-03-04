@@ -15,21 +15,21 @@
  * limitations under the license.
  */
 
-package widget.kubernetes
+package widget.mysql
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.sp
-import com.github.shoothzj.dev.module.config.KubernetesConfig
+import com.github.shoothzj.dev.module.config.MysqlConfig
 import navigationContext
 import widget.TopBar
 
 @Composable
-fun KubernetesInstanceScreen() {
+fun MysqlInstanceScreen() {
     Column {
-        val k8sConfig: KubernetesConfig = navigationContext.value as KubernetesConfig
+        val mysqlConfig: MysqlConfig = navigationContext.value as MysqlConfig
         TopBar()
-        Text(text = "kubernetes ${k8sConfig.name}", fontSize = 40.sp)
+        Text(text = "mysql ${mysqlConfig.name}", fontSize = 40.sp)
     }
 }

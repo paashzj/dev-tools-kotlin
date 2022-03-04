@@ -54,6 +54,10 @@ interface Strings {
     val namespace: String
     val notMatch: String
     val Params: String
+    val pulsarBrokerHost: String
+    val pulsarBrokerPort: String
+    val pulsarFunctionHost: String
+    val pulsarFunctionPort: String
     val receive: String
     val regex: String
     val regexExpression: String
@@ -129,6 +133,14 @@ object EnStrings : Strings {
         get() = "not match"
     override val Params: String
         get() = "Params"
+    override val pulsarBrokerHost: String
+        get() = "pulsar broker host"
+    override val pulsarBrokerPort: String
+        get() = "pulsar broker port"
+    override val pulsarFunctionHost: String
+        get() = "pulsar function host"
+    override val pulsarFunctionPort: String
+        get() = "pulsar function port"
     override val receive: String
         get() = "receive"
     override val regex: String
@@ -220,6 +232,14 @@ object ChStrings : Strings {
         get() = "不匹配"
     override val Params: String
         get() = "参数"
+    override val pulsarBrokerHost: String
+        get() = "pulsar broker host"
+    override val pulsarBrokerPort: String
+        get() = "pulsar broker 端口"
+    override val pulsarFunctionHost: String
+        get() = "pulsar function host"
+    override val pulsarFunctionPort: String
+        get() = "pulsar function 端口"
     override val receive: String
         get() = "接受"
     override val regex: String

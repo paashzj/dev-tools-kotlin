@@ -19,12 +19,45 @@
 
 package com.github.shoothzj.dev.module.config;
 
-public class MinioConfig extends BaseStatefulSetConfig {
+public class BaseDeployConfig extends BaseConfig {
 
-    public MinioConfig() {
+    private String k8sName;
+
+    private String namespace;
+
+    private String deployName;
+
+    public BaseDeployConfig() {
     }
 
-    public MinioConfig(String name, String k8sName, String namespace, String statefulSetName) {
-        super(name, k8sName, namespace, statefulSetName);
+    public BaseDeployConfig(String name, String k8sName, String namespace, String deployName) {
+        super(name);
+        this.k8sName = k8sName;
+        this.namespace = namespace;
+        this.deployName = deployName;
+    }
+
+    public String getK8sName() {
+        return k8sName;
+    }
+
+    public void setK8sName(String k8sName) {
+        this.k8sName = k8sName;
+    }
+
+    public String getNamespace() {
+        return namespace;
+    }
+
+    public void setNamespace(String namespace) {
+        this.namespace = namespace;
+    }
+
+    public String getDeployName() {
+        return deployName;
+    }
+
+    public void setDeployName(String deployName) {
+        this.deployName = deployName;
     }
 }

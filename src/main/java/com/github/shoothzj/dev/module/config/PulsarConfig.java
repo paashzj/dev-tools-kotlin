@@ -19,45 +19,64 @@
 
 package com.github.shoothzj.dev.module.config;
 
-public class PulsarConfig extends BaseConfig {
+public class PulsarConfig extends BaseDeployConfig {
 
-    private String k8sName;
+    private String brokerHttpHost;
 
-    private String namespace;
+    private int brokerHttpPort;
 
-    private String deployName;
+    private String functionHttpHost;
+
+    private int functionHttpPort;
 
     public PulsarConfig() {
     }
 
-    public PulsarConfig(String name, String k8sName, String namespace, String deployName) {
-        super(name);
-        this.k8sName = k8sName;
-        this.namespace = namespace;
-        this.deployName = deployName;
+    public PulsarConfig(String name,
+                        String k8sName,
+                        String namespace,
+                        String deployName,
+                        String brokerHttpHost,
+                        int brokerHttpPort,
+                        String functionHttpHost,
+                        int functionHttpPort
+    ) {
+        super(name, k8sName, namespace, deployName);
+        this.brokerHttpHost = brokerHttpHost;
+        this.brokerHttpPort = brokerHttpPort;
+        this.functionHttpHost = functionHttpHost;
+        this.functionHttpPort = functionHttpPort;
     }
 
-    public String getK8sName() {
-        return k8sName;
+    public String getBrokerHttpHost() {
+        return brokerHttpHost;
     }
 
-    public void setK8sName(String k8sName) {
-        this.k8sName = k8sName;
+    public void setBrokerHttpHost(String brokerHttpHost) {
+        this.brokerHttpHost = brokerHttpHost;
     }
 
-    public String getNamespace() {
-        return namespace;
+    public int getBrokerHttpPort() {
+        return brokerHttpPort;
     }
 
-    public void setNamespace(String namespace) {
-        this.namespace = namespace;
+    public void setBrokerHttpPort(int brokerHttpPort) {
+        this.brokerHttpPort = brokerHttpPort;
     }
 
-    public String getDeployName() {
-        return deployName;
+    public String getFunctionHttpHost() {
+        return functionHttpHost;
     }
 
-    public void setDeployName(String deployName) {
-        this.deployName = deployName;
+    public void setFunctionHttpHost(String functionHttpHost) {
+        this.functionHttpHost = functionHttpHost;
+    }
+
+    public int getFunctionHttpPort() {
+        return functionHttpPort;
+    }
+
+    public void setFunctionHttpPort(int functionHttpPort) {
+        this.functionHttpPort = functionHttpPort;
     }
 }

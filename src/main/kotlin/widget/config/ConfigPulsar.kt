@@ -17,14 +17,22 @@
 
 package widget.config
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.github.shoothzj.dev.module.config.PulsarConfig
 import com.github.shoothzj.dev.storage.StorageK8s
 import com.github.shoothzj.dev.storage.StoragePulsar
+import module.NavigationEnum
+import navigationContext
+import navigationIdx
 import widget.component.DropdownList
 
 @Composable
@@ -63,7 +71,14 @@ fun ConfigPulsar() {
         content = {
             repeat(pulsarList.value.size) { it ->
                 Row {
-                    Text(pulsarList.value[it])
+                    Box(
+                        modifier = Modifier.clickable {
+                            navigationContext.value = StoragePulsar.getInstance().getConfig(editPulsarName.value)
+                            navigationIdx.value = NavigationEnum.Pulsar
+                        }
+                    ) {
+                        Text(pulsarList.value[it], modifier = Modifier.padding(15.dp))
+                    }
                     Button(
                         onClick = {
                             StoragePulsar.getInstance().deleteConfig(editPulsarName.value)

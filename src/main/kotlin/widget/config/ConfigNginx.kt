@@ -30,6 +30,9 @@ import androidx.compose.ui.unit.dp
 import com.github.shoothzj.dev.module.config.NginxConfig
 import com.github.shoothzj.dev.storage.StorageK8s
 import com.github.shoothzj.dev.storage.StorageNginx
+import module.NavigationEnum
+import navigationContext
+import navigationIdx
 import widget.component.DropdownList
 
 @Composable
@@ -70,6 +73,8 @@ fun ConfigNginx() {
                 Row {
                     Box(
                         modifier = Modifier.clickable {
+                            navigationContext.value = StorageNginx.getInstance().getConfig(editNginxName.value)
+                            navigationIdx.value = NavigationEnum.Nginx
                         }
                     ) {
                         Text(nginxList.value[it], modifier = Modifier.padding(15.dp))

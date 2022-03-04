@@ -47,15 +47,17 @@ public class StorageUtil {
     static {
         File storageDir = new File(STORAGE_DIR);
         storageDir.mkdirs();
+
         FileUtil.ensureFileExists(K8S_CONF_PATH);
-        FileUtil.ensureFileExists(NGX_CONF_PATH);
-        FileUtil.ensureFileExists(ZK_CONF_PATH);
-        FileUtil.ensureFileExists(PULSAR_CONF_PATH);
+
         FileUtil.ensureFileExists(BOOKKEEPER_CONF_PATH);
         FileUtil.ensureFileExists(CASSANDRA_CONF_PATH);
-        FileUtil.ensureFileExists(MYSQL_CONF_PATH);
         FileUtil.ensureFileExists(MINIO_CONF_PATH);
+        FileUtil.ensureFileExists(MYSQL_CONF_PATH);
+        FileUtil.ensureFileExists(NGX_CONF_PATH);
+        FileUtil.ensureFileExists(PULSAR_CONF_PATH);
         FileUtil.ensureFileExists(REDIS_CONF_PATH);
+        FileUtil.ensureFileExists(ZK_CONF_PATH);
     }
 
 }

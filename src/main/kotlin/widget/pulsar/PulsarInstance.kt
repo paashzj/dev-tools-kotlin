@@ -15,21 +15,21 @@
  * limitations under the license.
  */
 
-package widget.kubernetes
+package widget.pulsar
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.sp
-import com.github.shoothzj.dev.module.config.KubernetesConfig
+import com.github.shoothzj.dev.module.config.PulsarConfig
 import navigationContext
 import widget.TopBar
 
 @Composable
-fun KubernetesInstanceScreen() {
+fun PulsarInstanceScreen() {
     Column {
-        val k8sConfig: KubernetesConfig = navigationContext.value as KubernetesConfig
+        val pulsarConfig: PulsarConfig = navigationContext.value as PulsarConfig
         TopBar()
-        Text(text = "kubernetes ${k8sConfig.name}", fontSize = 40.sp)
+        Text(text = "pulsar ${pulsarConfig.name}", fontSize = 40.sp)
     }
 }

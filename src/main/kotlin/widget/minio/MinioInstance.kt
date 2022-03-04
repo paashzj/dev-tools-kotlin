@@ -15,21 +15,21 @@
  * limitations under the license.
  */
 
-package widget.kubernetes
+package widget.minio
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.sp
-import com.github.shoothzj.dev.module.config.KubernetesConfig
+import com.github.shoothzj.dev.module.config.MinioConfig
 import navigationContext
 import widget.TopBar
 
 @Composable
-fun KubernetesInstanceScreen() {
+fun MinioInstanceScreen() {
     Column {
-        val k8sConfig: KubernetesConfig = navigationContext.value as KubernetesConfig
+        val minioConfig: MinioConfig = navigationContext.value as MinioConfig
         TopBar()
-        Text(text = "kubernetes ${k8sConfig.name}", fontSize = 40.sp)
+        Text(text = "minio ${minioConfig.name}", fontSize = 40.sp)
     }
 }

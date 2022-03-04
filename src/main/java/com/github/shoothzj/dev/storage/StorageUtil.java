@@ -35,8 +35,13 @@ public class StorageUtil {
 
     public static final String K8S_CONF_PATH = STORAGE_PREFIX + "kubernetes-conf.json";
 
+    public static final String BOOKKEEPER_CONF_PATH = STORAGE_PREFIX + "bookkeeper-conf.json";
+    public static final String CASSANDRA_CONF_PATH = STORAGE_PREFIX + "cassandra-conf.json";
+    public static final String MINIO_CONF_PATH = STORAGE_PREFIX + "minio-conf.json";
+    public static final String MYSQL_CONF_PATH = STORAGE_PREFIX + "mysql-conf.json";
     public static final String NGX_CONF_PATH = STORAGE_PREFIX + "nginx-conf.json";
-
+    public static final String PULSAR_CONF_PATH = STORAGE_PREFIX + "pulsar-conf.json";
+    public static final String REDIS_CONF_PATH = STORAGE_PREFIX + "redis-conf.json";
     public static final String ZK_CONF_PATH = STORAGE_PREFIX + "zookeeper-conf.json";
 
     static {
@@ -45,6 +50,12 @@ public class StorageUtil {
         FileUtil.ensureFileExists(K8S_CONF_PATH);
         FileUtil.ensureFileExists(NGX_CONF_PATH);
         FileUtil.ensureFileExists(ZK_CONF_PATH);
+        FileUtil.ensureFileExists(PULSAR_CONF_PATH);
+        FileUtil.ensureFileExists(BOOKKEEPER_CONF_PATH);
+        FileUtil.ensureFileExists(CASSANDRA_CONF_PATH);
+        FileUtil.ensureFileExists(MYSQL_CONF_PATH);
+        FileUtil.ensureFileExists(MINIO_CONF_PATH);
+        FileUtil.ensureFileExists(REDIS_CONF_PATH);
     }
 
 }

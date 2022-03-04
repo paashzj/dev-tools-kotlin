@@ -28,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.github.shoothzj.dev.module.config.MinioConfig
+import com.github.shoothzj.dev.storage.StorageCassandra
 import com.github.shoothzj.dev.storage.StorageK8s
 import com.github.shoothzj.dev.storage.StorageMinio
 import module.NavigationEnum

@@ -23,6 +23,8 @@ public class K8sCmdConst {
 
     public static final String GET_NODE_LIST = "kubectl get node -o wide";
 
+    public static final String GET_NODE_LIST_GREP = GET_NODE_LIST + LinuxCmdConst.GREP;
+
     public static final String DESCRIBE_NODE = "kubectl describe node %s";
 
     public static final String GET_STATEFUL_SET_LIST = "kubectl get statefulset -o wide -n %s";
@@ -32,6 +34,8 @@ public class K8sCmdConst {
     public static final String GET_SERVICE_LIST = "kubectl get service -o wide -n %s";
 
     public static final String GET_POD_LIST = "kubectl get pod -o wide -n %s";
+
+    public static final String GET_POD_LIST_GREP = GET_POD_LIST + LinuxCmdConst.GREP;
 
     public static final String DESCRIBE_POD = "kubectl describe pod %s -n %s";
 

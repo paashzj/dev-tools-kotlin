@@ -37,4 +37,27 @@ public class RedisConfig extends BaseConfig {
         this.statefulSetName = statefulSetName;
     }
 
+    public String getK8sName() {
+        return k8sName;
+    }
+
+    public void setK8sName(String k8sName) {
+        this.k8sName = k8sName;
+    }
+
+    public String getNamespace() {
+        return namespace;
+    }
+
+    public void setNamespace(String namespace) {
+        this.namespace = namespace;
+    }
+
+    public String getStatefulSetName() {
+        return statefulSetName;
+    }
+
+    public void setStatefulSetName(String statefulSetName) {
+        this.statefulSetName = statefulSetName;
+    }
 }

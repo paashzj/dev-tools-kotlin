@@ -43,9 +43,11 @@ fun ConfigPulsar() {
         errorState,
         dialogInputContent = {
             ConfigItemString(editPulsarName, R.strings.name, singleLine = true)
-            DropdownList(kubernetes, "k8s instance", editK8sInstanceName)
-            ConfigItemString(editPulsarNamespace, R.strings.namespace, singleLine = true)
-            ConfigItemString(editPulsarDeployName, R.strings.statefulSetName, singleLine = true)
+            DropdownList(kubernetes, "k8s ${R.strings.instance}", editK8sInstanceName)
+            ConfigGroupDeploy(
+                editPulsarNamespace,
+                editPulsarDeployName,
+            )
         },
         dialogConfirm = {
             StoragePulsar.getInstance().saveConfig(

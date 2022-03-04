@@ -35,7 +35,7 @@ fun ConfigMinio() {
     val editMinioName = mutableStateOf("default")
     val editK8sInstanceName = mutableStateOf("")
     val editMinioNamespace = mutableStateOf("default")
-    val editMinioDeployName = mutableStateOf("minio")
+    val editMinioStatefulSetName = mutableStateOf("minio")
     val kubernetes = StorageK8s.getInstance().listConfigNames()
     ConfigBase(
         "minio",
@@ -43,9 +43,11 @@ fun ConfigMinio() {
         errorState,
         dialogInputContent = {
             ConfigItemString(editMinioName, R.strings.name, singleLine = true)
-            DropdownList(kubernetes, "k8s instance", editK8sInstanceName)
-            ConfigItemString(editMinioNamespace, R.strings.namespace, singleLine = true)
-            ConfigItemString(editMinioDeployName, R.strings.statefulSetName, singleLine = true)
+            DropdownList(kubernetes, "k8s ${R.strings.instance}", editK8sInstanceName)
+            ConfigGroupStatefulSet(
+                editMinioNamespace,
+                editMinioStatefulSetName,
+            )
         },
         dialogConfirm = {
             StorageMinio.getInstance().saveConfig(
@@ -53,7 +55,7 @@ fun ConfigMinio() {
                     editMinioName.value,
                     editK8sInstanceName.value,
                     editMinioNamespace.value,
-                    editMinioDeployName.value,
+                    editMinioStatefulSetName.value,
                 )
             )
             minioList.value = StorageMinio.getInstance().listContent()

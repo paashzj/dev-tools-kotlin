@@ -35,7 +35,7 @@ fun ConfigCassandra() {
     val editCassandraName = mutableStateOf("default")
     val editK8sInstanceName = mutableStateOf("")
     val editCassandraNamespace = mutableStateOf("default")
-    val editCassandraDeployName = mutableStateOf("cassandra")
+    val editCassandraStatefulSetName = mutableStateOf("cassandra")
     val kubernetes = StorageK8s.getInstance().listConfigNames()
     ConfigBase(
         "cassandra",
@@ -43,9 +43,11 @@ fun ConfigCassandra() {
         errorState,
         dialogInputContent = {
             ConfigItemString(editCassandraName, R.strings.name, singleLine = true)
-            DropdownList(kubernetes, "k8s instance", editK8sInstanceName)
-            ConfigItemString(editCassandraNamespace, R.strings.namespace, singleLine = true)
-            ConfigItemString(editCassandraDeployName, R.strings.statefulSetName, singleLine = true)
+            DropdownList(kubernetes, "k8s ${R.strings.instance}", editK8sInstanceName)
+            ConfigGroupStatefulSet(
+                editCassandraNamespace,
+                editCassandraStatefulSetName,
+            )
         },
         dialogConfirm = {
             StorageCassandra.getInstance().saveConfig(
@@ -53,7 +55,7 @@ fun ConfigCassandra() {
                     editCassandraName.value,
                     editK8sInstanceName.value,
                     editCassandraNamespace.value,
-                    editCassandraDeployName.value,
+                    editCassandraStatefulSetName.value,
                 )
             )
             cassandraList.value = StorageCassandra.getInstance().listContent()

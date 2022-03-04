@@ -35,7 +35,7 @@ fun ConfigMysql() {
     val editMysqlName = mutableStateOf("default")
     val editK8sInstanceName = mutableStateOf("")
     val editMysqlNamespace = mutableStateOf("default")
-    val editMysqlDeployName = mutableStateOf("mysql")
+    val editMysqlStatefulSetName = mutableStateOf("mysql")
     val kubernetes = StorageK8s.getInstance().listConfigNames()
     ConfigBase(
         "mysql",
@@ -43,9 +43,11 @@ fun ConfigMysql() {
         errorState,
         dialogInputContent = {
             ConfigItemString(editMysqlName, R.strings.name, singleLine = true)
-            DropdownList(kubernetes, "k8s instance", editK8sInstanceName)
-            ConfigItemString(editMysqlNamespace, R.strings.namespace, singleLine = true)
-            ConfigItemString(editMysqlDeployName, R.strings.statefulSetName, singleLine = true)
+            DropdownList(kubernetes, "k8s ${R.strings.instance}", editK8sInstanceName)
+            ConfigGroupStatefulSet(
+                editMysqlNamespace,
+                editMysqlStatefulSetName,
+            )
         },
         dialogConfirm = {
             StorageMysql.getInstance().saveConfig(
@@ -53,7 +55,7 @@ fun ConfigMysql() {
                     editMysqlName.value,
                     editK8sInstanceName.value,
                     editMysqlNamespace.value,
-                    editMysqlDeployName.value,
+                    editMysqlStatefulSetName.value,
                 )
             )
             mysqlList.value = StorageMysql.getInstance().listContent()

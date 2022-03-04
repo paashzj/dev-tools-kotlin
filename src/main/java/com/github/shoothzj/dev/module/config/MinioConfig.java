@@ -25,16 +25,16 @@ public class MinioConfig extends BaseConfig {
 
     private String namespace;
 
-    private String deployName;
+    private String statefulSetName;
 
     public MinioConfig() {
     }
 
-    public MinioConfig(String name, String k8sName, String namespace, String deployName) {
+    public MinioConfig(String name, String k8sName, String namespace, String statefulSetName) {
         super(name);
         this.k8sName = k8sName;
         this.namespace = namespace;
-        this.deployName = deployName;
+        this.statefulSetName = statefulSetName;
     }
 
     public String getK8sName() {
@@ -53,11 +53,11 @@ public class MinioConfig extends BaseConfig {
         this.namespace = namespace;
     }
 
-    public String getDeployName() {
-        return deployName;
+    public String getStatefulSetName() {
+        return statefulSetName;
     }
 
-    public void setDeployName(String deployName) {
-        this.deployName = deployName;
+    public void setStatefulSetName(String statefulSetName) {
+        this.statefulSetName = statefulSetName;
     }
 }

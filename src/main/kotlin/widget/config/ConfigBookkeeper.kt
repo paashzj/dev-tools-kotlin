@@ -35,7 +35,7 @@ fun ConfigBookkeeper() {
     val editBookkeeperName = mutableStateOf("default")
     val editK8sInstanceName = mutableStateOf("")
     val editBookkeeperNamespace = mutableStateOf("default")
-    val editBookkeeperStatefulsetName = mutableStateOf("bookkeeper")
+    val editBookkeeperStatefulSetName = mutableStateOf("bookkeeper")
     val kubernetes = StorageK8s.getInstance().listConfigNames()
     ConfigBase(
         "bookkeeper",
@@ -43,9 +43,11 @@ fun ConfigBookkeeper() {
         errorState,
         dialogInputContent = {
             ConfigItemString(editBookkeeperName, R.strings.name, singleLine = true)
-            DropdownList(kubernetes, "k8s instance", editK8sInstanceName)
-            ConfigItemString(editBookkeeperNamespace, R.strings.namespace, singleLine = true)
-            ConfigItemString(editBookkeeperStatefulsetName, R.strings.statefulSetName, singleLine = true)
+            DropdownList(kubernetes, "k8s ${R.strings.instance}", editK8sInstanceName)
+            ConfigGroupStatefulSet(
+                editBookkeeperNamespace,
+                editBookkeeperStatefulSetName,
+            )
         },
         dialogConfirm = {
             StorageBookkeeper.getInstance().saveConfig(
@@ -53,7 +55,7 @@ fun ConfigBookkeeper() {
                     editBookkeeperName.value,
                     editK8sInstanceName.value,
                     editBookkeeperNamespace.value,
-                    editBookkeeperStatefulsetName.value,
+                    editBookkeeperStatefulSetName.value,
                 )
             )
             bookkeeperList.value = StorageBookkeeper.getInstance().listContent()

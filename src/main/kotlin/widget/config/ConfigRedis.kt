@@ -35,7 +35,7 @@ fun ConfigRedis() {
     val editRedisName = mutableStateOf("default")
     val editK8sInstanceName = mutableStateOf("")
     val editRedisNamespace = mutableStateOf("default")
-    val editRedisDeployName = mutableStateOf("redis")
+    val editRedisStatefulSetName = mutableStateOf("redis")
     val kubernetes = StorageK8s.getInstance().listConfigNames()
     ConfigBase(
         "redis",
@@ -43,9 +43,11 @@ fun ConfigRedis() {
         errorState,
         dialogInputContent = {
             ConfigItemString(editRedisName, R.strings.name, singleLine = true)
-            DropdownList(kubernetes, "k8s instance", editK8sInstanceName)
-            ConfigItemString(editRedisNamespace, R.strings.namespace, singleLine = true)
-            ConfigItemString(editRedisDeployName, R.strings.statefulSetName, singleLine = true)
+            DropdownList(kubernetes, "k8s ${R.strings.instance}", editK8sInstanceName)
+            ConfigGroupStatefulSet(
+                editRedisNamespace,
+                editRedisStatefulSetName,
+            )
         },
         dialogConfirm = {
             StorageRedis.getInstance().saveConfig(
@@ -53,7 +55,7 @@ fun ConfigRedis() {
                     editRedisName.value,
                     editK8sInstanceName.value,
                     editRedisNamespace.value,
-                    editRedisDeployName.value,
+                    editRedisStatefulSetName.value,
                 )
             )
             redisList.value = StorageRedis.getInstance().listContent()

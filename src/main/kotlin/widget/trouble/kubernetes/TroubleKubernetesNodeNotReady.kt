@@ -23,27 +23,34 @@ import com.github.shoothzj.dev.storage.StorageK8s
 import widget.component.DropdownList
 import widget.config.ConfigGroupKubernetes
 import widget.config.ConfigItemString
+import widget.trouble.TroubleShootBase
 
 @Composable
 fun TroubleKubernetesNotReady() {
-    val k8sNameList = StorageK8s.getInstance().listConfigNames()
-    val editKubernetesNodeName = mutableStateOf("")
-    DropdownList(k8sNameList, "kubernetes ${R.strings.instance}", editKubernetesInstanceName)
-    ConfigGroupKubernetes(
-        editKubernetesHost,
-        editKubernetesPort,
-        editKubernetesUsername,
-        editKubernetesPassword,
-        editKubernetesRootPassword
+    TroubleShootBase(
+        content = {
+            val k8sNameList = StorageK8s.getInstance().listConfigNames()
+            val editKubernetesNodeName = mutableStateOf("")
+            DropdownList(k8sNameList, "kubernetes ${R.strings.instance}", editKubernetesInstanceName)
+            ConfigGroupKubernetes(
+                editKubernetesHost,
+                editKubernetesPort,
+                editKubernetesUsername,
+                editKubernetesPassword,
+                editKubernetesRootPassword
+            )
+            ConfigItemString(editKubernetesNodeName, R.strings.kubernetesNodeName, singleLine = true)
+            if (editKubernetesInstanceName.value != "") {
+                val kubernetesConfig = StorageK8s.getInstance().getConfig(editKubernetesInstanceName.value)
+                editKubernetesHost.value = kubernetesConfig.host
+                editKubernetesPort.value = kubernetesConfig.port.toString()
+                val sshStep = kubernetesConfig.sshStep
+                editKubernetesUsername.value = sshStep.username
+                editKubernetesPassword.value = sshStep.password
+                editKubernetesRootPassword.value = if (sshStep.suPassword == null) "" else sshStep.suPassword
+            }
+        },
+        result = {
+        },
     )
-    ConfigItemString(editKubernetesNodeName, R.strings.kubernetesNodeName, singleLine = true)
-    if (editKubernetesInstanceName.value != "") {
-        val kubernetesConfig = StorageK8s.getInstance().getConfig(editKubernetesInstanceName.value)
-        editKubernetesHost.value = kubernetesConfig.host
-        editKubernetesPort.value = kubernetesConfig.port.toString()
-        val sshStep = kubernetesConfig.sshStep
-        editKubernetesUsername.value = sshStep.username
-        editKubernetesPassword.value = sshStep.password
-        editKubernetesRootPassword.value = if (sshStep.suPassword == null) "" else sshStep.suPassword
-    }
 }

@@ -23,32 +23,39 @@ import com.github.shoothzj.dev.storage.StorageZooKeeper
 import widget.component.DropdownList
 import widget.config.ConfigGroupKubernetes
 import widget.config.ConfigGroupStatefulSet
+import widget.trouble.TroubleShootBase
 
 @Composable
 fun TroubleZooKeeperClusterInitFail() {
-    val zooKeeperNameList = StorageZooKeeper.getInstance().listConfigNames()
-    DropdownList(zooKeeperNameList, "zookeeper ${R.strings.instance}", editZooKeeperInstanceName)
-    ConfigGroupKubernetes(
-        editKubernetesHost,
-        editKubernetesPort,
-        editKubernetesUsername,
-        editKubernetesPassword,
-        editKubernetesRootPassword
+    TroubleShootBase(
+        content = {
+            val zooKeeperNameList = StorageZooKeeper.getInstance().listConfigNames()
+            DropdownList(zooKeeperNameList, "zookeeper ${R.strings.instance}", editZooKeeperInstanceName)
+            ConfigGroupKubernetes(
+                editKubernetesHost,
+                editKubernetesPort,
+                editKubernetesUsername,
+                editKubernetesPassword,
+                editKubernetesRootPassword
+            )
+            ConfigGroupStatefulSet(
+                editZooKeeperNamespace,
+                editZooKeeperStatefulSetName,
+            )
+            if (editZooKeeperInstanceName.value != "") {
+                val zooKeeperConfig = StorageZooKeeper.getInstance().getConfig(editZooKeeperInstanceName.value)
+                editZooKeeperNamespace.value = zooKeeperConfig.namespace
+                editZooKeeperStatefulSetName.value = zooKeeperConfig.statefulSetName
+                val kubernetesConfig = StorageK8s.getInstance().getConfig(zooKeeperConfig.k8sName)
+                editKubernetesHost.value = kubernetesConfig.host
+                editKubernetesPort.value = kubernetesConfig.port.toString()
+                val sshStep = kubernetesConfig.sshStep
+                editKubernetesUsername.value = sshStep.username
+                editKubernetesPassword.value = sshStep.password
+                editKubernetesRootPassword.value = if (sshStep.suPassword == null) "" else sshStep.suPassword
+            }
+        },
+        result = {
+        },
     )
-    ConfigGroupStatefulSet(
-        editZooKeeperNamespace,
-        editZooKeeperStatefulSetName,
-    )
-    if (editZooKeeperInstanceName.value != "") {
-        val zooKeeperConfig = StorageZooKeeper.getInstance().getConfig(editZooKeeperInstanceName.value)
-        editZooKeeperNamespace.value = zooKeeperConfig.namespace
-        editZooKeeperStatefulSetName.value = zooKeeperConfig.statefulSetName
-        val kubernetesConfig = StorageK8s.getInstance().getConfig(zooKeeperConfig.k8sName)
-        editKubernetesHost.value = kubernetesConfig.host
-        editKubernetesPort.value = kubernetesConfig.port.toString()
-        val sshStep = kubernetesConfig.sshStep
-        editKubernetesUsername.value = sshStep.username
-        editKubernetesPassword.value = sshStep.password
-        editKubernetesRootPassword.value = if (sshStep.suPassword == null) "" else sshStep.suPassword
-    }
 }

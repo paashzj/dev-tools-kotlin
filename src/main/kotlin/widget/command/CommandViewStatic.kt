@@ -36,7 +36,6 @@ fun CommandViewStatic(commandDto: CommandDto) {
             Text(subCommands.category, fontSize = 30.sp)
             repeat(subCommands.commands.size) { iit ->
                 val command = subCommands.commands[iit]
-                // let we do the replacement
                 command.value.value = command.template
                 OutlinedTextField(
                     value = command.value.value,

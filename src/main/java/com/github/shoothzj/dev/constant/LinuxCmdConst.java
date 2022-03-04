@@ -23,4 +23,8 @@ public class LinuxCmdConst {
 
     public static final String FREE_MEMORY = "free -m";
 
+    public static final String SSH = "ssh %s";
+
+    public static final String GREP = "| grep %s";
+
 }

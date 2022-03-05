@@ -31,7 +31,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.github.shoothzj.dev.util.LogUtil
-import constat.PixelConst
+import constant.PixelConst
 import module.NavigationEnum
 import widget.DrawContent
 import widget.TopBar

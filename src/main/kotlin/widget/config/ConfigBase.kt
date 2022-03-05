@@ -33,8 +33,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.rememberDialogState
-import constat.PixelConst
-import constat.PixelConst.Companion.configDialogSize
+import constant.PixelConst
+import constant.PixelConst.Companion.configDialogSize
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

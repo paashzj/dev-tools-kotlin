@@ -19,7 +19,9 @@ package widget.trouble
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -31,10 +33,10 @@ fun TroubleShootBase(
     result: @Composable () -> Unit,
 ): @Composable Unit {
     Row {
-        Column(modifier = Modifier.weight(1f)) {
+        Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(1f)) {
             content()
         }
-        Column(modifier = Modifier.weight(2f)) {
+        Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(2f)) {
             Text(R.strings.troubleShootResult, fontSize = 40.sp)
             SelectionContainer {
                 result()

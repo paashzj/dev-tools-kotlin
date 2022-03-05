@@ -47,6 +47,8 @@ interface Strings {
     val dismiss: String
     val encode: String
     val homePage: String
+    val httpMethods: String
+    val httpRequestUrl: String
     val instance: String
     val kubernetesNodeName: String
     val match: String
@@ -119,6 +121,10 @@ object EnStrings : Strings {
         get() = "encode"
     override val homePage: String
         get() = "home page"
+    override val httpMethods: String
+        get() = "http methods"
+    override val httpRequestUrl: String
+        get() = "http request url"
     override val instance: String
         get() = "instance"
     override val kubernetesNodeName: String
@@ -218,6 +224,10 @@ object ChStrings : Strings {
         get() = "编码"
     override val homePage: String
         get() = "主界面"
+    override val httpMethods: String
+        get() = "http 方法"
+    override val httpRequestUrl: String
+        get() = "http 请求 url"
     override val instance: String
         get() = "实例"
     override val kubernetesNodeName: String

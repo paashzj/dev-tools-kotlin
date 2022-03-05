@@ -18,15 +18,20 @@
 package widget.trouble.nginx
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import com.github.shoothzj.dev.storage.StorageK8s
 import com.github.shoothzj.dev.storage.StorageNginx
 import widget.component.DropdownList
 import widget.config.ConfigGroupDeploy
 import widget.config.ConfigGroupKubernetes
+import widget.config.ConfigHttpMethod
+import widget.config.ConfigItemString
 import widget.trouble.TroubleShootBase
 
 @Composable
 fun TroubleNginxHttp() {
+    val httpRequestUrl = mutableStateOf("/example")
+    val httpRequestMethod = mutableStateOf("")
     TroubleShootBase(
         content = {
             val nginxNameList = StorageNginx.getInstance().listConfigNames()
@@ -42,10 +47,18 @@ fun TroubleNginxHttp() {
                 editNginxNamespace,
                 editNginxDeployName,
             )
+            ConfigItemString(
+                httpRequestUrl,
+                R.strings.httpRequestUrl,
+                singleLine = true
+            )
+            ConfigHttpMethod(
+                httpRequestMethod,
+            )
             if (editNginxInstanceName.value != "") {
                 val nginxConfig = StorageNginx.getInstance().getConfig(editNginxInstanceName.value)
                 editNginxNamespace.value = nginxConfig.namespace
-                editNginxDeployName.value = nginxConfig.deployName
+                httpRequestUrl.value = nginxConfig.deployName
                 val kubernetesConfig = StorageK8s.getInstance().getConfig(nginxConfig.k8sName)
                 editKubernetesHost.value = kubernetesConfig.host
                 editKubernetesPort.value = kubernetesConfig.port.toString()

@@ -141,6 +141,12 @@ public class SshClient {
         return SshUtil.deleteFirstLastLine(strings);
     }
 
+    public void jump(String host, String password) throws Exception {
+        execute(LinuxCmdConst.SSH, 20, host);
+        execute("yes", 15);
+        execute(password, 10);
+    }
+
     /**
      * used when you have already login to a k8s machine
      * @param nodeName

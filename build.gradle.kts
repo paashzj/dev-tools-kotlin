@@ -102,6 +102,20 @@ jacoco {
 }
 
 tasks.jacocoTestReport {
+    classDirectories.setFrom(
+        files(classDirectories.files.map {
+            fileTree(it) {
+                exclude(
+                    "com/github/shoothzj/dev/test/**",
+                    "constant/**",
+                    "module/**",
+                    "widget/**",
+                    "R/**",
+                    "**MainKt**"
+                )
+            }
+        })
+    )
     reports {
         xml.required.set(true)
         xml.outputLocation.set(layout.buildDirectory.file("jacocoXml/report.xml"))

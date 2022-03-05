@@ -15,7 +15,7 @@
  * limitations under the license.
  */
 
-package constat
+package constant
 
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize

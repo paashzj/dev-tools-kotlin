@@ -28,7 +28,26 @@ import java.util.List;
 public class KubectlPodResultParserTest {
 
     @Test
-    public void testParseKubectlPodResultSuccess() throws Exception {
+    public void testParseKubectlPodResultSuccessCase1() throws Exception {
+        List<KubectlPodResult> kubectlPodResultList = KubectlPodResultParser.parseFull(List.of(
+                "NAME                         READY   STATUS    RESTARTS        AGE   IP"
+                        + "           NODE       NOMINATED NODE   READINESS GATES",
+                "network-7cf6bdcb86-pc2w2     1/1     Running   2   50d"
+                        + "   172.17.0.4   minikube   <none>           <none>",
+                "zookeeper-54947bdd6b-xpnks   1/1     Running   2   50d"
+                        + "   172.17.0.3   minikube   <none>           <none>"
+        ));
+        Assert.assertEquals(kubectlPodResultList.size(), 2);
+        KubectlPodResult networkPod = kubectlPodResultList.get(0);
+        Assert.assertEquals(networkPod.getPodName(), "network-7cf6bdcb86-pc2w2");
+        Assert.assertTrue(networkPod.isReady());
+        KubectlPodResult zooKeeperPod = kubectlPodResultList.get(1);
+        Assert.assertEquals(zooKeeperPod.getPodName(), "zookeeper-54947bdd6b-xpnks");
+        Assert.assertTrue(zooKeeperPod.isReady());
+    }
+
+    @Test
+    public void testParseKubectlPodResultSuccessCase2() throws Exception {
         List<KubectlPodResult> kubectlPodResultList = KubectlPodResultParser.parseFull(List.of(
                 "NAME                         READY   STATUS    RESTARTS        AGE   IP"
                         + "           NODE       NOMINATED NODE   READINESS GATES",

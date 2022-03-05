@@ -19,11 +19,15 @@
 
 package com.github.shoothzj.dev.util;
 
+import com.github.shoothzj.dev.constant.K8sCmdConst;
 import com.github.shoothzj.dev.constant.LinuxCmdConst;
 import com.github.shoothzj.dev.module.shell.FreeMemoryResult;
+import com.github.shoothzj.dev.module.shell.KubectlNodeResult;
 import com.github.shoothzj.dev.shell.FreeMemoryResultParser;
+import com.github.shoothzj.dev.shell.KubectlNodeResultParser;
 import com.github.shoothzj.javatool.util.CommonUtil;
 import com.github.shoothzj.javatool.util.IoUtil;
+import com.github.shoothzj.sdk.net.Ipv4Util;
 import com.jcraft.jsch.ChannelShell;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
@@ -35,6 +39,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -87,6 +92,10 @@ public class SshClient {
         return stringList.get(0);
     }
 
+    public List<String> execute(String cmd, int timeoutSeconds, Object... args) throws Exception {
+        return this.execute(String.format(cmd, args), timeoutSeconds);
+    }
+
     /**
      * the output format is
      * ```
@@ -130,6 +139,33 @@ public class SshClient {
         List<String> strings = Arrays.asList(str.split("\\n"));
         log.debug("execute over, result is {}", str);
         return SshUtil.deleteFirstLastLine(strings);
+    }
+
+    /**
+     * used when you have already login to a k8s machine
+     * @param nodeName
+     */
+    public String getNodeHost(String nodeName, int timeoutSeconds) throws Exception {
+        if (Ipv4Util.isValidIp(nodeName)) {
+            return nodeName;
+        } else {
+            KubectlNodeResult nodeResult = getNode(nodeName, timeoutSeconds);
+            return nodeResult.getInternalIp();
+        }
+    }
+
+    /**
+     * used when you have already login to a k8s machine
+     * @param nodeName
+     */
+    public KubectlNodeResult getNode(String nodeName, int timeoutSeconds) throws Exception {
+        List<KubectlNodeResult> nodeResultList = KubectlNodeResultParser.parseBody(
+                execute(K8sCmdConst.GET_NODE_LIST_GREP, timeoutSeconds, nodeName));
+        Optional<KubectlNodeResult> kubectlNodeResult = nodeResultList.stream().findFirst();
+        if (kubectlNodeResult.isEmpty()) {
+            throw new Exception(String.format("kubernetes node %s not exists", nodeName));
+        }
+        return kubectlNodeResult.get();
     }
 
     public void close() {

@@ -19,6 +19,9 @@
 
 package com.github.shoothzj.dev.constant;
 
+import com.github.shoothzj.javatool.util.StringUtil;
+import org.jetbrains.annotations.NotNull;
+
 public class K8sCmdConst {
 
     public static final String GET_NODE_LIST = "kubectl get node -o wide";
@@ -38,5 +41,29 @@ public class K8sCmdConst {
     public static final String GET_POD_LIST_GREP = GET_POD_LIST + LinuxCmdConst.GREP;
 
     public static final String DESCRIBE_POD = "kubectl describe pod %s -n %s";
+
+    @NotNull
+    public static String podListCmd(@NotNull String namespace) {
+        return String.format(GET_POD_LIST, namespaceHelper(namespace));
+    }
+
+    @NotNull
+    public static String podListGrepCmd(@NotNull String namespace, @NotNull String grepWord) {
+        return String.format(GET_POD_LIST_GREP, namespaceHelper(namespace), grepWord);
+    }
+
+    @NotNull
+    public static String describePodCmd(@NotNull String namespace, @NotNull String podName) {
+        return String.format(DESCRIBE_POD, podName, namespaceHelper(namespace));
+    }
+
+    @NotNull
+    private static String namespaceHelper(@NotNull String namespace) {
+        if (StringUtil.isBlank(namespace)) {
+            return "default";
+        } else {
+            return namespace;
+        }
+    }
 
 }

@@ -41,28 +41,53 @@ public class KubectlPodResultParser {
         List<KubectlPodResult> list = new ArrayList<>();
         for (String s : body) {
             String[] fields = StringTool.fields(s);
-            if (fields.length < 6) {
-                log.warn("get pod line: {}, length not correct", s);
-                continue;
+            if (s.contains(" ago)")) {
+                if (fields.length < 8) {
+                    log.warn("get pod line: {}, length not correct", s);
+                    continue;
+                }
+                if (!Ipv4Util.isValidIp(fields[7])) {
+                    log.warn("get pod line: {}, field 7 is not valid ip", s);
+                    continue;
+                }
+                KubectlPodResult kubectlPodResult = new KubectlPodResult();
+                kubectlPodResult.setPodName(fields[0]);
+                kubectlPodResult.setReady(fields[1].equals("1/1"));
+                switch (fields[2]) {
+                    case "ImagePullBackOff" -> kubectlPodResult.setStatus(KubectlPodStatusEnum.ImagePullBackOff);
+                    case "Running" -> kubectlPodResult.setStatus(KubectlPodStatusEnum.Running);
+                    case "Terminating" -> kubectlPodResult.setStatus(KubectlPodStatusEnum.Terminating);
+                    default -> kubectlPodResult.setStatus(KubectlPodStatusEnum.Unknown);
+                }
+                kubectlPodResult.setRestarts(fields[3]);
+                kubectlPodResult.setAge(fields[6]);
+                kubectlPodResult.setIp(fields[7]);
+                kubectlPodResult.setNode(fields[8]);
+                list.add(kubectlPodResult);
+            } else {
+                if (fields.length < 6) {
+                    log.warn("get pod line: {}, length not correct", s);
+                    continue;
+                }
+                if (!Ipv4Util.isValidIp(fields[5])) {
+                    log.warn("get pod line: {}, field 5 is not valid ip", s);
+                    continue;
+                }
+                KubectlPodResult kubectlPodResult = new KubectlPodResult();
+                kubectlPodResult.setPodName(fields[0]);
+                kubectlPodResult.setReady(fields[1].equals("1/1"));
+                switch (fields[2]) {
+                    case "ImagePullBackOff" -> kubectlPodResult.setStatus(KubectlPodStatusEnum.ImagePullBackOff);
+                    case "Running" -> kubectlPodResult.setStatus(KubectlPodStatusEnum.Running);
+                    case "Terminating" -> kubectlPodResult.setStatus(KubectlPodStatusEnum.Terminating);
+                    default -> kubectlPodResult.setStatus(KubectlPodStatusEnum.Unknown);
+                }
+                kubectlPodResult.setRestarts(fields[3]);
+                kubectlPodResult.setAge(fields[4]);
+                kubectlPodResult.setIp(fields[5]);
+                kubectlPodResult.setNode(fields[6]);
+                list.add(kubectlPodResult);
             }
-            if (!Ipv4Util.isValidIp(fields[5])) {
-                log.warn("get pod line: {}, field 5 is not valid ip", s);
-                continue;
-            }
-            KubectlPodResult kubectlPodResult = new KubectlPodResult();
-            kubectlPodResult.setPodName(fields[0]);
-            kubectlPodResult.setReady(fields[1].equals("1/1"));
-            switch (fields[2]) {
-                case "ImagePullBackOff" -> kubectlPodResult.setStatus(KubectlPodStatusEnum.ImagePullBackOff);
-                case "Running" -> kubectlPodResult.setStatus(KubectlPodStatusEnum.Running);
-                case "Terminating" -> kubectlPodResult.setStatus(KubectlPodStatusEnum.Terminating);
-                default -> kubectlPodResult.setStatus(KubectlPodStatusEnum.Unknown);
-            }
-            kubectlPodResult.setRestarts(fields[3]);
-            kubectlPodResult.setAge(fields[4]);
-            kubectlPodResult.setIp(fields[5]);
-            kubectlPodResult.setNode(fields[6]);
-            list.add(kubectlPodResult);
         }
         return list;
     }

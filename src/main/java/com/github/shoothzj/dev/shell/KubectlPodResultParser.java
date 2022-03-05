@@ -22,11 +22,16 @@ package com.github.shoothzj.dev.shell;
 import com.github.shoothzj.dev.module.shell.KubectlPodResult;
 import com.github.shoothzj.dev.module.shell.KubectlPodStatusEnum;
 import com.github.shoothzj.dev.util.StringTool;
+import com.github.shoothzj.sdk.net.Ipv4Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class KubectlPodResultParser {
+
+    private static final Logger log = LoggerFactory.getLogger(KubectlPodResultParser.class);
 
     public static List<KubectlPodResult> parseFull(List<String> body) throws Exception {
         return parseBody(body.subList(1, body.size()));
@@ -36,6 +41,14 @@ public class KubectlPodResultParser {
         List<KubectlPodResult> list = new ArrayList<>();
         for (String s : body) {
             String[] fields = StringTool.fields(s);
+            if (fields.length < 6) {
+                log.warn("get pod line: {}, length not correct", s);
+                continue;
+            }
+            if (!Ipv4Util.isValidIp(fields[5])) {
+                log.warn("get pod line: {}, field 5 is not valid ip", s);
+                continue;
+            }
             KubectlPodResult kubectlPodResult = new KubectlPodResult();
             kubectlPodResult.setPodName(fields[0]);
             kubectlPodResult.setReady(fields[1].equals("1/1"));

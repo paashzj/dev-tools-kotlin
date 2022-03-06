@@ -40,18 +40,18 @@ repositories {
 dependencies {
     implementation(compose.desktop.currentOs)
     // middleware
-    implementation("org.apache.kafka:kafka-clients:2.4.0")
+    implementation("org.apache.kafka:kafka-clients:3.1.0")
     // ssh
     implementation("com.github.mwiede:jsch:0.2.0")
     // codec
-    implementation("com.github.shoothzj:test-pulsar:3.1.8")
-    implementation("com.github.shoothzj:test-kafka:3.1.8")
-    implementation("com.github.shoothzj:test-zookeeper:3.1.8")
-    implementation("com.github.shoothzj:sdk-net:3.1.8")
-    implementation("com.github.shoothzj:java-tool:3.1.8")
+    implementation("com.github.shoothzj:test-pulsar:3.1.9")
+    implementation("com.github.shoothzj:test-kafka:3.1.9")
+    implementation("com.github.shoothzj:test-zookeeper:3.1.9")
+    implementation("com.github.shoothzj:sdk-net:3.1.9")
+    implementation("com.github.shoothzj:java-tool:3.1.9")
     // log
-    implementation("org.apache.logging.log4j:log4j-core:2.17.0")
-    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.17.0")
+    implementation("org.apache.logging.log4j:log4j-core:2.17.2")
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.17.2")
     implementation("org.jacoco:org.jacoco.core:0.8.7")
     // test
     testImplementation("org.apache.sshd:sshd-core:2.8.0")

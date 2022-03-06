@@ -25,8 +25,8 @@ import org.testng.annotations.Test;
 public class ValidateUtilTest {
 
     @Test
-    public void invalidHostname() {
-        Assert.assertTrue(ValidateUtil.isNotHost("localhost.abc"));
+    public void validHostname() {
+        Assert.assertTrue(ValidateUtil.isHost("localhost.abc"));
     }
 
     @Test
@@ -47,6 +47,16 @@ public class ValidateUtilTest {
     @Test
     public void invalidPortBig() {
         Assert.assertTrue(ValidateUtil.isNotPort("65536"));
+    }
+
+    @Test
+    public void validLocalHost() {
+        Assert.assertTrue(ValidateUtil.isHost("localhost"));
+    }
+
+    @Test
+    public void invalidHostName() {
+        Assert.assertFalse(ValidateUtil.isHost("$4dfsas"));
     }
 
 }

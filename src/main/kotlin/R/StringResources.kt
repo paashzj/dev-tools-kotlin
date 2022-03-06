@@ -34,10 +34,12 @@ interface Strings {
     val addNginxInstance: String
     val backHome: String
     val Commands: String
+    val close: String
     val commandPage: String
     val componentList: String
     val config: String
     val confirm: String
+    val connect: String
     val content: String
     val convertPage: String
     val decode: String
@@ -95,6 +97,8 @@ object EnStrings : Strings {
         get() = "back home"
     override val Commands: String
         get() = "Commands"
+    override val close: String
+        get() = "close"
     override val commandPage: String
         get() = "command page"
     override val componentList: String
@@ -103,6 +107,8 @@ object EnStrings : Strings {
         get() = "config"
     override val confirm: String
         get() = "confirm"
+    override val connect: String
+        get() = "connect"
     override val content: String
         get() = "content"
     override val convertPage: String
@@ -198,6 +204,8 @@ object ChStrings : Strings {
         get() = "回到主页"
     override val Commands: String
         get() = "命令"
+    override val close: String
+        get() = "关闭"
     override val commandPage: String
         get() = "命令界面"
     override val componentList: String
@@ -206,6 +214,8 @@ object ChStrings : Strings {
         get() = "配置"
     override val confirm: String
         get() = "确认"
+    override val connect: String
+        get() = "连接"
     override val content: String
         get() = "内容"
     override val convertPage: String

@@ -27,4 +27,6 @@ public class LinuxCmdConst {
 
     public static final String GREP = "| grep %s";
 
+    public static final String PORT_LISTEN = "netstat -lnp";
+
 }

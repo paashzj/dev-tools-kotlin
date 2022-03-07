@@ -63,7 +63,7 @@ fun TroubleNginxHttp() {
             if (editNginxInstanceName.value != "") {
                 val nginxConfig = StorageNginx.getInstance().getConfig(editNginxInstanceName.value)
                 editNginxNamespace.value = nginxConfig.namespace
-                httpRequestUrl.value = nginxConfig.deployName
+                editNginxDeployName.value = nginxConfig.deployName
                 val kubernetesConfig = StorageK8s.getInstance().getConfig(nginxConfig.k8sName)
                 editKubernetesHost.value = kubernetesConfig.host
                 editKubernetesPort.value = kubernetesConfig.port.toString()

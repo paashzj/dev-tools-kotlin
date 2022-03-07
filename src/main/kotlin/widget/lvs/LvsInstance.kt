@@ -15,19 +15,21 @@
  * limitations under the license.
  */
 
-package module
+package widget.lvs
 
-enum class ConfigEnum {
-    Kubernetes,
-    // vm application
-    Lvs,
-    // container application
-    Bookkeeper,
-    Cassandra,
-    Minio,
-    MySql,
-    Nginx,
-    Pulsar,
-    Redis,
-    ZooKeeper,
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.sp
+import com.github.shoothzj.dev.module.config.LvsConfig
+import navigationContext
+import widget.TopBar
+
+@Composable
+fun LvsInstanceScreen() {
+    Column {
+        val lvsConfig: LvsConfig = navigationContext.value as LvsConfig
+        TopBar()
+        Text(text = "lvs ${lvsConfig.name}", fontSize = 40.sp)
+    }
 }

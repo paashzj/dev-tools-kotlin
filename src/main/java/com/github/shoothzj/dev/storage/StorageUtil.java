@@ -33,16 +33,18 @@ public class StorageUtil {
 
     public static final String STORAGE_PREFIX = STORAGE_DIR + File.separator;
 
-    public static final String K8S_CONF_PATH = STORAGE_PREFIX + "kubernetes-conf.json";
+    public static final String K8S_CONF_PATH = STORAGE_PREFIX + "kubernetes-conf-v1.json";
 
-    public static final String BOOKKEEPER_CONF_PATH = STORAGE_PREFIX + "bookkeeper-conf.json";
-    public static final String CASSANDRA_CONF_PATH = STORAGE_PREFIX + "cassandra-conf.json";
-    public static final String MINIO_CONF_PATH = STORAGE_PREFIX + "minio-conf.json";
-    public static final String MYSQL_CONF_PATH = STORAGE_PREFIX + "mysql-conf.json";
-    public static final String NGX_CONF_PATH = STORAGE_PREFIX + "nginx-conf.json";
-    public static final String PULSAR_CONF_PATH = STORAGE_PREFIX + "pulsar-conf.json";
-    public static final String REDIS_CONF_PATH = STORAGE_PREFIX + "redis-conf.json";
-    public static final String ZK_CONF_PATH = STORAGE_PREFIX + "zookeeper-conf.json";
+    public static final String BOOKKEEPER_CONF_PATH = STORAGE_PREFIX + "bookkeeper-conf-v1.json";
+    public static final String CASSANDRA_CONF_PATH = STORAGE_PREFIX + "cassandra-conf-v1.json";
+    public static final String MINIO_CONF_PATH = STORAGE_PREFIX + "minio-conf-v1.json";
+    public static final String MYSQL_CONF_PATH = STORAGE_PREFIX + "mysql-conf-v1.json";
+    public static final String NGX_CONF_PATH = STORAGE_PREFIX + "nginx-conf-v1.json";
+    public static final String PULSAR_CONF_PATH = STORAGE_PREFIX + "pulsar-conf-v1.json";
+    public static final String REDIS_CONF_PATH = STORAGE_PREFIX + "redis-conf-v1.json";
+    public static final String ZK_CONF_PATH = STORAGE_PREFIX + "zookeeper-conf-v1.json";
+
+    public static final String LVS_CONF_PATH = STORAGE_PREFIX + "lvs-conf-v1.json";
 
     static {
         File storageDir = new File(STORAGE_DIR);
@@ -58,6 +60,8 @@ public class StorageUtil {
         FileUtil.ensureFileExists(PULSAR_CONF_PATH);
         FileUtil.ensureFileExists(REDIS_CONF_PATH);
         FileUtil.ensureFileExists(ZK_CONF_PATH);
+
+        FileUtil.ensureFileExists(LVS_CONF_PATH);
     }
 
 }

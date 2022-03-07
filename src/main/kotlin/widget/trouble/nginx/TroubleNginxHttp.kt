@@ -24,6 +24,7 @@ import com.github.shoothzj.dev.storage.StorageNginx
 import widget.component.DropdownList
 import widget.config.ConfigGroupDeploy
 import widget.config.ConfigGroupKubernetes
+import widget.config.ConfigHttpCode
 import widget.config.ConfigHttpMethod
 import widget.config.ConfigItemString
 import widget.trouble.TroubleShootBase
@@ -32,6 +33,7 @@ import widget.trouble.TroubleShootBase
 fun TroubleNginxHttp() {
     val httpRequestUrl = mutableStateOf("/example")
     val httpRequestMethod = mutableStateOf("")
+    val httpCode = mutableStateOf("")
     TroubleShootBase(
         content = {
             val nginxNameList = StorageNginx.getInstance().listConfigNames()
@@ -54,6 +56,9 @@ fun TroubleNginxHttp() {
             )
             ConfigHttpMethod(
                 httpRequestMethod,
+            )
+            ConfigHttpCode(
+                httpCode,
             )
             if (editNginxInstanceName.value != "") {
                 val nginxConfig = StorageNginx.getInstance().getConfig(editNginxInstanceName.value)

@@ -17,11 +17,6 @@
 
 package module
 
-enum class TroubleEnum {
-    Kubernetes,
-    // vm application
-    Lvs,
-    // container application
-    Nginx,
-    ZooKeeper,
+enum class TroubleLvsEnum {
+    VIRTUAL_IP_DETECT,
 }

@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import module.TroubleEnum
 import widget.component.RowPaddingButton
 import widget.trouble.kubernetes.TroubleKubernetes
+import widget.trouble.lvs.TroubleLvs
 import widget.trouble.nginx.TroubleNginx
 import widget.trouble.zookeeper.TroubleZooKeeper
 
@@ -40,6 +41,11 @@ fun TroubleShootScreen() {
             TroubleEnum.Kubernetes -> {
                 TroubleKubernetes()
             }
+            // vm application
+            TroubleEnum.Lvs -> {
+                TroubleLvs()
+            }
+            // container application
             TroubleEnum.Nginx -> {
                 TroubleNginx()
             }
@@ -61,6 +67,15 @@ fun Head(idx: MutableState<TroubleEnum>) {
         ) {
             Text(text = "Kubernetes")
         }
+        // vm application
+        RowPaddingButton(
+            onClick = {
+                idx.value = TroubleEnum.Lvs
+            },
+        ) {
+            Text(text = "Lvs")
+        }
+        // container application
         RowPaddingButton(
             onClick = {
                 idx.value = TroubleEnum.Nginx

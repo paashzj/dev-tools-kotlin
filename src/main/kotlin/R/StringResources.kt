@@ -73,6 +73,7 @@ interface Strings {
     val simulatorPage: String
     val TroubleComponent: String
     val TroubleSceneKubernetesNodeNotReady: String
+    val TroubleSceneLvsVirtualIpDetect: String
     val TroubleSceneNginxHttpRequestFail: String
     val TroubleSceneZooKeeperClusterInitFail: String
     val troubleShootPage: String
@@ -176,6 +177,8 @@ object EnStrings : Strings {
         get() = "Trouble Component"
     override val TroubleSceneKubernetesNodeNotReady: String
         get() = "Kubernetes node not ready"
+    override val TroubleSceneLvsVirtualIpDetect: String
+        get() = "Lvs Virtual Ip detect"
     override val TroubleSceneNginxHttpRequestFail: String
         get() = "Nginx Http Request Fail"
     override val TroubleSceneZooKeeperClusterInitFail: String
@@ -285,6 +288,8 @@ object ChStrings : Strings {
         get() = "问题定位组件"
     override val TroubleSceneKubernetesNodeNotReady: String
         get() = "Kubernetes 节点 Not Ready"
+    override val TroubleSceneLvsVirtualIpDetect: String
+        get() = "Lvs 虚拟Ip探测"
     override val TroubleSceneNginxHttpRequestFail: String
         get() = "Nginx http请求失败"
     override val TroubleSceneZooKeeperClusterInitFail: String

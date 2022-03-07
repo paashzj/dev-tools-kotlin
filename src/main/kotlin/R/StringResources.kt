@@ -49,6 +49,7 @@ interface Strings {
     val dismiss: String
     val encode: String
     val homePage: String
+    val httpCodes: String
     val httpMethods: String
     val httpRequestUrl: String
     val instance: String
@@ -127,6 +128,8 @@ object EnStrings : Strings {
         get() = "encode"
     override val homePage: String
         get() = "home page"
+    override val httpCodes: String
+        get() = "http codes"
     override val httpMethods: String
         get() = "http methods"
     override val httpRequestUrl: String
@@ -234,6 +237,8 @@ object ChStrings : Strings {
         get() = "编码"
     override val homePage: String
         get() = "主界面"
+    override val httpCodes: String
+        get() = "http 响应码"
     override val httpMethods: String
         get() = "http 方法"
     override val httpRequestUrl: String

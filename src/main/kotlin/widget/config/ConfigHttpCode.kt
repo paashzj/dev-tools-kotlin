@@ -15,11 +15,16 @@
  * limitations under the license.
  */
 
-package constant
+package widget.config
 
-class HttpConst {
-    companion object {
-        val httpMethods = listOf("GET", "POST", "PUT", "DELETE")
-        val httpCodeList = listOf("200", "201", "204", "400", "401", "403", "404", "405", "500", "503")
-    }
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import constant.HttpConst
+import widget.component.DropdownList
+
+@Composable
+fun ConfigHttpCode(
+    editHttpCode: MutableState<String>
+) {
+    DropdownList(HttpConst.httpCodeList, R.strings.httpCodes, editHttpCode)
 }

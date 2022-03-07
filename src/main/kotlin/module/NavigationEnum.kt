@@ -19,10 +19,17 @@ package module
 
 enum class NavigationEnum {
     AboutAuthor,
+    // ability
     Command,
     Convert,
+    Simulator,
+    TroubleShoot,
+    Verify,
+    Home,
+    // vm application
     Kubernetes,
-    // middleware
+    Lvs,
+    // container application
     Bookkeeper,
     Cassandra,
     Minio,
@@ -31,8 +38,4 @@ enum class NavigationEnum {
     Pulsar,
     Redis,
     Zookeeper,
-    Simulator,
-    TroubleShoot,
-    Verify,
-    Home,
 }

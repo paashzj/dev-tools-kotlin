@@ -42,6 +42,7 @@ import widget.convert.ConvertScreen
 import widget.general.AboutAuthorScreen
 import widget.general.HomeScreen
 import widget.kubernetes.KubernetesInstanceScreen
+import widget.lvs.LvsInstanceScreen
 import widget.minio.MinioInstanceScreen
 import widget.mysql.MysqlInstanceScreen
 import widget.nginx.NginxInstanceScreen
@@ -86,6 +87,9 @@ fun main() = application {
                     }
                     NavigationEnum.Kubernetes -> {
                         KubernetesInstanceScreen()
+                    }
+                    NavigationEnum.Lvs -> {
+                        LvsInstanceScreen()
                     }
                     NavigationEnum.Bookkeeper -> {
                         BookkeeperInstanceScreen()

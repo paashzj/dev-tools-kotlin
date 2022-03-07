@@ -1,6 +1,8 @@
 # dev-tools-kotlin
 [![codecov](https://codecov.io/gh/paashzj/dev-tools-kotlin/branch/main/graph/badge.svg?token=155QKNN7MQ)](https://codecov.io/gh/paashzj/dev-tools-kotlin)
 <br/>
+# config
+[⚙️ config](docs/CONFIG_CN.md)
 # 🚀 功能
 ## 👁️ 命令速查
 - [x] kafka 命令

@@ -33,7 +33,7 @@ fun RowPaddingButton(
         onClick = {
             onClick()
         },
-        modifier = Modifier.padding(20.dp),
+        modifier = Modifier.padding(10.dp),
         content = content,
     )
 }

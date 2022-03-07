@@ -40,6 +40,15 @@ fun Config() {
             ) {
                 Text(text = "kubernetes")
             }
+            // vm application
+            RowPaddingButton(
+                onClick = {
+                    idx.value = ConfigEnum.Lvs
+                },
+            ) {
+                Text(text = "lvs")
+            }
+            // container application
             RowPaddingButton(
                 onClick = {
                     idx.value = ConfigEnum.Bookkeeper
@@ -100,6 +109,9 @@ fun Config() {
         when (idx.value) {
             ConfigEnum.Kubernetes -> {
                 ConfigKubernetes()
+            }
+            ConfigEnum.Lvs -> {
+                ConfigLvs()
             }
             ConfigEnum.Nginx -> {
                 ConfigNginx()

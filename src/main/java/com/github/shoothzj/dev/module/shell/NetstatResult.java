@@ -29,6 +29,8 @@ public class NetstatResult {
 
     private String localAddress;
 
+    private String foreignAddress;
+
     private String state;
 
     public NetstatResult() {
@@ -64,6 +66,14 @@ public class NetstatResult {
 
     public void setLocalAddress(String localAddress) {
         this.localAddress = localAddress;
+    }
+
+    public String getForeignAddress() {
+        return foreignAddress;
+    }
+
+    public void setForeignAddress(String foreignAddress) {
+        this.foreignAddress = foreignAddress;
     }
 
     public String getState() {

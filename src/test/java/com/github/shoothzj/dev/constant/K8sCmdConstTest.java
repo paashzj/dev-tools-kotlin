@@ -49,6 +49,12 @@ public class K8sCmdConstTest {
     }
 
     @Test
+    public void testPodListSystemGrepCorednsOne() {
+        String cmd = K8sCmdConst.podListGrepCmd(K8sConst.SYSTEM_NS, "coredns", "one");
+        Assert.assertEquals(cmd, "kubectl get pod -o wide -n kube-system| grep coredns| grep one");
+    }
+
+    @Test
     public void testDescribeDefaultCoredns() {
         String cmd = K8sCmdConst.describePodCmd("", "coredns");
         Assert.assertEquals(cmd, "kubectl describe pod coredns -n default");

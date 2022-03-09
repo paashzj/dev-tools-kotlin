@@ -50,8 +50,8 @@ public class K8sCmdConst {
     }
 
     @NotNull
-    public static String podListGrepCmd(@NotNull String namespace, @NotNull String grepWord) {
-        return String.format(GET_POD_LIST_GREP, namespaceHelper(namespace), grepWord);
+    public static String podListGrepCmd(@NotNull String namespace, @NotNull String... grepWords) {
+        return podListCmd(namespace) + LinuxCmdConst.grep(grepWords);
     }
 
     @NotNull

@@ -42,6 +42,8 @@ public class K8sCmdConst {
 
     public static final String DESCRIBE_POD = "kubectl describe pod %s -n %s";
 
+    public static final String EXEC_POD = "kubectl exec -it %s -n %s";
+
     @NotNull
     public static String podListCmd(@NotNull String namespace) {
         return String.format(GET_POD_LIST, namespaceHelper(namespace));
@@ -55,6 +57,11 @@ public class K8sCmdConst {
     @NotNull
     public static String describePodCmd(@NotNull String namespace, @NotNull String podName) {
         return String.format(DESCRIBE_POD, podName, namespaceHelper(namespace));
+    }
+
+    @NotNull
+    public static String execPodCmd(@NotNull String namespace, @NotNull String podName, @NotNull String cmd) {
+        return String.format(EXEC_POD + " -- %s", podName, namespaceHelper(namespace), cmd);
     }
 
     @NotNull

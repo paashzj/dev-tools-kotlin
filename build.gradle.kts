@@ -73,6 +73,7 @@ compose.desktop {
             targetFormats(TargetFormat.Deb, TargetFormat.Dmg, TargetFormat.Msi)
             modules("java.management")
             modules("java.naming")
+            modules("java.security.jgss")
             packageName = "dev-tools-kotlin"
             packageVersion = "1.0.0"
         }

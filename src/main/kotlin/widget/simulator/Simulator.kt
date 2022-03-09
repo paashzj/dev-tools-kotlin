@@ -26,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.sp
 import module.SimulatorEnum
 import widget.component.RowPaddingButton
+import widget.simulator.kafka.SimulatorKafka
 
 val idx = mutableStateOf(SimulatorEnum.Kafka)
 

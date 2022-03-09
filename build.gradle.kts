@@ -71,6 +71,7 @@ compose.desktop {
         mainClass = "MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Deb, TargetFormat.Dmg, TargetFormat.Msi)
+            modules("java.management")
             modules("java.naming")
             packageName = "dev-tools-kotlin"
             packageVersion = "1.0.0"

@@ -15,7 +15,7 @@
  * limitations under the license.
  */
 
-package widget.simulator
+package widget.simulator.kafka
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,6 +28,12 @@ import module.MqPatternEnum
 import widget.component.RowPaddingButton
 
 val pattern = mutableStateOf(MqPatternEnum.Producer)
+
+val host = mutableStateOf("localhost")
+val port = mutableStateOf("9092")
+val saslMechanism = mutableStateOf("")
+val username = mutableStateOf("")
+val password = mutableStateOf("")
 
 @Composable
 fun SimulatorKafka() {

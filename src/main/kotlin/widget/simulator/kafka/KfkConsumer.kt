@@ -15,7 +15,7 @@
  * limitations under the license.
  */
 
-package widget.simulator
+package widget.simulator.kafka
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button
@@ -31,11 +31,6 @@ import widget.config.ConfigGroupKafkaRaw
 
 @Composable
 fun KafkaConsumer() {
-    val host = mutableStateOf("localhost")
-    val port = mutableStateOf("9092")
-    val saslMechanism = mutableStateOf("")
-    val username = mutableStateOf("")
-    val password = mutableStateOf("")
     var topic by remember { mutableStateOf("") }
     var msg by remember { mutableStateOf("") }
 

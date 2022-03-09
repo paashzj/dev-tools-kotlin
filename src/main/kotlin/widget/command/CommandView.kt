@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import module.CommandDto
 import module.CommandParam
+import widget.component.ChapterElement
 
 @Composable
 fun CommandView(params: Array<CommandParam>, commandDto: CommandDto) {
@@ -49,23 +50,27 @@ fun CommandView(params: Array<CommandParam>, commandDto: CommandDto) {
         Text(R.strings.Commands, fontSize = 40.sp)
         repeat(commandDto.subCommandsList.size) { it ->
             val subCommands = commandDto.subCommandsList[it]
-            Text(subCommands.category, fontSize = 30.sp)
-            repeat(subCommands.commands.size) { iit ->
-                val command = subCommands.commands[iit]
-                // let we do the replacement
-                var aux = command.template
-                for (param in params) {
-                    aux = aux.replace("$" + param.name, param.value.value)
+            ChapterElement(
+                title = subCommands.category,
+                content = {
+                    repeat(subCommands.commands.size) { iit ->
+                        val command = subCommands.commands[iit]
+                        // let we do the replacement
+                        var aux = command.template
+                        for (param in params) {
+                            aux = aux.replace("$" + param.name, param.value.value)
+                        }
+                        command.value.value = aux
+                        OutlinedTextField(
+                            value = command.value.value,
+                            onValueChange = {
+                                command.value.value = it
+                            },
+                            label = { Text(command.desc) }
+                        )
+                    }
                 }
-                command.value.value = aux
-                OutlinedTextField(
-                    value = command.value.value,
-                    onValueChange = {
-                        command.value.value = it
-                    },
-                    label = { Text(command.desc) }
-                )
-            }
+            )
         }
     }
 }

@@ -17,27 +17,7 @@
  * under the License.
  */
 
-package com.github.shoothzj.dev.constant;
+package com.github.shoothzj.dev.shell;
 
-import org.jetbrains.annotations.NotNull;
-
-public class LinuxCmdConst {
-
-    public static final String FREE_MEMORY = "free -m";
-
-    public static final String SSH = "ssh %s";
-
-    public static final String GREP = "| grep %s";
-
-    public static final String PORT_LISTEN = "netstat -lnp";
-
-    @NotNull
-    public static String grep(@NotNull String... words) {
-        StringBuilder sb = new StringBuilder();
-        for (String word : words) {
-            sb.append(String.format(LinuxCmdConst.GREP, word));
-        }
-        return sb.toString();
-    }
-
+public class KubectlDescribePodResultParser {
 }

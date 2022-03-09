@@ -59,4 +59,14 @@ public class ValidateUtilTest {
         Assert.assertFalse(ValidateUtil.isHost("$4dfsas"));
     }
 
+    @Test
+    public void invalidNumber() {
+        Assert.assertTrue(ValidateUtil.isNumber("8908786475"));
+    }
+
+    @Test
+    public void invalidNotNumber() {
+        Assert.assertFalse(ValidateUtil.isNumber("jsdfkhfjksgk"));
+    }
+
 }

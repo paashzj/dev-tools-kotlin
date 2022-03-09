@@ -71,6 +71,7 @@ interface Strings {
     val statefulSetName: String
     val send: String
     val simulatorPage: String
+    val subscribe: String
     val TroubleComponent: String
     val TroubleSceneKubernetesNodeNotReady: String
     val TroubleSceneLvsVirtualIpDetect: String
@@ -174,6 +175,8 @@ object EnStrings : Strings {
         get() = "send"
     override val simulatorPage: String
         get() = "simulator page"
+    override val subscribe: String
+        get() = "subscribe"
     override val TroubleComponent: String
         get() = "Trouble Component"
     override val TroubleSceneKubernetesNodeNotReady: String
@@ -287,6 +290,8 @@ object ChStrings : Strings {
         get() = "发送"
     override val simulatorPage: String
         get() = "模拟器界面"
+    override val subscribe: String
+        get() = "订阅"
     override val TroubleComponent: String
         get() = "问题定位组件"
     override val TroubleSceneKubernetesNodeNotReady: String

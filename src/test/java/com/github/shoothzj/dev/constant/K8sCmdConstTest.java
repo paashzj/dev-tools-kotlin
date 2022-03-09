@@ -60,4 +60,10 @@ public class K8sCmdConstTest {
         Assert.assertEquals(cmd, "kubectl describe pod coredns -n kube-system");
     }
 
+    @Test
+    public void testExecNetstat() {
+        String cmd = K8sCmdConst.execPodCmd("", "coredns", "netstat -anp");
+        Assert.assertEquals(cmd, "kubectl exec -it coredns -n default -- netstat -anp");
+    }
+
 }

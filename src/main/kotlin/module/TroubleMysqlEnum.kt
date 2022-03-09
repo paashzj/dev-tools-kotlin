@@ -17,12 +17,6 @@
 
 package module
 
-enum class TroubleEnum {
-    Kubernetes,
-    // vm application
-    Lvs,
-    // container application
-    Mysql,
-    Nginx,
-    ZooKeeper,
+enum class TroubleMysqlEnum {
+    SLOW_SQL,
 }

@@ -74,6 +74,7 @@ interface Strings {
     val TroubleComponent: String
     val TroubleSceneKubernetesNodeNotReady: String
     val TroubleSceneLvsVirtualIpDetect: String
+    val TroubleSceneMysqlSlowSql: String
     val TroubleSceneNginxHttpRequestFail: String
     val TroubleSceneZooKeeperClusterInitFail: String
     val troubleShootPage: String
@@ -179,6 +180,8 @@ object EnStrings : Strings {
         get() = "Kubernetes node not ready"
     override val TroubleSceneLvsVirtualIpDetect: String
         get() = "Lvs Virtual Ip detect"
+    override val TroubleSceneMysqlSlowSql: String
+        get() = "Mysql slow sql"
     override val TroubleSceneNginxHttpRequestFail: String
         get() = "Nginx Http Request Fail"
     override val TroubleSceneZooKeeperClusterInitFail: String
@@ -290,6 +293,8 @@ object ChStrings : Strings {
         get() = "Kubernetes 节点 Not Ready"
     override val TroubleSceneLvsVirtualIpDetect: String
         get() = "Lvs 虚拟Ip探测"
+    override val TroubleSceneMysqlSlowSql: String
+        get() = "Mysql 慢sql"
     override val TroubleSceneNginxHttpRequestFail: String
         get() = "Nginx http请求失败"
     override val TroubleSceneZooKeeperClusterInitFail: String

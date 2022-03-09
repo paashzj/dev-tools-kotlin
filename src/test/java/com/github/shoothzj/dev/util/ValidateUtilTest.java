@@ -60,12 +60,12 @@ public class ValidateUtilTest {
     }
 
     @Test
-    public void invalidNumber() {
+    public void validNumber() {
         Assert.assertTrue(ValidateUtil.isNumber("8908786475"));
     }
 
     @Test
-    public void invalidNotNumber() {
+    public void invalidNumber() {
         Assert.assertFalse(ValidateUtil.isNumber("jsdfkhfjksgk"));
     }
 

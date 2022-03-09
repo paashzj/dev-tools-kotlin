@@ -18,7 +18,7 @@
 package widget.simulator.kafka
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.Row
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +26,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.github.shoothzj.dev.simulator.KafkaClientSimulator
+import androidx.compose.ui.unit.sp
+import com.github.shoothzj.dev.simulator.kafka.KafkaProducerSimulator
+import widget.component.RowPaddingButton
 import widget.config.ConfigGroupKafkaRaw
 
 @Composable
@@ -65,11 +67,38 @@ fun KafkaProducer() {
             },
             label = { Text("kafka message") }
         )
-
-        Button(onClick = {
-            val client = KafkaClientSimulator()
-            res = client.produce(host.value, port.value, saslMechanism.value, username.value, password.value, topic, key, msg)
-        }) { Text(R.strings.send) }
+        Row {
+            var producer: KafkaProducerSimulator? = null
+            RowPaddingButton(
+                onClick = {
+                    try {
+                        producer = KafkaProducerSimulator(
+                            host.value,
+                            port.value,
+                            saslMechanism.value,
+                            username.value,
+                            password.value
+                        )
+                    } catch (e: Exception) {
+                        res = e.message.toString()
+                    }
+                }
+            ) { Text(text = R.strings.connect, fontSize = 12.sp) }
+            RowPaddingButton(
+                onClick = {
+                    res = producer?.send(topic, key, msg) ?: "please create kafka consumer"
+                },
+            ) {
+                Text(text = R.strings.send, fontSize = 12.sp)
+            }
+            RowPaddingButton(
+                onClick = {
+                    res = (producer?.close() ?: "") as String
+                },
+            ) {
+                Text(text = R.strings.close, fontSize = 12.sp)
+            }
+        }
         Text(res)
     }
 }

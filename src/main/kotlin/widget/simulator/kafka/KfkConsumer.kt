@@ -18,7 +18,7 @@
 package widget.simulator.kafka
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.Row
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +26,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.github.shoothzj.dev.simulator.KafkaClientSimulator
+import androidx.compose.ui.unit.sp
+import com.github.shoothzj.dev.simulator.kafka.KafkaConsumerSimulator
+import widget.component.RowPaddingButton
 import widget.config.ConfigGroupKafkaRaw
 
 @Composable
@@ -49,10 +51,45 @@ fun KafkaConsumer() {
             },
             label = { Text("kafka topic") }
         )
-        Button(onClick = {
-            val consumer = KafkaClientSimulator()
-            msg = consumer.consume(host.value, port.value, saslMechanism.value, username.value, password.value, topic)
-        }) { Text(R.strings.receive) }
+        Row {
+            var consumer: KafkaConsumerSimulator? = null
+            RowPaddingButton(
+                onClick = {
+                    try {
+                        consumer = KafkaConsumerSimulator(
+                            host.value,
+                            port.value,
+                            saslMechanism.value,
+                            username.value,
+                            password.value
+                        )
+                    } catch (e: Exception) {
+                        msg = e.message.toString()
+                    }
+                }
+            ) { Text(text = R.strings.connect, fontSize = 12.sp) }
+            RowPaddingButton(
+                onClick = {
+                    msg = consumer?.subscribe(topic) ?: "please create kafka consumer"
+                },
+            ) {
+                Text(text = R.strings.subscribe, fontSize = 12.sp)
+            }
+            RowPaddingButton(
+                onClick = {
+                    msg = consumer?.receive(topic) ?: "please create kafka consumer"
+                },
+            ) {
+                Text(text = R.strings.receive, fontSize = 12.sp)
+            }
+            RowPaddingButton(
+                onClick = {
+                    msg = (consumer?.close() ?: "") as String
+                },
+            ) {
+                Text(text = R.strings.close, fontSize = 12.sp)
+            }
+        }
         Text(msg)
     }
 }

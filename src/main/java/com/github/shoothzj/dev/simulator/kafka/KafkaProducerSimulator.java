@@ -24,10 +24,16 @@ import com.github.shoothzj.dev.util.ValidateUtil;
 import com.google.common.base.Preconditions;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
 public class KafkaProducerSimulator {
+
+    private static final Logger log = LoggerFactory.getLogger(KafkaProducerSimulator.class);
 
     private final Producer<String, String> producer;
 
@@ -40,6 +46,17 @@ public class KafkaProducerSimulator {
         Preconditions.checkArgument(ValidateUtil.isPort(port), String.format("port [%s] is illegal", port));
         Properties properties = KafkaConfFactory.acquireProducerConf(host, port, saslMechanism, username, password);
         producer = new KafkaProducer<>(properties);
+    }
+
+    public String send(String topic, String key, String msg) {
+        ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, msg);
+        try {
+            RecordMetadata metadata = producer.send(record).get();
+            return String.format("send message to kafka success. topic [%s], key [%s]", metadata.topic(), key);
+        } catch (Exception e) {
+            log.error("kafka produce exception is ", e);
+            return String.format("send message to kafka fail. topic [%s], key [%s], reason [%s]", topic, key, e.getMessage());
+        }
     }
 
     public void close() {

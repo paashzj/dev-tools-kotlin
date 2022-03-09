@@ -19,6 +19,7 @@
 
 package com.github.shoothzj.dev.util;
 
+import com.github.shoothzj.javatool.util.RegexUtil;
 import com.github.shoothzj.sdk.net.Ipv4Util;
 
 import java.util.regex.Pattern;
@@ -51,5 +52,13 @@ public class ValidateUtil {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public static boolean isNotNumber(String str) {
+        return !isNumber(str);
+    }
+
+    public static boolean isNumber(String str) {
+        return RegexUtil.NUMBER_PATTERN.matcher(str).matches();
     }
 }

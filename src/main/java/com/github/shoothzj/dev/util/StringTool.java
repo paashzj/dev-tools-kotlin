@@ -40,4 +40,14 @@ public class StringTool {
         return src.split("\\s+");
     }
 
+    public static int leadingBlank(@NotNull String str) {
+        char[] charArray = str.toCharArray();
+        for (int i = 0; i < charArray.length; i++) {
+            if (charArray[i] != ' ' && charArray[i] != '\t') {
+                return i;
+            }
+        }
+        return charArray.length;
+    }
+
 }

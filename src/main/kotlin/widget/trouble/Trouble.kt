@@ -28,6 +28,7 @@ import module.TroubleEnum
 import widget.component.RowPaddingButton
 import widget.trouble.kubernetes.TroubleKubernetes
 import widget.trouble.lvs.TroubleLvs
+import widget.trouble.mysql.TroubleMysql
 import widget.trouble.nginx.TroubleNginx
 import widget.trouble.zookeeper.TroubleZooKeeper
 
@@ -46,6 +47,9 @@ fun TroubleShootScreen() {
                 TroubleLvs()
             }
             // container application
+            TroubleEnum.Mysql -> {
+                TroubleMysql()
+            }
             TroubleEnum.Nginx -> {
                 TroubleNginx()
             }
@@ -76,6 +80,13 @@ fun Head(idx: MutableState<TroubleEnum>) {
             Text(text = "Lvs")
         }
         // container application
+        RowPaddingButton(
+            onClick = {
+                idx.value = TroubleEnum.Mysql
+            },
+        ) {
+            Text(text = "Mysql")
+        }
         RowPaddingButton(
             onClick = {
                 idx.value = TroubleEnum.Nginx

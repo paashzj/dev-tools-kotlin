@@ -117,7 +117,7 @@ public class SshClient {
         StringBuilder stringBuilder = new StringBuilder();
         long start = System.currentTimeMillis();
         while (System.currentTimeMillis() - start < timeoutSeconds * 1000L) {
-            String content = IoUtil.read2StringCharset(inputStream, StandardCharsets.UTF_8);
+            String content = ShellUtil.removeColor(IoUtil.read2StringCharset(inputStream, StandardCharsets.UTF_8));
             stringBuilder.append(content);
             String aux = stringBuilder.toString();
             // output contains part of src cmd, continue

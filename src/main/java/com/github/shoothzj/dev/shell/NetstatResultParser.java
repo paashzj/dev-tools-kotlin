@@ -21,6 +21,7 @@ package com.github.shoothzj.dev.shell;
 
 import com.github.shoothzj.dev.module.shell.NetstatResult;
 import com.github.shoothzj.dev.util.StringTool;
+import com.github.shoothzj.dev.util.ValidateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class NetstatResultParser {
         List<NetstatResult> netstatResults = new ArrayList<>();
         for (String s : body) {
             String[] fields = StringTool.fields(s);
-            if (fields.length < 7) {
+            if (fields.length < 7 || ValidateUtil.isNotNumber(fields[2])) {
                 continue;
             }
             NetstatResult netstatResult = new NetstatResult();

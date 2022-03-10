@@ -25,6 +25,8 @@ public class LinuxCmdConst {
 
     private static final int DEFAULT_TEXT_NUM = 50;
 
+    public static final String CAT = "cat %s";
+
     public static final String FREE_MEMORY = "free -m";
 
     public static final String SSH = "ssh %s";
@@ -36,6 +38,16 @@ public class LinuxCmdConst {
     public static final String HEAD = "| head -n %d";
 
     public static final String TAIL = "| tail -n %d";
+
+    @NotNull
+    public static String path(@NotNull String... words) {
+        return String.join(LinuxConst.PATH_SEP, words);
+    }
+
+    @NotNull
+    public static String cat(@NotNull String str) {
+        return String.format(CAT, str);
+    }
 
     @NotNull
     public static String grep(@NotNull String... words) {

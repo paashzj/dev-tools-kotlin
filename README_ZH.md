@@ -1,6 +1,8 @@
 # dev-tools-kotlin
 [![codecov](https://codecov.io/gh/paashzj/dev-tools-kotlin/branch/main/graph/badge.svg?token=155QKNN7MQ)](https://codecov.io/gh/paashzj/dev-tools-kotlin)
 <br/>
+# 🍡 依赖
+- [compose-jb](https://github.com/JetBrains/compose-jb)
 # ⚙️ [配置](docs/CONFIG_CN.md)
 # 🚀 功能
 ## 👁️ 命令速查

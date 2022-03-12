@@ -2,6 +2,9 @@
 [![codecov](https://codecov.io/gh/paashzj/dev-tools-kotlin/branch/main/graph/badge.svg?token=155QKNN7MQ)](https://codecov.io/gh/paashzj/dev-tools-kotlin)
 <br/>
 English | [🇨🇳中文](README_ZH.md)
+<br/>
+# 🍡 depends on
+- [compose-jb](https://github.com/JetBrains/compose-jb)
 # ⚙️ [config](docs/CONFIG.md)
 # 🚀 features
 ## 👁️ command lookup

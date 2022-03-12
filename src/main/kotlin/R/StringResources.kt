@@ -40,6 +40,7 @@ interface Strings {
     val config: String
     val confirm: String
     val connect: String
+    val containerIp: String
     val content: String
     val convertPage: String
     val decode: String
@@ -52,11 +53,13 @@ interface Strings {
     val httpCodes: String
     val httpMethods: String
     val httpRequestUrl: String
+    val imageVersion: String
     val instance: String
     val kubernetesNodeName: String
     val match: String
     val name: String
     val namespace: String
+    val nodeIp: String
     val notMatch: String
     val Params: String
     val pulsarBrokerHost: String
@@ -71,6 +74,7 @@ interface Strings {
     val statefulSetName: String
     val send: String
     val simulatorPage: String
+    val startTime: String
     val subscribe: String
     val TroubleComponent: String
     val TroubleSceneKubernetesNodeNotReady: String
@@ -113,6 +117,8 @@ object EnStrings : Strings {
         get() = "confirm"
     override val connect: String
         get() = "connect"
+    override val containerIp: String
+        get() = "container Ip"
     override val content: String
         get() = "content"
     override val convertPage: String
@@ -137,6 +143,8 @@ object EnStrings : Strings {
         get() = "http methods"
     override val httpRequestUrl: String
         get() = "http request url"
+    override val imageVersion: String
+        get() = "image version"
     override val instance: String
         get() = "instance"
     override val kubernetesNodeName: String
@@ -147,6 +155,8 @@ object EnStrings : Strings {
         get() = "name"
     override val namespace: String
         get() = "namespace"
+    override val nodeIp: String
+        get() = "node Ip"
     override val notMatch: String
         get() = "not match"
     override val Params: String
@@ -175,6 +185,8 @@ object EnStrings : Strings {
         get() = "send"
     override val simulatorPage: String
         get() = "simulator page"
+    override val startTime: String
+        get() = "start time"
     override val subscribe: String
         get() = "subscribe"
     override val TroubleComponent: String
@@ -228,6 +240,8 @@ object ChStrings : Strings {
         get() = "确认"
     override val connect: String
         get() = "连接"
+    override val containerIp: String
+        get() = "容器Ip"
     override val content: String
         get() = "内容"
     override val convertPage: String
@@ -252,6 +266,8 @@ object ChStrings : Strings {
         get() = "http 方法"
     override val httpRequestUrl: String
         get() = "http 请求 url"
+    override val imageVersion: String
+        get() = "镜像版本"
     override val instance: String
         get() = "实例"
     override val kubernetesNodeName: String
@@ -262,6 +278,8 @@ object ChStrings : Strings {
         get() = "名称"
     override val namespace: String
         get() = "命名空间"
+    override val nodeIp: String
+        get() = "节点 Ip"
     override val notMatch: String
         get() = "不匹配"
     override val Params: String
@@ -290,6 +308,8 @@ object ChStrings : Strings {
         get() = "发送"
     override val simulatorPage: String
         get() = "模拟器界面"
+    override val startTime: String
+        get() = "启动时间"
     override val subscribe: String
         get() = "订阅"
     override val TroubleComponent: String

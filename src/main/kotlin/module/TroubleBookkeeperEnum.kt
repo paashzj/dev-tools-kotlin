@@ -14,20 +14,8 @@
  * See the license for the specific language governing permissions and
  * limitations under the license.
  */
-
 package module
 
-enum class TroubleEnum {
-    Kubernetes,
-    // vm application
-    Lvs,
-    // container application
-    Bookkeeper,
-    Cassandra,
-    Minio,
-    Mysql,
-    Nginx,
-    Pulsar,
-    Redis,
-    ZooKeeper,
+enum class TroubleBookkeeperEnum {
+    CLUSTER_INIT_FAIL,
 }

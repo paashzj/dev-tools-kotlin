@@ -17,17 +17,6 @@
 
 package module
 
-enum class TroubleEnum {
-    Kubernetes,
-    // vm application
-    Lvs,
-    // container application
-    Bookkeeper,
-    Cassandra,
-    Minio,
-    Mysql,
-    Nginx,
-    Pulsar,
-    Redis,
-    ZooKeeper,
+enum class TroubleCassandraEnum {
+    CLUSTER_INIT_FAIL,
 }

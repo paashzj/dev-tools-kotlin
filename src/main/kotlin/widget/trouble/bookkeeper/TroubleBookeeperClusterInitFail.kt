@@ -58,5 +58,5 @@ fun TroubleBookkeeperClusterInitFail() {
         },
         result = {
         },
-    ) 
+    )
 }

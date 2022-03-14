@@ -26,7 +26,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.sp
 import module.TroubleEnum
 import module.TroubleRedisEnum
-import module.TroubleZooKeeperEnum
 import widget.component.RowPaddingButton
 
 val idx = mutableStateOf(TroubleRedisEnum.CLUSTER_INIT_FAIL)

@@ -19,8 +19,8 @@ package widget.trouble.minio
 
 import R.strings
 import androidx.compose.runtime.Composable
-import com.github.shoothzj.dev.storage.StorageMinio
 import com.github.shoothzj.dev.storage.StorageK8s
+import com.github.shoothzj.dev.storage.StorageMinio
 import widget.component.DropdownList
 import widget.config.ConfigGroupKubernetes
 import widget.config.ConfigGroupStatefulSet
@@ -58,5 +58,5 @@ fun TroubleMinioClusterInitFail() {
         },
         result = {
         },
-    ) 
+    )
 }

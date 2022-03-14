@@ -140,7 +140,7 @@ fun Head(idx: MutableState<TroubleEnum>) {
                 idx.value = TroubleEnum.Pulsar
             }
         ) {
-          Text(text = "Pulsar")
+            Text(text = "Pulsar")
         }
         RowPaddingButton(
             onClick = {

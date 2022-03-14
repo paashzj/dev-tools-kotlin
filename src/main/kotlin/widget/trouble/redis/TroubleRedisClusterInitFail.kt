@@ -58,5 +58,5 @@ fun TroubleRedisClusterInitFail() {
         },
         result = {
         },
-    ) 
+    )
 }

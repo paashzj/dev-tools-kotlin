@@ -28,7 +28,6 @@ import module.TroubleBookkeeperEnum
 import module.TroubleEnum
 import widget.component.RowPaddingButton
 
-
 val idx = mutableStateOf(TroubleBookkeeperEnum.CLUSTER_INIT_FAIL)
 val editBookkeeperInstanceName = mutableStateOf("")
 val editKubernetesHost = mutableStateOf("localhost")

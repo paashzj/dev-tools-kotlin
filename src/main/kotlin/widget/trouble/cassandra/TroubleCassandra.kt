@@ -17,7 +17,6 @@
 
 package widget.trouble.cassandra
 
-import R.strings
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Text
@@ -53,13 +52,13 @@ fun TroubleCassandra() {
 @Composable
 fun Head(idx: MutableState<TroubleCassandraEnum>) {
     Row {
-        Text(strings.sceneList, fontSize = 40.sp)
+        Text(R.strings.sceneList, fontSize = 40.sp)
         RowPaddingButton(
             onClick = {
                 idx.value = TroubleCassandraEnum.CLUSTER_INIT_FAIL
             },
         ) {
-            Text(text = TroubleEnum.Cassandra.name + strings.TroubleSceneClusterInitFail)
+            Text(text = TroubleEnum.Cassandra.name + R.strings.TroubleSceneClusterInitFail)
         }
     }
 }

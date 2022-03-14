@@ -17,7 +17,6 @@
 
 package widget.trouble.pulsar
 
-import R.strings
 import androidx.compose.runtime.Composable
 import com.github.shoothzj.dev.storage.StorageK8s
 import com.github.shoothzj.dev.storage.StoragePulsar
@@ -31,7 +30,7 @@ fun TroublePulsarClusterInitFail() {
     TroubleShootBase(
         content = {
             val PulsarNameList = StoragePulsar.getInstance().listConfigNames()
-            DropdownList(PulsarNameList, "Pulsar ${strings.instance}", editPulsarInstanceName)
+            DropdownList(PulsarNameList, "Pulsar ${R.strings.instance}", editPulsarInstanceName)
             ConfigGroupKubernetes(
                 editKubernetesHost,
                 editKubernetesPort,

@@ -17,7 +17,6 @@
 
 package widget.trouble.cassandra
 
-import R.strings
 import androidx.compose.runtime.Composable
 import com.github.shoothzj.dev.storage.StorageCassandra
 import com.github.shoothzj.dev.storage.StorageK8s
@@ -31,7 +30,7 @@ fun TroubleCassandraClusterInitFail() {
     TroubleShootBase(
         content = {
             val CassandraNameList = StorageCassandra.getInstance().listConfigNames()
-            DropdownList(CassandraNameList, "Cassandra ${strings.instance}", editCassandraInstanceName)
+            DropdownList(CassandraNameList, "Cassandra ${R.strings.instance}", editCassandraInstanceName)
             ConfigGroupKubernetes(
                 editKubernetesHost,
                 editKubernetesPort,

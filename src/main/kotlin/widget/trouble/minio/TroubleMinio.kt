@@ -17,7 +17,6 @@
 
 package widget.trouble.minio
 
-import R.strings
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Text
@@ -52,13 +51,13 @@ fun TroubleMinio() {
 @Composable
 fun Head(idx: MutableState<TroubleMinioEnum>) {
     Row {
-        Text(strings.sceneList, fontSize = 40.sp)
+        Text(R.strings.sceneList, fontSize = 40.sp)
         RowPaddingButton(
             onClick = {
                 idx.value = TroubleMinioEnum.CLUSTER_INIT_FAIL
             },
         ) {
-            Text(text = TroubleEnum.Minio.name + strings.TroubleSceneClusterInitFail)
+            Text(text = TroubleEnum.Minio.name + R.strings.TroubleSceneClusterInitFail)
         }
     }
 }

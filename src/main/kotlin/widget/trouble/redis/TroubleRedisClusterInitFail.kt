@@ -17,7 +17,6 @@
 
 package widget.trouble.redis
 
-import R.strings
 import androidx.compose.runtime.Composable
 import com.github.shoothzj.dev.storage.StorageK8s
 import com.github.shoothzj.dev.storage.StorageRedis
@@ -31,7 +30,7 @@ fun TroubleRedisClusterInitFail() {
     TroubleShootBase(
         content = {
             val RedisNameList = StorageRedis.getInstance().listConfigNames()
-            DropdownList(RedisNameList, "redis ${strings.instance}", editRedisInstanceName)
+            DropdownList(RedisNameList, "redis ${R.strings.instance}", editRedisInstanceName)
             ConfigGroupKubernetes(
                 editKubernetesHost,
                 editKubernetesPort,

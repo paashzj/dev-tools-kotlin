@@ -16,7 +16,7 @@
  */
 
 package widget.trouble.bookkeeper
-import R.strings
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Text
@@ -52,7 +52,7 @@ fun TroubleBookkeeper() {
 @Composable
 fun Head(idx: MutableState<TroubleBookkeeperEnum>) {
     Row {
-        Text(strings.sceneList, fontSize = 40.sp)
+        Text(R.strings.sceneList, fontSize = 40.sp)
         RowPaddingButton(
             onClick = {
                 idx.value = TroubleBookkeeperEnum.CLUSTER_INIT_FAIL

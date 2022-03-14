@@ -17,7 +17,6 @@
 
 package widget.trouble.bookkeeper
 
-import R.strings
 import androidx.compose.runtime.Composable
 import com.github.shoothzj.dev.storage.StorageBookkeeper
 import com.github.shoothzj.dev.storage.StorageK8s
@@ -31,7 +30,7 @@ fun TroubleBookkeeperClusterInitFail() {
     TroubleShootBase(
         content = {
             val BookkeeperNameList = StorageBookkeeper.getInstance().listConfigNames()
-            DropdownList(BookkeeperNameList, "Bookkeeper ${strings.instance}", editBookkeeperInstanceName)
+            DropdownList(BookkeeperNameList, "Bookkeeper ${R.strings.instance}", editBookkeeperInstanceName)
             ConfigGroupKubernetes(
                 editKubernetesHost,
                 editKubernetesPort,

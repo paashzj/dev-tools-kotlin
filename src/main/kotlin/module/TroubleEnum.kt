@@ -22,7 +22,12 @@ enum class TroubleEnum {
     // vm application
     Lvs,
     // container application
+    Bookkeeper,
+    Cassandra,
+    Minio,
     Mysql,
     Nginx,
+    Pulsar,
+    Redis,
     ZooKeeper,
 }

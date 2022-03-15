@@ -25,7 +25,6 @@ import widget.config.ConfigItemHost
 import widget.config.ConfigItemPort
 import widget.config.ConfigItemString
 import widget.trouble.TroubleShootBase
-import widget.trouble.nginx.editNginxInstanceName
 
 @Composable
 fun TroubleLvsConnFail() {

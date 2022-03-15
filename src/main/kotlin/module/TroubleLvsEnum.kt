@@ -18,5 +18,6 @@
 package module
 
 enum class TroubleLvsEnum {
+    CONN_FAIL,
     VIRTUAL_IP_DETECT,
 }

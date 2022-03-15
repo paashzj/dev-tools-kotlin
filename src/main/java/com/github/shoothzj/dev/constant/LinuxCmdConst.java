@@ -27,6 +27,8 @@ public class LinuxCmdConst {
 
     public static final String CAT = "cat %s";
 
+    public static final String IFCONFIG = "ifconfig";
+
     public static final String FREE_MEMORY = "free -m";
 
     public static final String SSH = "ssh %s";

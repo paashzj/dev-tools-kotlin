@@ -27,7 +27,7 @@ import widget.config.ConfigItemString
 import widget.trouble.TroubleShootBase
 
 @Composable
-fun TroubleLvsVirtualIpDetect() {
+fun TroubleLvsConnFail() {
     TroubleShootBase(
         content = {
             val lvsNameList = StorageLvs.getInstance().listConfigNames()

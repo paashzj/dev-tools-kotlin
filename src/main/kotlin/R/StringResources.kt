@@ -78,6 +78,7 @@ interface Strings {
     val subscribe: String
     val TroubleComponent: String
     val TroubleSceneClusterInitFail: String
+    val TroubleSceneConnFail: String
     val TroubleSceneKubernetesNodeNotReady: String
     val TroubleSceneLvsVirtualIpDetect: String
     val TroubleSceneMysqlSlowSql: String
@@ -194,6 +195,8 @@ object EnStrings : Strings {
         get() = "Trouble Component"
     override val TroubleSceneClusterInitFail: String
         get() = "Cluster Init Fail"
+    override val TroubleSceneConnFail: String
+        get() = "Conn Fail"
     override val TroubleSceneKubernetesNodeNotReady: String
         get() = "Kubernetes node not ready"
     override val TroubleSceneLvsVirtualIpDetect: String
@@ -319,6 +322,8 @@ object ChStrings : Strings {
         get() = "问题定位组件"
     override val TroubleSceneClusterInitFail: String
         get() = "集群初始化失败"
+    override val TroubleSceneConnFail: String
+        get() = "连接失败"
     override val TroubleSceneKubernetesNodeNotReady: String
         get() = "Kubernetes 节点 Not Ready"
     override val TroubleSceneLvsVirtualIpDetect: String

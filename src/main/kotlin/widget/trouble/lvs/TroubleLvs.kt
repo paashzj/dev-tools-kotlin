@@ -34,6 +34,8 @@ val editLvsHost = mutableStateOf("localhost")
 val editLvsPort = mutableStateOf("22")
 val editLvsUsername = mutableStateOf("root")
 val editLvsPassword = mutableStateOf("")
+val editLvsNamespace = mutableStateOf("default")
+val editLvsDeployName = mutableStateOf("")
 val editLvsMasterHost = mutableStateOf("")
 val editLvsSlaveHost = mutableStateOf("")
 
@@ -42,6 +44,9 @@ fun TroubleLvs() {
     Column {
         Head(idx)
         when (idx.value) {
+            TroubleLvsEnum.CONN_FAIL -> {
+                TroubleLvsConnFail()
+            }
             TroubleLvsEnum.VIRTUAL_IP_DETECT -> {
                 TroubleLvsVirtualIpDetect()
             }
@@ -53,6 +58,13 @@ fun TroubleLvs() {
 fun Head(idx: MutableState<TroubleLvsEnum>) {
     Row {
         Text(R.strings.sceneList, fontSize = 40.sp)
+        RowPaddingButton(
+            onClick = {
+                idx.value = TroubleLvsEnum.CONN_FAIL
+            },
+        ) {
+            Text(text = R.strings.TroubleSceneConnFail)
+        }
         RowPaddingButton(
             onClick = {
                 idx.value = TroubleLvsEnum.VIRTUAL_IP_DETECT

@@ -41,12 +41,15 @@ dependencies {
     implementation(compose.desktop.currentOs)
     // middleware
     implementation("org.apache.kafka:kafka-clients:3.1.0")
-    // ssh
-    implementation("com.github.mwiede:jsch:0.2.0")
-    // codec
+    // embedded middleware
     implementation("com.github.shoothzj:test-pulsar:3.1.9")
     implementation("com.github.shoothzj:test-kafka:3.1.9")
     implementation("com.github.shoothzj:test-zookeeper:3.1.9")
+    // ssh
+    implementation("com.github.mwiede:jsch:0.2.0")
+    // codec
+    implementation("com.jayway.jsonpath:json-path:2.7.0")
+    // base
     implementation("com.github.shoothzj:sdk-net:3.1.9")
     implementation("com.github.shoothzj:java-tool:3.1.9")
     // log

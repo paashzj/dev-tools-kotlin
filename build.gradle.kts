@@ -22,7 +22,7 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 plugins {
     // version same as kotlin-gradle-plugin
     kotlin("jvm") version "1.6.10"
-    id("org.jetbrains.compose") version "1.1.0"
+    id("org.jetbrains.compose") version "1.1.1"
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
     checkstyle
     id("jacoco")

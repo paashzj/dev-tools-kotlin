@@ -1,0 +1,71 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements. See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache license, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the license for the specific language governing permissions and
+ * limitations under the license.
+ */
+
+package widget.convert
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material.Button
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import com.github.shoothzj.dev.secret.ConvertSecret
+import com.github.shoothzj.dev.secret.SecretResponseBody
+
+@Composable
+fun ConvertSecret() {
+    var jkspath by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var content by remember { mutableStateOf("") }
+    var result: SecretResponseBody? = null
+    Column {
+        Row {
+            Button(onClick = {
+                var convertSecret = ConvertSecret()
+                result = convertSecret.jks2pem(jkspath, content, password)
+            }) {
+                Text("jks2pem")
+            }
+        }
+        OutlinedTextField(
+            value = jkspath,
+            onValueChange = {
+                jkspath = it
+            },
+            label = { Text("absolute path") }
+        )
+        OutlinedTextField(
+            value = content,
+            onValueChange = {
+                content = it
+            },
+            label = { Text("content") }
+        )
+
+        OutlinedTextField(
+            value = password,
+            onValueChange = {
+                password = it
+            },
+            label = { Text("password") }
+        )
+    }
+}

@@ -40,6 +40,9 @@ fun ConvertScreen() {
             ConvertEnum.Url -> {
                 ConvertURL()
             }
+            ConvertEnum.Secret -> {
+                ConvertSecret()
+            }
         }
     }
 }
@@ -61,6 +64,13 @@ fun Head(idx: MutableState<ConvertEnum>) {
             }
         ) {
             Text("url")
+        }
+        RowPaddingButton(
+            onClick = {
+                idx.value = ConvertEnum.Secret
+            }
+        ) {
+            Text("secret")
         }
     }
 }

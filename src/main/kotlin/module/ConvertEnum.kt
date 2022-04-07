@@ -20,4 +20,5 @@ package module
 enum class ConvertEnum {
     Base64,
     Url,
+    Jks2Pem,
 }

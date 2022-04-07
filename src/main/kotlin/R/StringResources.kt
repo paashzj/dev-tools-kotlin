@@ -42,6 +42,7 @@ interface Strings {
     val connect: String
     val containerIp: String
     val content: String
+    val convert: String
     val convertPage: String
     val decode: String
     val delete: String
@@ -49,6 +50,8 @@ interface Strings {
     val devTools: String
     val dismiss: String
     val encode: String
+    val generate: String
+    val generatePath: String
     val homePage: String
     val httpCodes: String
     val httpMethods: String
@@ -123,6 +126,8 @@ object EnStrings : Strings {
         get() = "container Ip"
     override val content: String
         get() = "content"
+    override val convert: String
+        get() = "convert"
     override val convertPage: String
         get() = "convert page"
     override val decode: String
@@ -137,6 +142,10 @@ object EnStrings : Strings {
         get() = "dismiss"
     override val encode: String
         get() = "encode"
+    override val generate: String
+        get() = "generate"
+    override val generatePath: String
+        get() = "generate path"
     override val homePage: String
         get() = "home page"
     override val httpCodes: String
@@ -250,6 +259,8 @@ object ChStrings : Strings {
         get() = "容器Ip"
     override val content: String
         get() = "内容"
+    override val convert: String
+        get() = "转换"
     override val convertPage: String
         get() = "转换界面"
     override val decode: String
@@ -264,6 +275,10 @@ object ChStrings : Strings {
         get() = "取消"
     override val encode: String
         get() = "编码"
+    override val generate: String
+        get() = "生成"
+    override val generatePath: String
+        get() = "生成路径"
     override val homePage: String
         get() = "主界面"
     override val httpCodes: String

@@ -43,7 +43,7 @@ dependencies {
     implementation("org.apache.kafka:kafka-clients:3.1.0")
     // embedded middleware
     implementation("com.github.shoothzj:test-pulsar:3.1.10")
-    implementation("com.github.shoothzj:test-kafka:3.1.9")
+    implementation("com.github.shoothzj:test-kafka:3.1.10")
     implementation("com.github.shoothzj:test-zookeeper:3.1.10")
     // ssh
     implementation("com.github.mwiede:jsch:0.2.0")

@@ -40,6 +40,9 @@ fun ConvertScreen() {
             ConvertEnum.Url -> {
                 ConvertURL()
             }
+            ConvertEnum.Jks2Pem -> {
+                ConvertJks2Pem()
+            }
         }
     }
 }
@@ -61,6 +64,13 @@ fun Head(idx: MutableState<ConvertEnum>) {
             }
         ) {
             Text("url")
+        }
+        RowPaddingButton(
+            onClick = {
+                idx.value = ConvertEnum.Jks2Pem
+            }
+        ) {
+            Text("jks2pem")
         }
     }
 }

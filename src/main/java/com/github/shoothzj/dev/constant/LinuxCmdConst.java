@@ -41,6 +41,8 @@ public class LinuxCmdConst {
 
     public static final String TAIL = "| tail -n %d";
 
+    public static final String SYSCTL_PARAM = "sysctl -a";
+
     @NotNull
     public static String path(@NotNull String... words) {
         return String.join(LinuxConst.PATH_SEP, words);

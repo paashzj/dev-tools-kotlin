@@ -30,6 +30,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.github.shoothzj.dev.secret.ConvertSecret
 
 @Composable
 fun ConvertJks2Pem() {
@@ -78,6 +79,8 @@ fun ConvertJks2Pem() {
                         label = { Text(R.strings.generatePath) }
                     )
                     Button(onClick = {
+                        val secret = ConvertSecret()
+                        var result = secret.jks2pem(trustStore, keyStore, password, path)
                     }) {
                         Text(R.strings.generate)
                     }

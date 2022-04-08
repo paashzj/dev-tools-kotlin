@@ -1,0 +1,49 @@
+/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+package com.github.shoothzj.dev.secret;
+
+
+public class Constant {
+
+    public static final String KEYTOOL_JKS_PEM_CONVERSION = "keytool -list -rfc -keystore %s ";
+
+    public static final String GENERATE_CERT_PATH = "%s\\%s";
+
+    public static final String KEYTOOL_CLIENT_KEY_CERT = "keytool -export -file %s -alias client -keystore %s -storepass %s";
+
+    public static final String KEYTOOL_JKS_P12_CONVERSION = "keytool -importkeystore -srckeystore %s -destkeystore %s -srcstoretype JKS -deststoretype PKCS12 -srcstorepass %s -deststorepass %s  -noprompt";
+
+    public static final String KEYTOOL_CLIENT_KEY_JKS = "keytool -genkey -keyalg RSA -dname  \"cn=hankserver,ou=cysignet,o=none,l=china,st=beijing,c=cn\" -alias client -keypass 123456  -storepass 123456 -validity 36500 -keystore client.jks";
+
+    public static final String STOREPASS = "-storepass %s";
+
+    public static final String BEGIN_CERTIFICATE = "BEGIN CERTIFICATE";
+
+    public static final String END_CERTIFICATE = "END CERTIFICATE";
+
+    public static final String PEM_FILE_PATH_DESCRIBE = "pem filepath : %s";
+
+    public static final String EXCEPTION = "Exception";
+
+    public static final String TRUST_P12_FILE_NAME = "trust.p12";
+
+    public static final String KEY_P12_FILE_NAME = "key.p12";
+
+}

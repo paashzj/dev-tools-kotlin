@@ -19,17 +19,18 @@
 
 package com.github.shoothzj.dev.secret;
 
+import com.github.shoothzj.dev.constant.CertConstant;
 import com.github.shoothzj.javatool.util.IoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.InputStream;
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Base64;
 
 public class ConvertSecret {
@@ -38,7 +39,7 @@ public class ConvertSecret {
     public String jks2pem(String trustStore, String keyStore, String password, String path) {
         try {
             // generate trust jks file
-            String trustJksPath = String.format(Constant.GENERATE_CERT_PATH, path, Constant.TRUST_JKS_FILE_NAME);
+            String trustJksPath = String.format(CertConstant.GENERATE_CERT_PATH, path, CertConstant.TRUST_JKS_FILE_NAME);
             File trustFile = new File(trustJksPath);
             byte[] trustBytes = Base64.getDecoder().decode(trustStore);
             IoUtil.write(trustBytes, new FileOutputStream(trustFile));
@@ -47,17 +48,10 @@ public class ConvertSecret {
             jks2pem(trustJksPath, password);
 
             // generate trust p12 file
-            exeCmd1(Constant.generateP12(trustJksPath, path, password, Constant.TRUST_P12_FILE_NAME));
-
-
-            //generate trust public key file
-            //  exeCmd1(Constant.opensslOutPublicPemCmd(genTrustPath, path, Constant.TRUST_PUBLIC_PEM_NAME));
-
-            // generate trust private key file
-            // exeCmd1(Constant.opensslOutPrivatePemCmd(genTrustPath, path, Constant.TRUST_PRIVATE_PEM_NAME));
+            exeCmd(CertConstant.jks2P12Command(trustJksPath, path, password, CertConstant.TRUST_P12_FILE_NAME));
 
             // generate key jks file
-            String keyJksPath = String.format(Constant.GENERATE_CERT_PATH, path, Constant.KEY_JKS_FILE_NAME);
+            String keyJksPath = String.format(CertConstant.GENERATE_CERT_PATH, path, CertConstant.KEY_JKS_FILE_NAME);
             File keyFile = new File(keyJksPath);
             byte[] KeyBytes = Base64.getDecoder().decode(keyStore);
             IoUtil.write(KeyBytes, new FileOutputStream(keyFile));
@@ -66,13 +60,8 @@ public class ConvertSecret {
             jks2pem(keyJksPath, password);
 
             // generate key p12 file
-            exeCmd1(Constant.generateP12(keyJksPath, path, password, Constant.KEY_P12_FILE_NAME));
+            exeCmd(CertConstant.jks2P12Command(keyJksPath, path, password, CertConstant.KEY_P12_FILE_NAME));
 
-            //generate trust public key file
-            //exeCmd1(Constant.opensslOutPublicPemCmd(genKeyPath, path, Constant.KEY_PUBLIC_PEM_NAME));
-
-            //generate key private key file
-            //exeCmd1(Constant.opensslOutPrivatePemCmd(genKeyPath, path, Constant.KEY_PRIVATE_PEM_NAME));
             return "success.";
         } catch (Exception e) {
             log.error("jks failed to convert the pem.", e);
@@ -83,11 +72,11 @@ public class ConvertSecret {
     public void jks2pem(String path, String password) {
         try {
             StringBuilder cmd = new StringBuilder();
-            cmd.append(String.format(Constant.KEYTOOL_JKS_PEM_CONVERSION, path));
+            cmd.append(String.format(CertConstant.KEYTOOL_JKS_PEM_CONVERSION, path));
             if (!"".equals(password)) {
-                cmd.append(String.format(Constant.STOREPASS, password));
+                cmd.append(String.format(CertConstant.STOREPASS, password));
             }
-            parseJksAndGeneratePemFile(exeCmd(cmd.toString()), path);
+            parseJksAndGeneratePemFile(exeCmdGetInputStream(cmd.toString()), path);
         } catch (Exception e) {
             log.error("jks failed to convert the pem. ", e);
         }
@@ -100,18 +89,18 @@ public class ConvertSecret {
              BufferedWriter out = new BufferedWriter(new FileWriter(pemPath))) {
             boolean flag = false;
             String content = br.readLine();
-            if (content.contains(Constant.EXCEPTION)) {
+            if (content.contains(CertConstant.EXCEPTION)) {
                 throw new Exception(content);
             }
             while (content != null) {
                 if (!flag) {
-                    flag = content.contains(Constant.BEGIN_CERTIFICATE);
+                    flag = content.contains(CertConstant.BEGIN_CERTIFICATE);
                 }
                 if (flag) {
                     builder.append(content).append(System.lineSeparator());
                     out.write(content);
                     out.newLine();
-                    flag = !content.contains(Constant.END_CERTIFICATE);
+                    flag = !content.contains(CertConstant.END_CERTIFICATE);
                 }
                 content = br.readLine();
             }
@@ -131,16 +120,16 @@ public class ConvertSecret {
         log.debug("the pem content : {}", builder);
     }
 
-    private InputStream exeCmd(String cmd) throws Exception {
+    private InputStream exeCmdGetInputStream(String cmd) throws Exception {
         Process process = Runtime.getRuntime().exec(cmd);
         return process.getInputStream();
     }
 
-    private void exeCmd1(String cmd) throws Exception {
-        InputStream is = exeCmd(cmd);
+    private void exeCmd(String cmd) throws Exception {
+        InputStream is = exeCmdGetInputStream(cmd);
         BufferedReader br = new BufferedReader(new InputStreamReader(is, "GBK"));
         String content = br.readLine();
-        System.out.println(cmd + " : " + content);
+        log.info("exec cmd {} content is {}", cmd, content);
         if (content == null) {
             log.error("generate fail. cmd {}", cmd);
         } else {

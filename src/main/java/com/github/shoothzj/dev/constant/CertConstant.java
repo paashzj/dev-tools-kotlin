@@ -17,12 +17,12 @@
  * under the License.
  */
 
-package com.github.shoothzj.dev.secret;
+package com.github.shoothzj.dev.constant;
 
 
 import java.io.File;
 
-public class Constant {
+public class CertConstant {
 
     public static final String KEYTOOL_JKS_PEM_CONVERSION = "keytool -list -rfc -keystore %s ";
 
@@ -50,32 +50,9 @@ public class Constant {
 
     public static final String KEY_P12_FILE_NAME = "key.p12";
 
-    public static final String TRUST_PEM_FILE_NAME = "trust.pem";
-
-    public static final String KEY_PEM_FILE_NAME = "key.pem";
-
-    public static final String TRUST_PUBLIC_PEM_NAME = "trust-public.pem";
-
-    public static final String TRUST_PRIVATE_PEM_NAME = "trust-private.pem";
-
-    public static final String KEY_PUBLIC_PEM_NAME = "key-public.pem";
-
-    public static final String KEY_PRIVATE_PEM_NAME = "key-private.pem";
-
-
-    public static String generateP12(String trustFile, String path, String password, String fileName) {
-        String genTrustPath = String.format(Constant.GENERATE_CERT_PATH, path, fileName);
-        return String.format(Constant.KEYTOOL_JKS_P12_CONVERSION, trustFile, genTrustPath, password, password);
-    }
-
-    public static String opensslOutPublicPemCmd(String srcPath, String destPath, String publicPemName) {
-        String dest = String.format(GENERATE_CERT_PATH, destPath, publicPemName);
-        return String.format(OPENSSL_OUT_PUBLIC_PEM, srcPath, dest);
-    }
-
-    public static String opensslOutPrivatePemCmd(String srcPath, String destPath, String privatePemName) {
-        String dest = String.format(GENERATE_CERT_PATH, destPath, privatePemName);
-        return String.format(OPENSSL_OUT_PRIVATE_PEM, srcPath, dest);
+    public static String jks2P12Command(String trustFile, String path, String password, String fileName) {
+        String genTrustPath = String.format(CertConstant.GENERATE_CERT_PATH, path, fileName);
+        return String.format(CertConstant.KEYTOOL_JKS_P12_CONVERSION, trustFile, genTrustPath, password, password);
     }
 
 }

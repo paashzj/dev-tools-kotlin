@@ -90,13 +90,19 @@ fun ConvertJks2Pem() {
             Row {
                 Column {
                     OutlinedTextField(
-                        value = "openssl pkcs12 -in your_p12_file -nokeys -out public.pem",
+                        value = "openssl pkcs12 -in trust.p12 -nokeys -out ca.pem",
                         onValueChange = {
                         },
-                        label = { Text("generate public key command") }
+                        label = { Text("generate ca cert command") }
                     )
                     OutlinedTextField(
-                        value = "openssl pkcs12 -in your_p12_file -nodes -nocerts -out private.pem",
+                        value = "openssl pkcs12 -in key.p12 -nokeys -out cert.pem",
+                        onValueChange = {
+                        },
+                        label = { Text("generate cert command") }
+                    )
+                    OutlinedTextField(
+                        value = "openssl pkcs12 -in key.p12 -nodes -nocerts -out private.pem",
                         onValueChange = {
                         },
                         label = { Text("generate private key command") }

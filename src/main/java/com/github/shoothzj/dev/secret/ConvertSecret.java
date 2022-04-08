@@ -53,8 +53,8 @@ public class ConvertSecret {
             // generate key jks file
             String keyJksPath = String.format(CertConstant.GENERATE_CERT_PATH, path, CertConstant.KEY_JKS_FILE_NAME);
             File keyFile = new File(keyJksPath);
-            byte[] KeyBytes = Base64.getDecoder().decode(keyStore);
-            IoUtil.write(KeyBytes, new FileOutputStream(keyFile));
+            byte[] keyBytes = Base64.getDecoder().decode(keyStore);
+            IoUtil.write(keyBytes, new FileOutputStream(keyFile));
 
             // generate key pem file
             jks2pem(keyJksPath, password);

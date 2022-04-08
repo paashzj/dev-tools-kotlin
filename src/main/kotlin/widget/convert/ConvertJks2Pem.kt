@@ -37,6 +37,7 @@ fun ConvertJks2Pem() {
     var trustStore by remember { mutableStateOf("") }
     var keyStore by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var result by remember { mutableStateOf("") }
     var path by remember { mutableStateOf("") }
     Row {
         Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(3f)) {
@@ -80,10 +81,33 @@ fun ConvertJks2Pem() {
                     )
                     Button(onClick = {
                         val secret = ConvertSecret()
-                        var result = secret.jks2pem(trustStore, keyStore, password, path)
+                        result = secret.jks2pem(trustStore, keyStore, password, path)
                     }) {
                         Text(R.strings.generate)
                     }
+                }
+            }
+            Row {
+                Column {
+                    OutlinedTextField(
+                        value = "openssl pkcs12 -in trust.p12 -nokeys -out ca.pem",
+                        onValueChange = {
+                        },
+                        label = { Text("generate ca cert command") }
+                    )
+                    OutlinedTextField(
+                        value = "openssl pkcs12 -in key.p12 -nokeys -out cert.pem",
+                        onValueChange = {
+                        },
+                        label = { Text("generate cert command") }
+                    )
+                    OutlinedTextField(
+                        value = "openssl pkcs12 -in key.p12 -nodes -nocerts -out private.pem",
+                        onValueChange = {
+                        },
+                        label = { Text("generate private key command") }
+                    )
+                    Text(result)
                 }
             }
         }

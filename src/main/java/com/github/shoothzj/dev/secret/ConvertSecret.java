@@ -19,6 +19,7 @@
 
 package com.github.shoothzj.dev.secret;
 
+import com.github.shoothzj.dev.constant.CertConstant;
 import com.github.shoothzj.javatool.util.IoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,83 +29,81 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class ConvertSecret {
     private static final Logger log = LoggerFactory.getLogger(ConvertSecret.class);
 
-    public SecretResponseBody jks2pem(String trustStore, String keyStore, String password, String path) {
+    public String jks2pem(String trustStore, String keyStore, String password, String path) {
         try {
-            generateP12(trustStore, path, password, Constant.TRUST_P12_FILE_NAME);
-            generateP12(keyStore, path, password, Constant.KEY_P12_FILE_NAME);
+            // generate trust jks file
+            String trustJksPath = String.format(CertConstant.GENERATE_CERT_PATH, path, CertConstant.TRUST_JKS_FILE_NAME);
+            File trustFile = new File(trustJksPath);
+            byte[] trustBytes = Base64.getDecoder().decode(trustStore);
+            IoUtil.write(trustBytes, new FileOutputStream(trustFile));
+
+            // generate trust pem file
+            jks2pem(trustJksPath, password);
+
+            // generate trust p12 file
+            exeCmd(CertConstant.jks2P12Command(trustJksPath, path, password, CertConstant.TRUST_P12_FILE_NAME));
+
+            // generate key jks file
+            String keyJksPath = String.format(CertConstant.GENERATE_CERT_PATH, path, CertConstant.KEY_JKS_FILE_NAME);
+            File keyFile = new File(keyJksPath);
+            byte[] keyBytes = Base64.getDecoder().decode(keyStore);
+            IoUtil.write(keyBytes, new FileOutputStream(keyFile));
+
+            // generate key pem file
+            jks2pem(keyJksPath, password);
+
+            // generate key p12 file
+            exeCmd(CertConstant.jks2P12Command(keyJksPath, path, password, CertConstant.KEY_P12_FILE_NAME));
+
+            return "success.";
         } catch (Exception e) {
-            log.error("jks failed to convert the pem.");
+            log.error("jks failed to convert the pem.", e);
+            return "fail.";
         }
-
-        return null;
     }
 
-    private void generateP12(String store, String path, String password, String generatePath) throws Exception {
-        String keyTempPath = tempFile(store);
-        String genPath = String.format(Constant.GENERATE_CERT_PATH, path, generatePath);
-        String exportCmd = String.format(Constant.KEYTOOL_JKS_P12_CONVERSION, keyTempPath, genPath, password, password);
-        InputStream is = exeCmd(exportCmd);
-    }
-
-    public SecretResponseBody jks2pem(String path, String content, String password) {
+    public void jks2pem(String path, String password) {
         try {
             StringBuilder cmd = new StringBuilder();
-            if ("".equals(path) && !"".equals(content)) {
-                path = tempFile(content);
-            }
-            cmd.append(String.format(Constant.KEYTOOL_JKS_PEM_CONVERSION, path));
+            cmd.append(String.format(CertConstant.KEYTOOL_JKS_PEM_CONVERSION, path));
             if (!"".equals(password)) {
-                cmd.append(String.format(Constant.STOREPASS, password));
+                cmd.append(String.format(CertConstant.STOREPASS, password));
             }
-            InputStream is = exeCmd(cmd.toString());
-            return parseJksAndGeneratePemFile(is, path);
+            parseJksAndGeneratePemFile(exeCmdGetInputStream(cmd.toString()), path);
         } catch (Exception e) {
             log.error("jks failed to convert the pem. ", e);
-            return new SecretResponseBody("jks failed to convert the pem.", "");
         }
     }
 
-    private String tempFile(String content) throws IOException {
-        File file = File.createTempFile("temp-file", ".jks");
-        file.deleteOnExit();
-        byte[] bytes = Base64.getDecoder().decode(content);
-        IoUtil.write(bytes, new FileOutputStream(file));
-        log.info("the file absolute path : {}", file.getAbsolutePath());
-        return file.getAbsolutePath();
-    }
-
-    private SecretResponseBody parseJksAndGeneratePemFile(InputStream is, String path) {
+    private void parseJksAndGeneratePemFile(InputStream is, String path) {
         String pemPath = path.replaceAll(".jks", ".pem");
         StringBuilder builder = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(is, "GBK"));
              BufferedWriter out = new BufferedWriter(new FileWriter(pemPath))) {
             boolean flag = false;
             String content = br.readLine();
-            if (content.contains(Constant.EXCEPTION)) {
+            if (content.contains(CertConstant.EXCEPTION)) {
                 throw new Exception(content);
             }
             while (content != null) {
                 if (!flag) {
-                    flag = content.contains(Constant.BEGIN_CERTIFICATE);
+                    flag = content.contains(CertConstant.BEGIN_CERTIFICATE);
                 }
                 if (flag) {
                     builder.append(content).append(System.lineSeparator());
                     out.write(content);
                     out.newLine();
-                    flag = !content.contains(Constant.END_CERTIFICATE);
+                    flag = !content.contains(CertConstant.END_CERTIFICATE);
                 }
                 content = br.readLine();
             }
-            return new SecretResponseBody(String.format(Constant.PEM_FILE_PATH_DESCRIBE, pemPath), builder.toString());
         } catch (Exception e) {
             builder.append("jks failed to convert the pem. ");
             if (e.getMessage().contains("keystore password was incorrect")) {
@@ -117,12 +116,24 @@ public class ConvertSecret {
                 builder.append(String.format("keystore file does not exist: %s", path));
             }
             log.error("jks failed to convert the pem. {}", e.getMessage());
-            return new SecretResponseBody("fail to generate pem file.", builder.toString());
         }
+        log.debug("the pem content : {}", builder);
     }
 
-    private InputStream exeCmd(String cmd) throws Exception {
+    private InputStream exeCmdGetInputStream(String cmd) throws Exception {
         Process process = Runtime.getRuntime().exec(cmd);
         return process.getInputStream();
+    }
+
+    private void exeCmd(String cmd) throws Exception {
+        InputStream is = exeCmdGetInputStream(cmd);
+        BufferedReader br = new BufferedReader(new InputStreamReader(is, "GBK"));
+        String content = br.readLine();
+        log.info("exec cmd {} content is {}", cmd, content);
+        if (content == null) {
+            log.error("generate fail. cmd {}", cmd);
+        } else {
+            log.info("generate success. cmd {}", cmd);
+        }
     }
 }

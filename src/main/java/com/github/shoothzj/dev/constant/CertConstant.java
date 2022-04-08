@@ -17,33 +17,42 @@
  * under the License.
  */
 
-package com.github.shoothzj.dev.secret;
+package com.github.shoothzj.dev.constant;
 
 
-public class Constant {
+import java.io.File;
+
+public class CertConstant {
 
     public static final String KEYTOOL_JKS_PEM_CONVERSION = "keytool -list -rfc -keystore %s ";
 
-    public static final String GENERATE_CERT_PATH = "%s\\%s";
-
-    public static final String KEYTOOL_CLIENT_KEY_CERT = "keytool -export -file %s -alias client -keystore %s -storepass %s";
+    public static final String GENERATE_CERT_PATH = "%s" + File.separator + "%s";
 
     public static final String KEYTOOL_JKS_P12_CONVERSION = "keytool -importkeystore -srckeystore %s -destkeystore %s -srcstoretype JKS -deststoretype PKCS12 -srcstorepass %s -deststorepass %s  -noprompt";
 
-    public static final String KEYTOOL_CLIENT_KEY_JKS = "keytool -genkey -keyalg RSA -dname  \"cn=hankserver,ou=cysignet,o=none,l=china,st=beijing,c=cn\" -alias client -keypass 123456  -storepass 123456 -validity 36500 -keystore client.jks";
-
     public static final String STOREPASS = "-storepass %s";
+
+    public static final String OPENSSL_OUT_PUBLIC_PEM = "openssl pkcs12 -in %s -nokeys -out %s";
+
+    public static final String OPENSSL_OUT_PRIVATE_PEM = "openssl pkcs12 -in %s -nodes -nocerts -out private1.pem";
 
     public static final String BEGIN_CERTIFICATE = "BEGIN CERTIFICATE";
 
     public static final String END_CERTIFICATE = "END CERTIFICATE";
 
-    public static final String PEM_FILE_PATH_DESCRIBE = "pem filepath : %s";
-
     public static final String EXCEPTION = "Exception";
+
+    public static final String TRUST_JKS_FILE_NAME = "trust.jks";
+
+    public static final String KEY_JKS_FILE_NAME = "key.jks";
 
     public static final String TRUST_P12_FILE_NAME = "trust.p12";
 
     public static final String KEY_P12_FILE_NAME = "key.p12";
+
+    public static String jks2P12Command(String trustFile, String path, String password, String fileName) {
+        String genTrustPath = String.format(CertConstant.GENERATE_CERT_PATH, path, fileName);
+        return String.format(CertConstant.KEYTOOL_JKS_P12_CONVERSION, trustFile, genTrustPath, password, password);
+    }
 
 }

@@ -43,6 +43,8 @@ public class LinuxCmdConst {
 
     public static final String SYSCTL_PARAM = "sysctl -a";
 
+    public static final String SCP_TO_NODE_CMD = "scp %d %d:%d";
+
     @NotNull
     public static String path(@NotNull String... words) {
         return String.join(LinuxConst.PATH_SEP, words);
@@ -80,6 +82,11 @@ public class LinuxCmdConst {
     @NotNull
     public static String tail(int num) {
         return String.format(TAIL, num);
+    }
+
+    @NotNull
+    public static String scpCmd(String resource, String host, String target) {
+        return String.format(SCP_TO_NODE_CMD, resource, host, target);
     }
 
 }

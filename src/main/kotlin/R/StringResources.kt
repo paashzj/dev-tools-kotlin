@@ -79,6 +79,7 @@ interface Strings {
     val simulatorPage: String
     val startTime: String
     val subscribe: String
+    val Transfer: String
     val TroubleComponent: String
     val TroubleSceneClusterInitFail: String
     val TroubleSceneConnFail: String
@@ -200,6 +201,8 @@ object EnStrings : Strings {
         get() = "start time"
     override val subscribe: String
         get() = "subscribe"
+    override val Transfer: String
+        get() = "transfer"
     override val TroubleComponent: String
         get() = "Trouble Component"
     override val TroubleSceneClusterInitFail: String
@@ -333,6 +336,8 @@ object ChStrings : Strings {
         get() = "启动时间"
     override val subscribe: String
         get() = "订阅"
+    override val Transfer: String
+        get() = "传输界面"
     override val TroubleComponent: String
         get() = "问题定位组件"
     override val TroubleSceneClusterInitFail: String

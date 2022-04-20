@@ -25,6 +25,7 @@ enum class NavigationEnum {
     Simulator,
     TroubleShoot,
     Verify,
+    Transfer,
     Home,
     // vm application
     Kubernetes,

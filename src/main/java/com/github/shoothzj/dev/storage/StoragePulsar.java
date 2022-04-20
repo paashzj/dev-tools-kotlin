@@ -39,6 +39,11 @@ public class StoragePulsar extends AbstractStorage<PulsarConfig> {
     }
 
     @Override
+    public PulsarConfig deserializeConfig(String json) {
+        return JacksonService.toObject(json, PulsarConfig.class);
+    }
+
+    @Override
     protected Map<String, PulsarConfig> deserialize(String json) {
         return JacksonService.toRefer(json, new TypeReference<>() {
         });

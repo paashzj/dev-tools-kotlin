@@ -73,7 +73,7 @@ fun ConfigMinio() {
                 Row {
                     Box(
                         modifier = Modifier.clickable {
-                            navigationContext.value = StorageMinio.getInstance().getConfig(editMinioName.value)
+                            navigationContext.value = StorageMinio.getInstance().deserializeConfig(minioList.value[it])
                             navigationIdx.value = NavigationEnum.Minio
                         }
                     ) {

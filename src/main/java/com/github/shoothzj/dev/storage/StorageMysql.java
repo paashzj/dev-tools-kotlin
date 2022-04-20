@@ -39,6 +39,11 @@ public class StorageMysql extends AbstractStorage<MysqlConfig> {
     }
 
     @Override
+    public MysqlConfig deserializeConfig(String json) {
+        return JacksonService.toObject(json, MysqlConfig.class);
+    }
+
+    @Override
     protected Map<String, MysqlConfig> deserialize(String json) {
         return JacksonService.toRefer(json, new TypeReference<>() {
         });

@@ -73,7 +73,7 @@ fun ConfigNginx() {
                 Row {
                     Box(
                         modifier = Modifier.clickable {
-                            navigationContext.value = StorageNginx.getInstance().getConfig(editNginxName.value)
+                            navigationContext.value = StorageNginx.getInstance().deserializeConfig(nginxList.value[it])
                             navigationIdx.value = NavigationEnum.Nginx
                         }
                     ) {

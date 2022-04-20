@@ -39,6 +39,11 @@ public class StorageMinio extends AbstractStorage<MinioConfig> {
     }
 
     @Override
+    public MinioConfig deserializeConfig(String json) {
+        return JacksonService.toObject(json, MinioConfig.class);
+    }
+
+    @Override
     protected Map<String, MinioConfig> deserialize(String json) {
         return JacksonService.toRefer(json, new TypeReference<>() {
         });

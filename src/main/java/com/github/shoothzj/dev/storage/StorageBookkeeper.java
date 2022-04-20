@@ -39,6 +39,11 @@ public class StorageBookkeeper extends AbstractStorage<BookkeeperConfig> {
     }
 
     @Override
+    public BookkeeperConfig deserializeConfig(String json) {
+        return JacksonService.toObject(json, BookkeeperConfig.class);
+    }
+
+    @Override
     protected Map<String, BookkeeperConfig> deserialize(String json) {
         return JacksonService.toRefer(json, new TypeReference<>() {
         });

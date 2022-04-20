@@ -39,6 +39,11 @@ public class StorageZooKeeper extends AbstractStorage<ZooKeeperConfig> {
     }
 
     @Override
+    public ZooKeeperConfig deserializeConfig(String json) {
+        return JacksonService.toObject(json, ZooKeeperConfig.class);
+    }
+
+    @Override
     protected Map<String, ZooKeeperConfig> deserialize(String json) {
         return JacksonService.toRefer(json, new TypeReference<>() {
         });

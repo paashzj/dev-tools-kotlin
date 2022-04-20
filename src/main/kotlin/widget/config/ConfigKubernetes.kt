@@ -88,7 +88,7 @@ fun ConfigKubernetes() {
                 Row {
                     Box(
                         modifier = Modifier.clickable {
-                            navigationContext.value = StorageK8s.getInstance().getConfig(editKubernetesName.value)
+                            navigationContext.value = StorageK8s.getInstance().deserializeConfig(kubernetes.value[it])
                             navigationIdx.value = NavigationEnum.Kubernetes
                         }
                     ) {

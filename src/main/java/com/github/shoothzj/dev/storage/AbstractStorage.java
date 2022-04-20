@@ -96,6 +96,8 @@ public abstract class AbstractStorage<T extends BaseConfig> {
         return result == null ? new HashMap<>() : result;
     }
 
+    public abstract T deserializeConfig(String json);
+
     protected abstract Map<String, T> deserialize(String json);
 
 }

@@ -73,7 +73,7 @@ fun ConfigBookkeeper() {
                 Row {
                     Box(
                         modifier = Modifier.clickable {
-                            navigationContext.value = StorageBookkeeper.getInstance().getConfig(editBookkeeperName.value)
+                            navigationContext.value = StorageBookkeeper.getInstance().deserializeConfig(bookkeeperList.value[it])
                             navigationIdx.value = NavigationEnum.Bookkeeper
                         }
                     ) {

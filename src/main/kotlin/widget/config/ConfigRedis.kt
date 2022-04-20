@@ -73,7 +73,7 @@ fun ConfigRedis() {
                 Row {
                     Box(
                         modifier = Modifier.clickable {
-                            navigationContext.value = StorageRedis.getInstance().getConfig(editRedisName.value)
+                            navigationContext.value = StorageRedis.getInstance().deserializeConfig(redisList.value[it])
                             navigationIdx.value = NavigationEnum.Redis
                         }
                     ) {

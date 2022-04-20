@@ -39,6 +39,11 @@ public class StorageK8s extends AbstractStorage<KubernetesConfig> {
     }
 
     @Override
+    public KubernetesConfig deserializeConfig(String json) {
+        return JacksonService.toObject(json, KubernetesConfig.class);
+    }
+
+    @Override
     protected Map<String, KubernetesConfig> deserialize(String json) {
         return JacksonService.toRefer(json, new TypeReference<>() {
         });

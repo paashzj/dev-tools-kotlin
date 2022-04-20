@@ -39,6 +39,11 @@ public class StorageLvs extends AbstractStorage<LvsConfig> {
     }
 
     @Override
+    public LvsConfig deserializeConfig(String json) {
+        return JacksonService.toObject(json, LvsConfig.class);
+    }
+
+    @Override
     protected Map<String, LvsConfig> deserialize(String json) {
         return JacksonService.toRefer(json, new TypeReference<>() {
         });

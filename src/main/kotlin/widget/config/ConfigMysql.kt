@@ -73,7 +73,7 @@ fun ConfigMysql() {
                 Row {
                     Box(
                         modifier = Modifier.clickable {
-                            navigationContext.value = StorageMysql.getInstance().getConfig(editMysqlName.value)
+                            navigationContext.value = StorageMysql.getInstance().deserializeConfig(mysqlList.value[it])
                             navigationIdx.value = NavigationEnum.Mysql
                         }
                     ) {

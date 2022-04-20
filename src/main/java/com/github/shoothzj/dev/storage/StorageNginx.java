@@ -39,6 +39,11 @@ public class StorageNginx extends AbstractStorage<NginxConfig> {
     }
 
     @Override
+    public NginxConfig deserializeConfig(String json) {
+        return JacksonService.toObject(json, NginxConfig.class);
+    }
+
+    @Override
     protected Map<String, NginxConfig> deserialize(String json) {
         return JacksonService.toRefer(json, new TypeReference<>() {
         });

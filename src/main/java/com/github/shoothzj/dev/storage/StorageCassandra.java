@@ -39,6 +39,11 @@ public class StorageCassandra extends AbstractStorage<CassandraConfig> {
     }
 
     @Override
+    public CassandraConfig deserializeConfig(String json) {
+        return JacksonService.toObject(json, CassandraConfig.class);
+    }
+
+    @Override
     protected Map<String, CassandraConfig> deserialize(String json) {
         return JacksonService.toRefer(json, new TypeReference<>() {
         });

@@ -39,6 +39,11 @@ public class StorageRedis extends AbstractStorage<RedisConfig> {
     }
 
     @Override
+    public RedisConfig deserializeConfig(String json) {
+        return JacksonService.toObject(json, RedisConfig.class);
+    }
+
+    @Override
     protected Map<String, RedisConfig> deserialize(String json) {
         return JacksonService.toRefer(json, new TypeReference<>() {
         });

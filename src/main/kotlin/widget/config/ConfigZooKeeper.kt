@@ -74,7 +74,7 @@ fun ConfigZooKeeper() {
                 Row {
                     Box(
                         modifier = Modifier.clickable {
-                            navigationContext.value = StorageRedis.getInstance().getConfig(editZooKeeperName.value)
+                            navigationContext.value = StorageRedis.getInstance().deserializeConfig(zooKeeperList.value[it])
                             navigationIdx.value = NavigationEnum.Zookeeper
                         }
                     ) {

@@ -73,7 +73,7 @@ fun ConfigCassandra() {
                 Row {
                     Box(
                         modifier = Modifier.clickable {
-                            navigationContext.value = StorageCassandra.getInstance().getConfig(editCassandraName.value)
+                            navigationContext.value = StorageCassandra.getInstance().deserializeConfig(cassandraList.value[it])
                             navigationIdx.value = NavigationEnum.Cassandra
                         }
                     ) {

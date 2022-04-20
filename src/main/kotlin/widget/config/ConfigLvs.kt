@@ -100,7 +100,7 @@ fun ConfigLvs() {
                 Row {
                     Box(
                         modifier = Modifier.clickable {
-                            navigationContext.value = StorageLvs.getInstance().getConfig(editLvsName.value)
+                            navigationContext.value = StorageLvs.getInstance().deserializeConfig(lvsList.value[it])
                             navigationIdx.value = NavigationEnum.Lvs
                         }
                     ) {

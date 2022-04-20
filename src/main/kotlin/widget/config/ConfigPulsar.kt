@@ -85,7 +85,7 @@ fun ConfigPulsar() {
                 Row {
                     Box(
                         modifier = Modifier.clickable {
-                            navigationContext.value = StoragePulsar.getInstance().getConfig(editPulsarName.value)
+                            navigationContext.value = StoragePulsar.getInstance().deserializeConfig(pulsarList.value[it])
                             navigationIdx.value = NavigationEnum.Pulsar
                         }
                     ) {

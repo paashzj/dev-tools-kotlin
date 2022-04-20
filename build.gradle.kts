@@ -37,6 +37,16 @@ repositories {
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
+configurations {
+    all {
+        // log4j1
+        exclude("org.slf4j", "slf4j-log4j12")
+        // logback
+        exclude("ch.qos.logback", "logback-core")
+        exclude("ch.qos.logback", "logback-classic")
+    }
+}
+
 dependencies {
     implementation(compose.desktop.currentOs)
     // middleware

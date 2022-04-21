@@ -49,7 +49,6 @@ import widget.nginx.NginxInstanceScreen
 import widget.pulsar.PulsarInstanceScreen
 import widget.redis.RedisInstanceScreen
 import widget.simulator.SimulatorScreen
-import widget.transfer.TransferScreen
 import widget.trouble.TroubleShootScreen
 import widget.verify.VerifyScreen
 import widget.zookeeper.ZooKeeperInstanceScreen
@@ -118,9 +117,6 @@ fun main() = application {
                     }
                     NavigationEnum.Simulator -> {
                         SimulatorScreen()
-                    }
-                    NavigationEnum.Transfer -> {
-                        TransferScreen()
                     }
                     NavigationEnum.TroubleShoot -> {
                         TroubleShootScreen()

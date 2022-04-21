@@ -59,7 +59,7 @@ dependencies {
     implementation("com.github.mwiede:jsch:0.2.0")
     // scp
     implementation("org.apache.sshd:sshd-common:2.8.0")
-    implementation("org.apache.sshd:sshd-core:2.7.0")
+    implementation("org.apache.sshd:sshd-core:2.8.0")
     implementation("org.apache.sshd:sshd-scp:2.8.0")
     // codec
     implementation("com.jayway.jsonpath:json-path:2.7.0")

@@ -33,6 +33,7 @@ interface Strings {
     val addKubernetesInstance: String
     val addNginxInstance: String
     val backHome: String
+    val broadcast: String
     val Commands: String
     val close: String
     val commandPage: String
@@ -50,6 +51,7 @@ interface Strings {
     val devTools: String
     val dismiss: String
     val encode: String
+    val execute: String
     val generate: String
     val generatePath: String
     val homePage: String
@@ -92,6 +94,7 @@ interface Strings {
     val troubleShootResult: String
     val VerifyList: String
     val verifyPage: String
+    val localTransfer: String
 }
 
 object EnStrings : Strings {
@@ -109,6 +112,8 @@ object EnStrings : Strings {
         get() = "add nginx instance"
     override val backHome: String
         get() = "back home"
+    override val broadcast: String
+        get() = "broadcast"
     override val Commands: String
         get() = "Commands"
     override val close: String
@@ -143,6 +148,8 @@ object EnStrings : Strings {
         get() = "dismiss"
     override val encode: String
         get() = "encode"
+    override val execute: String
+        get() = "execute"
     override val generate: String
         get() = "generate"
     override val generatePath: String
@@ -227,6 +234,8 @@ object EnStrings : Strings {
         get() = "Verify List"
     override val verifyPage: String
         get() = "verify page"
+    override val localTransfer: String
+        get() = "local transfer"
 }
 
 object ChStrings : Strings {
@@ -244,6 +253,8 @@ object ChStrings : Strings {
         get() = "添加Nginx实例"
     override val backHome: String
         get() = "回到主页"
+    override val broadcast: String
+        get() = "广播"
     override val Commands: String
         get() = "命令"
     override val close: String
@@ -278,6 +289,8 @@ object ChStrings : Strings {
         get() = "取消"
     override val encode: String
         get() = "编码"
+    override val execute: String
+        get() = "执行"
     override val generate: String
         get() = "生成"
     override val generatePath: String
@@ -362,4 +375,6 @@ object ChStrings : Strings {
         get() = "验证列表"
     override val verifyPage: String
         get() = "验证界面"
+    override val localTransfer: String
+        get() = "本地传输"
 }

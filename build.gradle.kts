@@ -52,19 +52,19 @@ dependencies {
     // middleware
     implementation("org.apache.kafka:kafka-clients:3.1.0")
     // embedded middleware
-    implementation("com.github.shoothzj:test-pulsar:3.1.11")
+    implementation("com.github.shoothzj:test-pulsar:3.1.12")
     implementation("com.github.shoothzj:test-kafka:3.1.11")
-    implementation("com.github.shoothzj:test-zookeeper:3.1.11")
+    implementation("com.github.shoothzj:test-zookeeper:3.1.12")
     // ssh
     implementation("com.github.mwiede:jsch:0.2.0")
     // scp
     implementation("org.apache.sshd:sshd-common:2.7.0")
     implementation("org.apache.sshd:sshd-core:2.7.0")
-    implementation("org.apache.sshd:sshd-scp:2.7.0")
+    implementation("org.apache.sshd:sshd-scp:2.8.0")
     // codec
     implementation("com.jayway.jsonpath:json-path:2.7.0")
     // base
-    implementation("com.github.shoothzj:sdk-net:3.1.11")
+    implementation("com.github.shoothzj:sdk-net:3.1.12")
     implementation("com.github.shoothzj:java-tool:3.1.11")
     // log
     implementation("org.apache.logging.log4j:log4j-core:2.17.2")

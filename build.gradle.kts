@@ -65,7 +65,7 @@ dependencies {
     implementation("com.jayway.jsonpath:json-path:2.7.0")
     // base
     implementation("com.github.shoothzj:sdk-net:3.1.12")
-    implementation("com.github.shoothzj:java-tool:3.1.11")
+    implementation("com.github.shoothzj:java-tool:3.1.12")
     // log
     implementation("org.apache.logging.log4j:log4j-core:2.17.2")
     implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.17.2")

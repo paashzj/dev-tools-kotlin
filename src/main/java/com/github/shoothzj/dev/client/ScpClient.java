@@ -65,15 +65,10 @@ public class ScpClient {
     public class Client {
 
         public boolean scpFile(String local, String remote) throws Exception {
-            // create ssh client
             SshClient client = SshClient.setUpDefaultClient();
-            //start ssh client
             client.start();
 
-            // 通过主机IP、端口和用户名，连接主机，获取Session
             ClientSession session = client.connect(username, host, port).verify().getSession();
-
-            // login by password
             session.addPasswordIdentity(password);
 
             boolean isSuccess = session.auth().verify().isSuccess();
@@ -81,8 +76,6 @@ public class ScpClient {
                 ScpClientCreator creator = ScpClientCreator.instance();
                 org.apache.sshd.scp.client.ScpClient scpClient = creator.createScpClient(session);
                 scpClient.upload(local, remote, org.apache.sshd.scp.client.ScpClient.Option.Recursive);
-
-                scpClient = null;
 
                 if (session.isOpen()) {
                     session.close();

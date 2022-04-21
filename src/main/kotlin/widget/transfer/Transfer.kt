@@ -17,7 +17,6 @@
 
 package widget.transfer
 
-import R.strings
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.OutlinedTextField
@@ -48,7 +47,7 @@ fun TransferScreen() {
                 result =
                     Transfer().transferFile(sshUserName, sshPassword, configHost, configPort, localFile, targetPath)
             }
-        ) { Text(text = strings.send, fontSize = 12.sp) }
+        ) { Text(text = R.strings.send, fontSize = 12.sp) }
         Row {
             Column {
                 OutlinedTextField(

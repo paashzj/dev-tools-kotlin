@@ -43,7 +43,7 @@ public class LinuxCmdConst {
 
     public static final String SYSCTL_PARAM = "sysctl -a";
 
-    public static final String SCP_TO_NODE_CMD = "scp %d %d:%d";
+    public static final String SCP_TO_NODE_CMD = "scp %s %s:%s";
 
     @NotNull
     public static String path(@NotNull String... words) {

@@ -337,7 +337,7 @@ object ChStrings : Strings {
     override val subscribe: String
         get() = "订阅"
     override val Transfer: String
-        get() = "传输界面"
+        get() = "传输"
     override val TroubleComponent: String
         get() = "问题定位组件"
     override val TroubleSceneClusterInitFail: String

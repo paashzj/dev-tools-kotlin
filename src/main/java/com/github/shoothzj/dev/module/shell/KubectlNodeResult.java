@@ -123,4 +123,20 @@ public class KubectlNodeResult {
     public void setContainerRuntime(String containerRuntime) {
         this.containerRuntime = containerRuntime;
     }
+
+    @Override
+    public String toString() {
+        return "KubectlNodeResult{"
+                + "name='" + name + '\''
+                + ", status=" + status
+                + ", roles='" + roles + '\''
+                + ", age='" + age + '\''
+                + ", version='" + version + '\''
+                + ", internalIp='" + internalIp + '\''
+                + ", externalIp='" + externalIp + '\''
+                + ", osImage='" + osImage + '\''
+                + ", kernelVersion='" + kernelVersion + '\''
+                + ", containerRuntime='" + containerRuntime + '\''
+                + '}';
+    }
 }

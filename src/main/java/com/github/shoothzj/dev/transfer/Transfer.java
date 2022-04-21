@@ -35,18 +35,18 @@ public class Transfer {
 
     private static final Logger log = LoggerFactory.getLogger(Transfer.class);
 
-    public String transferFile(String sshUsername, String sshPassword, String host,
-                               String port, String localFile, String targetPath) {
+    public TransferResp transferFile(String sshUsername, String sshPassword, String host,
+                               int port, String localFile, String targetPath) {
 
         try {
             ScpClient.builder().build();
             ScpClient.Client scpClient = ScpClient.builder()
-                    .setHost(host).setPort(Integer.parseInt(port))
+                    .setHost(host).setPort(port)
                     .setUsername(sshUsername).setPassword(sshPassword).build();
 
             boolean isSuccess = scpClient.scpFile(localFile, targetPath);
             if (isSuccess) {
-                SshClient sshClient = new SshClient(host, Integer.parseInt(port), sshUsername, sshPassword);
+                SshClient sshClient = new SshClient(host, port, sshUsername, sshPassword);
                 List<String> body = sshClient.execute(K8sCmdConst.GET_NODE_LIST, 5);
                 List<KubectlNodeResult> nodeResults = KubectlNodeResultParser.parseBody(body);
                 for (KubectlNodeResult nodeResult : nodeResults) {
@@ -54,12 +54,13 @@ public class Transfer {
                     sshClient.execute("yes", 15);
                     sshClient.execute(sshPassword, 20);
                 }
+                return new TransferResp(200, nodeResults, "send file to virtual machine success.");
             }
-            return "send file to virtual machine success.";
+            return new TransferResp(400, null, "send file to virtual machine fail.");
         } catch (Exception e) {
             log.error("fail to login virtual machine. host[{}] port[{}] username[{}] password[{}]"
                     , host, port, sshUsername, sshPassword, e);
-            return "send file to virtual machine fail.";
+            return new TransferResp(400, null, "send file to virtual machine fail.");
         }
     }
 }

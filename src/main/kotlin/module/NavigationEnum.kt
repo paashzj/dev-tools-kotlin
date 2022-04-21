@@ -23,6 +23,7 @@ enum class NavigationEnum {
     Command,
     Convert,
     Simulator,
+    Transfer,
     TroubleShoot,
     Verify,
     Home,

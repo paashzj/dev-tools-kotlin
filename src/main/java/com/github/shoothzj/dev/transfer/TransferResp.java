@@ -18,20 +18,19 @@
  */
 package com.github.shoothzj.dev.transfer;
 
-import com.github.shoothzj.dev.module.shell.KubectlNodeResult;
-
 import java.util.List;
 
 public class TransferResp {
 
     private int code;
-    private List<KubectlNodeResult> contents;
+    private List<String> contents;
     private String reason;
 
     TransferResp() {
     }
 
-    TransferResp(int code, List<KubectlNodeResult> contents, String reason) {
+
+    TransferResp(int code, List<String> contents, String reason) {
         this.code = code;
         this.contents = contents;
         this.reason = reason;
@@ -45,11 +44,11 @@ public class TransferResp {
         this.code = code;
     }
 
-    public List<KubectlNodeResult> getContents() {
+    public List<String> getContents() {
         return contents;
     }
 
-    public void setContents(List<KubectlNodeResult> contents) {
+    public void setContents(List<String> contents) {
         this.contents = contents;
     }
 

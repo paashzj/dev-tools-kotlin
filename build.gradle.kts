@@ -47,31 +47,35 @@ configurations {
     }
 }
 
+val jacocoVersion = "0.8.8"
+val jschVersion = "0.2.0"
+val jsonPathVersion = "2.7.0"
+val kafkaVersion = "3.1.0"
+val log4jVersion = "2.17.2"
+val sdkVersion = "3.1.12"
+val sshdVersion = "2.8.0"
+
 dependencies {
     implementation(compose.desktop.currentOs)
     // middleware
-    implementation("org.apache.kafka:kafka-clients:3.1.0")
+    implementation("org.apache.kafka:kafka-clients:$kafkaVersion")
     // embedded middleware
-    implementation("com.github.shoothzj:test-pulsar:3.1.12")
-    implementation("com.github.shoothzj:test-kafka:3.1.12")
-    implementation("com.github.shoothzj:test-zookeeper:3.1.12")
+    implementation("com.github.shoothzj:test-pulsar:$sdkVersion")
+    implementation("com.github.shoothzj:test-kafka:$sdkVersion")
+    implementation("com.github.shoothzj:test-zookeeper:$sdkVersion")
     // ssh
-    implementation("com.github.mwiede:jsch:0.2.0")
-    // scp
-    implementation("org.apache.sshd:sshd-common:2.8.0")
-    implementation("org.apache.sshd:sshd-core:2.8.0")
-    implementation("org.apache.sshd:sshd-scp:2.8.0")
+    implementation("com.github.mwiede:jsch:$jschVersion")
     // codec
-    implementation("com.jayway.jsonpath:json-path:2.7.0")
+    implementation("com.jayway.jsonpath:json-path:$jsonPathVersion")
     // base
-    implementation("com.github.shoothzj:sdk-net:3.1.12")
-    implementation("com.github.shoothzj:java-tool:3.1.12")
+    implementation("com.github.shoothzj:sdk-net:$sdkVersion")
+    implementation("com.github.shoothzj:java-tool:$sdkVersion")
     // log
-    implementation("org.apache.logging.log4j:log4j-core:2.17.2")
-    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.17.2")
-    implementation("org.jacoco:org.jacoco.core:0.8.8")
+    implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
+    implementation("org.jacoco:org.jacoco.core:$jacocoVersion")
     // test
-    testImplementation("org.apache.sshd:sshd-core:2.8.0")
+    testImplementation("org.apache.sshd:sshd-core:$sshdVersion")
     testImplementation(kotlin("test"))
 }
 

@@ -19,8 +19,6 @@ package widget.kubernetes
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +26,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import com.github.shoothzj.dev.module.config.KubernetesConfig
 import com.github.shoothzj.dev.transfer.Transfer
@@ -36,19 +33,21 @@ import com.github.shoothzj.dev.transfer.TransferResp
 import navigationContext
 import widget.TopBar
 import widget.component.RowPaddingButton
+import widget.component.ShowBase
 
 @Composable
 fun KubernetesInstanceScreen() {
 
     var targetPath by remember { mutableStateOf("") }
     var masterFile by remember { mutableStateOf("") }
+    var remotePath by remember { mutableStateOf("") }
     var localFile by remember { mutableStateOf("") }
     var command by remember { mutableStateOf("") }
     var expended = mutableStateOf(false)
     var result: TransferResp? = null
 
-    Row {
-        Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(1f)) {
+    ShowBase(
+        leftContent = {
             val k8sConfig: KubernetesConfig = navigationContext.value as KubernetesConfig
             TopBar()
             Text(text = "kubernetes ${k8sConfig.name}", fontSize = 40.sp)
@@ -100,11 +99,11 @@ fun KubernetesInstanceScreen() {
 
                     Column {
                         OutlinedTextField(
-                            value = targetPath,
+                            value = remotePath,
                             onValueChange = {
-                                targetPath = it
+                                remotePath = it
                             },
-                            label = { Text("target path") }
+                            label = { Text("remote path") }
                         )
                     }
                 }
@@ -146,28 +145,28 @@ fun KubernetesInstanceScreen() {
                     ) { Text(text = R.strings.execute, fontSize = 35.sp) }
                 }
             }
-            Column {
-                if (expended.value) {
-                    if (result!!.code == 200) {
-                        for (content in result!!.contents) {
-                            Text(content)
-                        }
-                        Text(result!!.reason)
-                    } else {
-                        Text(result!!.reason)
-                    }
-                }
-            }
-        }
-        Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(1f)) {
+        },
+        rightContent = {
             val k8sConfig: KubernetesConfig = navigationContext.value as KubernetesConfig
-            var nodeInfos = Transfer().getNodeInfo(
+            val nodeInfoList = Transfer().getNodeInfo(
                 k8sConfig.sshStep.username, k8sConfig.sshStep.password,
                 k8sConfig.host, k8sConfig.port
             )
-            repeat(nodeInfos.size) {
-                Row { Text(nodeInfos[it]) }
+            repeat(nodeInfoList.size) {
+                Row { Text(nodeInfoList[it], fontSize = 25.sp) }
             }
-        }
-    }
+        },
+        result = {
+            if (expended.value) {
+                if (result!!.code == 200) {
+                    for (content in result!!.contents) {
+                        Text(content)
+                    }
+                    Text(result!!.reason, fontSize = 30.sp)
+                } else {
+                    Text(result!!.reason, fontSize = 30.sp)
+                }
+            }
+        },
+    )
 }

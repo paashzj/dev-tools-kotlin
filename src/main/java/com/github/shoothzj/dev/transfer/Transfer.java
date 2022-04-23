@@ -19,7 +19,6 @@
 
 package com.github.shoothzj.dev.transfer;
 
-import com.github.shoothzj.dev.client.ScpClient;
 import com.github.shoothzj.dev.constant.K8sCmdConst;
 import com.github.shoothzj.dev.constant.LinuxCmdConst;
 import com.github.shoothzj.dev.module.shell.KubectlNodeResult;
@@ -30,6 +29,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 
@@ -38,18 +39,20 @@ public class Transfer {
     private static final Logger log = LoggerFactory.getLogger(Transfer.class);
 
     public TransferResp masterTransfer(String sshUsername, String sshPassword, String host,
-                                       int port, String localFile, String targetPath) {
+                                       int port, String masterFile, String targetPath) {
+        ExecutorService fixedPool = Executors.newFixedThreadPool(10);
         SshClient sshClient = null;
         try {
             sshClient = new SshClient(host, port, sshUsername, sshPassword);
+
             List<String> body = sshClient.execute(K8sCmdConst.GET_NODE_LIST, 5);
             List<KubectlNodeResult> nodeResults = KubectlNodeResultParser.parseBody(body);
             for (KubectlNodeResult nodeResult : nodeResults) {
-                new Thread(() -> {
+                fixedPool.execute(() -> {
                     SshClient client = null;
                     try {
                         client = new SshClient(host, port, sshUsername, sshPassword);
-                        client.execute(LinuxCmdConst.scpCmd(localFile, nodeResult.getExternalIp(), targetPath), 3);
+                        client.execute(LinuxCmdConst.scpCmd(masterFile, nodeResult.getExternalIp(), targetPath), 3);
                         Thread.sleep(7_000);
                         client.execute("yes", 15);
                         client.execute(sshPassword, 20);
@@ -60,13 +63,14 @@ public class Transfer {
                             client.close();
                         }
                     }
-                }).start();
+                });
             }
             return new TransferResp(400, null, "send file to virtual machine success.");
         } catch (Exception e) {
             log.error("master transfer fail.", e);
             return new TransferResp(400, null, "send file to virtual machine fail.");
         } finally {
+            fixedPool.shutdown();
             if (sshClient != null) {
                 sshClient.close();
             }
@@ -76,15 +80,18 @@ public class Transfer {
 
     public TransferResp localTransfer(String sshUsername, String sshPassword, String host,
                                       int port, String localFile, String targetPath) {
+        SshClient sshClient = null;
         try {
-            ScpClient.Client scpClient = ScpClient.builder()
-                    .setHost(host).setPort(port)
-                    .setUsername(sshUsername).setPassword(sshPassword).build();
-            boolean isSuccess = scpClient.scpFile(localFile, targetPath);
-            return new TransferResp(400, null, String.valueOf(isSuccess));
+            sshClient = new SshClient(host, port, sshUsername, sshPassword);
+            sshClient.sftp(localFile, targetPath);
+            return new TransferResp(400, null, "success");
         } catch (Exception e) {
             log.error("send file to remote machine fail. ", e);
             return new TransferResp(400, null, "fail.");
+        } finally {
+            if (sshClient != null) {
+                sshClient.close();
+            }
         }
     }
 
@@ -94,7 +101,7 @@ public class Transfer {
         try {
             client = new SshClient(host, port, sshUsername, sshPassword);
             List<String> res = client.execute(cmd, 10);
-            return new TransferResp(200, res, "");
+            return new TransferResp(400, res, "");
         } catch (Exception e) {
             return new TransferResp(400, null, "execute fail.");
         } finally {
@@ -110,8 +117,11 @@ public class Transfer {
             sshClient = new SshClient(host, port, sshUsername, sshPassword);
             List<String> body = sshClient.execute(K8sCmdConst.GET_NODE_LIST, 5);
             List<KubectlNodeResult> nodeResults = KubectlNodeResultParser.parseBody(body);
-            List<String> list = nodeResults.stream().map(KubectlNodeResult::toString)
-                    .map(info -> info.substring(18, info.length() - 1)).collect(Collectors.toList());
+            List<String> list = nodeResults.stream()
+                    .map(result -> String.format("name=%s, status=%s, intern´alIp=%s",
+                            result.getName(), result.getStatus(), result.getInternalIp()))
+                    .collect(Collectors.toList());
+            list.remove(0);
             return list;
         } catch (Exception e) {
             log.error("get node info fail. ", e);

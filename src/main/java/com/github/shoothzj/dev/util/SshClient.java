@@ -28,6 +28,7 @@ import com.github.shoothzj.dev.shell.KubectlNodeResultParser;
 import com.github.shoothzj.javatool.util.CommonUtil;
 import com.github.shoothzj.javatool.util.IoUtil;
 import com.github.shoothzj.sdk.net.Ipv4Util;
+import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.ChannelShell;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
@@ -145,6 +146,15 @@ public class SshClient {
         execute(LinuxCmdConst.SSH, 20, host);
         execute("yes", 15);
         execute(password, 10);
+    }
+
+    public void sftp(String srcFile, String remotePath) throws Exception {
+        ChannelSftp channel = (ChannelSftp) session.openChannel("sftp");
+        channel.connect();
+        channel.put(srcFile, remotePath);
+        if (!channel.isClosed()) {
+            channel.disconnect();
+        }
     }
 
     /**

@@ -118,7 +118,7 @@ public class Transfer {
             List<String> body = sshClient.execute(K8sCmdConst.GET_NODE_LIST, 5);
             List<KubectlNodeResult> nodeResults = KubectlNodeResultParser.parseBody(body);
             List<String> list = nodeResults.stream()
-                    .map(result -> String.format("name=%s, status=%s, intern´alIp=%s",
+                    .map(result -> String.format("name=%s, status=%s, internalIp=%s",
                             result.getName(), result.getStatus(), result.getInternalIp()))
                     .collect(Collectors.toList());
             list.remove(0);

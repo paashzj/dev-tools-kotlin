@@ -89,4 +89,9 @@ public class LinuxCmdConst {
         return String.format(SCP_TO_NODE_CMD, resource, host, target);
     }
 
+    @NotNull
+    public static String lsCmd(String filename) {
+        return String.format("ls %s", String.format(GREP, filename));
+    }
+
 }

@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.sp
 import com.github.shoothzj.dev.module.config.KubernetesConfig
+import com.github.shoothzj.dev.state.State
 import com.github.shoothzj.dev.transfer.Transfer
 import com.github.shoothzj.dev.transfer.TransferResp
 import navigationContext
@@ -43,7 +44,7 @@ fun KubernetesInstanceScreen() {
     var remotePath by remember { mutableStateOf("") }
     var localFile by remember { mutableStateOf("") }
     var command by remember { mutableStateOf("") }
-    var expended = mutableStateOf(false)
+    val expended = mutableStateOf(false)
     var result: TransferResp? = null
 
     ShowBase(
@@ -158,10 +159,20 @@ fun KubernetesInstanceScreen() {
         },
         result = {
             if (expended.value) {
-                if (result!!.code == 200) {
+                if (result!!.code == State.HASCONTENT.code) {
                     for (content in result!!.contents) {
-                        Text(content)
+                        Text(content, fontSize = 25.sp)
                     }
+                    val nodeInfos = result!!.nodeInfos
+                    repeat(nodeInfos.size) { idx ->
+                        val nodeInfo = nodeInfos[idx]
+                        val res = nodeInfo.executeResult
+                        Text(nodeInfos[idx].name, fontSize = 25.sp)
+                        repeat(res.size) { iidx ->
+                            Text(res[iidx])
+                        }
+                    }
+
                     Text(result!!.reason, fontSize = 30.sp)
                 } else {
                     Text(result!!.reason, fontSize = 30.sp)

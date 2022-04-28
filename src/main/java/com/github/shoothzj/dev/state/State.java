@@ -16,34 +16,29 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.github.shoothzj.dev.transfer;
 
-import java.util.List;
+package com.github.shoothzj.dev.state;
 
-public class TransferResp {
+public enum State {
 
+    OK("ok", 200),
+    NOCONTENT("no content", 204),
+    HASCONTENT("has content", 300);
+
+    private String state;
     private int code;
-    private List<String> contents;
-    private List<NodeInfo> nodeInfos;
-    private String reason;
 
-    public List<NodeInfo> getNodeInfos() {
-        return nodeInfos;
-    }
-
-    public void setNodeInfos(List<NodeInfo> nodeInfos) {
-        this.nodeInfos = nodeInfos;
-    }
-
-    TransferResp() {
-    }
-
-
-    TransferResp(int code, List<String> contents, List<NodeInfo> nodeInfos, String reason) {
+    State(String state, int code) {
+        this.state = state;
         this.code = code;
-        this.contents = contents;
-        this.nodeInfos = nodeInfos;
-        this.reason = reason;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public int getCode() {
@@ -52,21 +47,5 @@ public class TransferResp {
 
     public void setCode(int code) {
         this.code = code;
-    }
-
-    public List<String> getContents() {
-        return contents;
-    }
-
-    public void setContents(List<String> contents) {
-        this.contents = contents;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
     }
 }

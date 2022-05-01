@@ -90,8 +90,8 @@ public class LinuxCmdConst {
     }
 
     @NotNull
-    public static String lsCmd(String filename) {
-        return String.format("ls %s", String.format(GREP, filename));
+    public static String lsCmd(String filePath) {
+        return String.format("ls %s", filePath);
     }
 
 }

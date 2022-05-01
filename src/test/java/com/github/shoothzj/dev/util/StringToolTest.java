@@ -22,7 +22,16 @@ package com.github.shoothzj.dev.util;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+
 public class StringToolTest {
+
+    @Test
+    public void testAnyLineMatch() {
+        ArrayList<String> list = new ArrayList<>();
+        list.add("No such file or directory");
+        Assert.assertTrue(StringTool.anyLineContains(list, "No such file"));
+    }
 
     @Test
     public void testLeadingBlankFour() {

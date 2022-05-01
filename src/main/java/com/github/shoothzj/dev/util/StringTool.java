@@ -35,6 +35,10 @@ public class StringTool {
         return Arrays.stream(result.split("\\n")).anyMatch(s -> pattern.matcher(s).matches());
     }
 
+    public static boolean anyLineContains(List<String> result, String str) {
+        return result.stream().anyMatch(s -> s.contains(str));
+    }
+
     @NotNull
     public static String[] fields(@NotNull String src) {
         return src.split("\\s+");

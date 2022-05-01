@@ -25,6 +25,7 @@ import com.github.shoothzj.dev.module.shell.KubectlNodeResult;
 import com.github.shoothzj.dev.shell.KubectlNodeResultParser;
 import com.github.shoothzj.dev.state.State;
 import com.github.shoothzj.dev.util.SshClient;
+import com.github.shoothzj.dev.util.StringTool;
 import com.github.shoothzj.javatool.util.CommonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +51,7 @@ public class Transfer {
             sshClient = new SshClient(host, port, sshUsername, sshPassword);
 
             List<String> body = sshClient.execute(K8sCmdConst.GET_NODE_LIST, 5);
-            List<KubectlNodeResult> nodeResults = KubectlNodeResultParser.parseBody(body);
+            List<KubectlNodeResult> nodeResults = KubectlNodeResultParser.parseFull(body);
             List<FutureTask<String>> futureTasks = new ArrayList<>();
             for (KubectlNodeResult nodeResult : nodeResults) {
                 FutureTask<String> futureTask = new FutureTask<>(() -> {
@@ -59,14 +60,13 @@ public class Transfer {
                     try {
                         client = new SshClient(host, port, sshUsername, sshPassword);
                         jumpClient = new SshClient(host, port, sshUsername, sshPassword);
-                        client.execute(LinuxCmdConst.scpCmd(masterFile, nodeResult.getExternalIp(), targetPath), 3);
+                        client.execute(LinuxCmdConst.scpCmd(masterFile, nodeResult.getInternalIp(), targetPath), 3);
                         CommonUtil.sleep(TimeUnit.SECONDS, 7);
                         client.execute(sshPassword, 20);
                         CommonUtil.sleep(TimeUnit.SECONDS, 7);
-                        jumpClient.jump(nodeResult.getExternalIp(), sshPassword);
-                        String[] fields = masterFile.split("/");
-                        List<String> list = jumpClient.execute(LinuxCmdConst.lsCmd(fields[fields.length - 1]), 5);
-                        if (list.size() == 0) {
+                        jumpClient.jump(nodeResult.getInternalIp(), sshPassword);
+                        List<String> list = jumpClient.execute(LinuxCmdConst.lsCmd(targetPath), 5);
+                        if (StringTool.anyLineContains(list, targetPath)) {
                             return String.format("send file to remote success. IP [%s]", nodeResult.getInternalIp());
                         } else {
                             return String.format("send file to remote fail. IP [%s]", nodeResult.getInternalIp());

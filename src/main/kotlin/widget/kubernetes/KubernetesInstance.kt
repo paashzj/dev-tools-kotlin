@@ -114,7 +114,7 @@ fun KubernetesInstanceScreen() {
                             result =
                                 Transfer().masterTransfer(
                                     k8sConfig.sshStep.username, k8sConfig.sshStep.password,
-                                    k8sConfig.host, k8sConfig.port, masterFile, targetPath
+                                    k8sConfig.host, k8sConfig.port, masterFile, remotePath
                                 )
                             expended.value = true
                         }

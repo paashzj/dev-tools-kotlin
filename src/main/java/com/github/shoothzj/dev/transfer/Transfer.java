@@ -40,12 +40,12 @@ import java.util.stream.Collectors;
 
 
 public class Transfer {
-
     private static final Logger log = LoggerFactory.getLogger(Transfer.class);
+
+    private static final ExecutorService fixedPool = Executors.newFixedThreadPool(2);
 
     public TransferResp masterTransfer(String sshUsername, String sshPassword, String host,
                                        int port, String masterFile, String targetPath) {
-        ExecutorService fixedPool = Executors.newFixedThreadPool(10);
         SshClient sshClient = null;
         try {
             sshClient = new SshClient(host, port, sshUsername, sshPassword);
@@ -56,14 +56,23 @@ public class Transfer {
             for (KubectlNodeResult nodeResult : nodeResults) {
                 FutureTask<String> futureTask = new FutureTask<>(() -> {
                     SshClient client = null;
-                    SshClient jumpClient = null;
                     try {
                         client = new SshClient(host, port, sshUsername, sshPassword);
-                        jumpClient = new SshClient(host, port, sshUsername, sshPassword);
                         client.execute(LinuxCmdConst.scpCmd(masterFile, nodeResult.getInternalIp(), targetPath), 3);
-                        CommonUtil.sleep(TimeUnit.SECONDS, 7);
+                        CommonUtil.sleep(TimeUnit.SECONDS, 5);
                         client.execute(sshPassword, 20);
-                        CommonUtil.sleep(TimeUnit.SECONDS, 7);
+                        CommonUtil.sleep(TimeUnit.SECONDS, 5);
+                    } catch (Exception e) {
+                        log.error("send file fail. ", e);
+                        return String.format("send file to remote fail. IP [%s]", nodeResult.getInternalIp());
+                    } finally {
+                        if (client != null) {
+                            client.close();
+                        }
+                    }
+                    SshClient jumpClient = null;
+                    try {
+                        jumpClient = new SshClient(host, port, sshUsername, sshPassword);
                         jumpClient.jump(nodeResult.getInternalIp(), sshPassword);
                         List<String> list = jumpClient.execute(LinuxCmdConst.lsCmd(targetPath), 5);
                         if (StringTool.anyLineContains(list, targetPath)) {
@@ -75,9 +84,6 @@ public class Transfer {
                         log.error("send file fail. ", e);
                         return String.format("send file to remote fail. IP [%s]", nodeResult.getInternalIp());
                     } finally {
-                        if (client != null) {
-                            client.close();
-                        }
                         if (jumpClient != null) {
                             jumpClient.close();
                         }
@@ -150,7 +156,7 @@ public class Transfer {
                     }
                     return new ArrayList<>();
                 });
-                new Thread(futureTask).start();
+                fixedPool.execute(futureTask);
                 futureTasks.add(futureTask);
             }
             List<List<String>> collect = futureTasks.stream().map(futureTask -> {
@@ -184,13 +190,11 @@ public class Transfer {
         try {
             sshClient = new SshClient(host, port, sshUsername, sshPassword);
             List<String> body = sshClient.execute(K8sCmdConst.GET_NODE_LIST, 5);
-            List<KubectlNodeResult> nodeResults = KubectlNodeResultParser.parseBody(body);
-            List<String> list = nodeResults.stream()
+            List<KubectlNodeResult> nodeResults = KubectlNodeResultParser.parseFull(body);
+            return nodeResults.stream()
                     .map(result -> String.format("name=%s, status=%s, internalIp=%s",
                             result.getName(), result.getStatus(), result.getInternalIp()))
                     .collect(Collectors.toList());
-            list.remove(0);
-            return list;
         } catch (Exception e) {
             log.error("get node info fail. ", e);
             List<String> res = new ArrayList<>();

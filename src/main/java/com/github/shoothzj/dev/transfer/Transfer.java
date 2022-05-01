@@ -156,7 +156,7 @@ public class Transfer {
                     }
                     return new ArrayList<>();
                 });
-                new Thread(futureTask).start();
+                fixedPool.execute(futureTask);
                 futureTasks.add(futureTask);
             }
             List<List<String>> collect = futureTasks.stream().map(futureTask -> {
@@ -190,13 +190,11 @@ public class Transfer {
         try {
             sshClient = new SshClient(host, port, sshUsername, sshPassword);
             List<String> body = sshClient.execute(K8sCmdConst.GET_NODE_LIST, 5);
-            List<KubectlNodeResult> nodeResults = KubectlNodeResultParser.parseBody(body);
-            List<String> list = nodeResults.stream()
+            List<KubectlNodeResult> nodeResults = KubectlNodeResultParser.parseFull(body);
+            return nodeResults.stream()
                     .map(result -> String.format("name=%s, status=%s, internalIp=%s",
                             result.getName(), result.getStatus(), result.getInternalIp()))
                     .collect(Collectors.toList());
-            list.remove(0);
-            return list;
         } catch (Exception e) {
             log.error("get node info fail. ", e);
             List<String> res = new ArrayList<>();

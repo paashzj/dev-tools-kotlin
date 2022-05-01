@@ -144,7 +144,6 @@ public class SshClient {
 
     public void jump(String host, String password) throws Exception {
         execute(LinuxCmdConst.SSH, 20, host);
-        execute("yes", 15);
         execute(password, 10);
     }
 

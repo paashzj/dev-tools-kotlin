@@ -31,7 +31,7 @@ public class LinuxCmdConst {
 
     public static final String FREE_MEMORY = "free -m";
 
-    public static final String SSH = "ssh %s";
+    public static final String SSH = "ssh -o StrictHostKeyChecking=no %s";
 
     public static final String GREP = "| grep %s";
 
@@ -43,7 +43,7 @@ public class LinuxCmdConst {
 
     public static final String SYSCTL_PARAM = "sysctl -a";
 
-    public static final String SCP_TO_NODE_CMD = "scp %s %s:%s";
+    public static final String SCP_TO_NODE_CMD = "scp -o StrictHostKeyChecking=no %s %s:%s";
 
     @NotNull
     public static String path(@NotNull String... words) {

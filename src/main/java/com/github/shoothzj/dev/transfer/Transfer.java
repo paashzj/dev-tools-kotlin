@@ -25,6 +25,7 @@ import com.github.shoothzj.dev.module.shell.KubectlNodeResult;
 import com.github.shoothzj.dev.shell.KubectlNodeResultParser;
 import com.github.shoothzj.dev.state.State;
 import com.github.shoothzj.dev.util.SshClient;
+import com.github.shoothzj.javatool.util.CommonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +34,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
@@ -58,10 +60,9 @@ public class Transfer {
                         client = new SshClient(host, port, sshUsername, sshPassword);
                         jumpClient = new SshClient(host, port, sshUsername, sshPassword);
                         client.execute(LinuxCmdConst.scpCmd(masterFile, nodeResult.getExternalIp(), targetPath), 3);
-                        Thread.sleep(7_000);
-                        client.execute("yes", 15);
+                        CommonUtil.sleep(TimeUnit.SECONDS, 7);
                         client.execute(sshPassword, 20);
-                        Thread.sleep(7_000);
+                        CommonUtil.sleep(TimeUnit.SECONDS, 7);
                         jumpClient.jump(nodeResult.getExternalIp(), sshPassword);
                         String[] fields = masterFile.split("/");
                         List<String> list = jumpClient.execute(LinuxCmdConst.lsCmd(fields[fields.length - 1]), 5);

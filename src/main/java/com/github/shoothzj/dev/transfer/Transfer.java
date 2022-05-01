@@ -82,6 +82,7 @@ public class Transfer {
                         }
                     }
                 });
+                fixedPool.execute(futureTask);
                 futureTasks.add(futureTask);
             }
             List<String> content = futureTasks.stream().map(futureTask -> {

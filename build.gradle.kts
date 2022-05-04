@@ -23,7 +23,7 @@ plugins {
     // version same as kotlin-gradle-plugin
     kotlin("jvm") version "1.6.10"
     id("org.jetbrains.compose") version "1.1.1"
-    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
+    id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
     checkstyle
     id("jacoco")
 }

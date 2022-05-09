@@ -34,7 +34,6 @@ interface Strings {
     val addNginxInstance: String
     val backHome: String
     val broadcast: String
-    val ChangeWord: String
     val Commands: String
     val close: String
     val commandPage: String
@@ -75,6 +74,7 @@ interface Strings {
     val receive: String
     val regex: String
     val regexExpression: String
+    val replace: String
     val SimulatorList: String
     val sceneList: String
     val statefulSetName: String
@@ -113,8 +113,6 @@ object EnStrings : Strings {
         get() = "add nginx instance"
     override val backHome: String
         get() = "back home"
-    override val ChangeWord: String
-        get() = "replace"
     override val broadcast: String
         get() = "broadcast"
     override val Commands: String
@@ -197,6 +195,8 @@ object EnStrings : Strings {
         get() = "regex"
     override val regexExpression: String
         get() = "regex repression"
+    override val replace: String
+        get() = "replace"
     override val SimulatorList: String
         get() = "Simulator List"
     override val sceneList: String
@@ -258,8 +258,6 @@ object ChStrings : Strings {
         get() = "回到主页"
     override val broadcast: String
         get() = "广播"
-    override val ChangeWord: String
-        get() = "替换"
     override val Commands: String
         get() = "命令"
     override val close: String
@@ -340,6 +338,8 @@ object ChStrings : Strings {
         get() = "正则"
     override val regexExpression: String
         get() = "正则表达式"
+    override val replace: String
+        get() = "替换"
     override val SimulatorList: String
         get() = "模拟器列表"
     override val sceneList: String

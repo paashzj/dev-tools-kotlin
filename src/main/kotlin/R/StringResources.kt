@@ -34,6 +34,7 @@ interface Strings {
     val addNginxInstance: String
     val backHome: String
     val broadcast: String
+    val ChangeWord: String
     val Commands: String
     val close: String
     val commandPage: String
@@ -112,6 +113,8 @@ object EnStrings : Strings {
         get() = "add nginx instance"
     override val backHome: String
         get() = "back home"
+    override val ChangeWord: String
+        get() = "replace"
     override val broadcast: String
         get() = "broadcast"
     override val Commands: String
@@ -255,6 +258,8 @@ object ChStrings : Strings {
         get() = "回到主页"
     override val broadcast: String
         get() = "广播"
+    override val ChangeWord: String
+        get() = "替换"
     override val Commands: String
         get() = "命令"
     override val close: String

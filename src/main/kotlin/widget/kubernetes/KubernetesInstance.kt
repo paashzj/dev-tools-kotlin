@@ -44,6 +44,9 @@ fun KubernetesInstanceScreen() {
     var remotePath by remember { mutableStateOf("") }
     var localFile by remember { mutableStateOf("") }
     var command by remember { mutableStateOf("") }
+    var resource by remember { mutableStateOf("") }
+    var target by remember { mutableStateOf("") }
+    var filename by remember { mutableStateOf("") }
     val expended = mutableStateOf(false)
     var result: TransferResp? = null
 
@@ -144,6 +147,51 @@ fun KubernetesInstanceScreen() {
                             expended.value = true
                         }
                     ) { Text(text = R.strings.execute, fontSize = 35.sp) }
+                }
+            }
+            //  sed command
+            Column {
+                Row {
+                    Column {
+                        OutlinedTextField(
+                            value = resource,
+                            onValueChange = {
+                                resource = it
+                            },
+                            label = { Text("resource word") }
+                        )
+                    }
+                    Column {
+                        OutlinedTextField(
+                            value = target,
+                            onValueChange = {
+                                target = it
+                            },
+                            label = { Text("target word") }
+                        )
+                    }
+                }
+                Row {
+                    Column {
+                        OutlinedTextField(
+                            value = filename,
+                            onValueChange = {
+                                filename = it
+                            },
+                            label = { Text("filename") }
+                        )
+                    }
+                }
+                Row {
+                    RowPaddingButton(
+                        onClick = {
+                            result = Transfer().replaceWord(
+                                k8sConfig.sshStep.username, k8sConfig.sshStep.password,
+                                k8sConfig.host, k8sConfig.port, resource, target, filename
+                            )
+                            expended.value = true
+                        }
+                    ) { Text(text = R.strings.ChangeWord, fontSize = 35.sp) }
                 }
             }
         },

@@ -45,6 +45,8 @@ public class LinuxCmdConst {
 
     public static final String SCP_TO_NODE_CMD = "scp -o StrictHostKeyChecking=no %s %s:%s";
 
+    public static final String SED_I_S_G = " sed -i 's/%s/%s/g' %s";
+
     @NotNull
     public static String path(@NotNull String... words) {
         return String.join(LinuxConst.PATH_SEP, words);
@@ -92,6 +94,11 @@ public class LinuxCmdConst {
     @NotNull
     public static String lsCmd(String filePath) {
         return String.format("ls %s", filePath);
+    }
+
+    @NotNull
+    public static String sedCmd(String resource, String target, String filename) {
+        return String.format(SED_I_S_G, resource, target, filename);
     }
 
 }

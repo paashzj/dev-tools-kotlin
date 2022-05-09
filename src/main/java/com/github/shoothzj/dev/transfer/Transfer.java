@@ -137,8 +137,7 @@ public class Transfer {
         try {
             sshClient = new SshClient(host, port, sshUsername, sshPassword);
             List<String> body = sshClient.execute(K8sCmdConst.GET_NODE_LIST, 5);
-            List<KubectlNodeResult> nodeResults = KubectlNodeResultParser.parseBody(body);
-            nodeResults.remove(0);
+            List<KubectlNodeResult> nodeResults = KubectlNodeResultParser.parseFull(body);
             List<FutureTask<List<String>>> futureTasks = new ArrayList<>();
             for (KubectlNodeResult nodeResult : nodeResults) {
                 FutureTask<List<String>> futureTask = new FutureTask<>(() -> {
@@ -205,5 +204,20 @@ public class Transfer {
                 sshClient.close();
             }
         }
+    }
+
+    public TransferResp replaceWord(String sshUsername, String sshPassword, String host, int port,
+                                    String resource, String target, String filename) {
+        String cmd = LinuxCmdConst.sedCmd(resource, target, filename);
+        TransferResp transferResp = execute(sshUsername, sshPassword, host, port, cmd);
+        List<NodeInfo> collect = transferResp.getNodeInfos().stream().peek(nodeInfo -> {
+            if (nodeInfo.getExecuteResult().isEmpty()) {
+                List<String> res = new ArrayList<>();
+                res.add("replace success.");
+                nodeInfo.setExecuteResult(res);
+            }
+        }).collect(Collectors.toList());
+        transferResp.setNodeInfos(collect);
+        return transferResp;
     }
 }

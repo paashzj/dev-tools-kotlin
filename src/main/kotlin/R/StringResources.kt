@@ -74,6 +74,7 @@ interface Strings {
     val receive: String
     val regex: String
     val regexExpression: String
+    val replace: String
     val SimulatorList: String
     val sceneList: String
     val statefulSetName: String
@@ -194,6 +195,8 @@ object EnStrings : Strings {
         get() = "regex"
     override val regexExpression: String
         get() = "regex repression"
+    override val replace: String
+        get() = "replace"
     override val SimulatorList: String
         get() = "Simulator List"
     override val sceneList: String
@@ -335,6 +338,8 @@ object ChStrings : Strings {
         get() = "正则"
     override val regexExpression: String
         get() = "正则表达式"
+    override val replace: String
+        get() = "替换"
     override val SimulatorList: String
         get() = "模拟器列表"
     override val sceneList: String

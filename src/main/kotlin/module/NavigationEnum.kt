@@ -27,6 +27,7 @@ enum class NavigationEnum {
     TroubleShoot,
     Verify,
     Home,
+    Settings,
     // vm application
     Kubernetes,
     Lvs,

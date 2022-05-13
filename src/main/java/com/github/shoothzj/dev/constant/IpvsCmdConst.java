@@ -23,4 +23,6 @@ public class IpvsCmdConst {
 
     public static final String GET_TIMEOUT = "ipvsadm -l --timeout";
 
+    public static final String GET_STATS = "ipvsadm -ln --stats";
+
 }

@@ -27,7 +27,6 @@ import com.github.shoothzj.dev.shell.FreeMemoryResultParser;
 import com.github.shoothzj.dev.shell.KubectlNodeResultParser;
 import com.github.shoothzj.javatool.util.CommonUtil;
 import com.github.shoothzj.javatool.util.IoUtil;
-import com.github.shoothzj.sdk.net.Ipv4Util;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.ChannelShell;
 import com.jcraft.jsch.JSch;
@@ -143,6 +142,7 @@ public class SshClient {
     }
 
     public void jump(String host, String password) throws Exception {
+        log.info("jump to host {}", host);
         execute(LinuxCmdConst.SSH, 20, host);
         execute(password, 10);
     }
@@ -153,19 +153,6 @@ public class SshClient {
         channel.put(srcFile, remotePath);
         if (!channel.isClosed()) {
             channel.disconnect();
-        }
-    }
-
-    /**
-     * used when you have already login to a k8s machine
-     * @param nodeName
-     */
-    public String getNodeHost(String nodeName, int timeoutSeconds) throws Exception {
-        if (Ipv4Util.isValidIp(nodeName)) {
-            return nodeName;
-        } else {
-            KubectlNodeResult nodeResult = getNode(nodeName, timeoutSeconds);
-            return nodeResult.getInternalIp();
         }
     }
 

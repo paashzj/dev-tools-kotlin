@@ -77,10 +77,11 @@ interface Strings {
     val replace: String
     val SimulatorList: String
     val sceneList: String
-    val statefulSetName: String
     val send: String
+    val setting: String
     val simulatorPage: String
     val startTime: String
+    val statefulSetName: String
     val subscribe: String
     val Transfer: String
     val TroubleComponent: String
@@ -203,6 +204,8 @@ object EnStrings : Strings {
         get() = "scene list"
     override val statefulSetName: String
         get() = "stateful set name"
+    override val setting: String
+        get() = "setting"
     override val send: String
         get() = "send"
     override val simulatorPage: String
@@ -344,14 +347,16 @@ object ChStrings : Strings {
         get() = "模拟器列表"
     override val sceneList: String
         get() = "场景列表"
-    override val statefulSetName: String
-        get() = "状态实例名"
+    override val setting: String
+        get() = "设置"
     override val send: String
         get() = "发送"
     override val simulatorPage: String
         get() = "模拟器界面"
     override val startTime: String
         get() = "启动时间"
+    override val statefulSetName: String
+        get() = "状态实例名"
     override val subscribe: String
         get() = "订阅"
     override val Transfer: String

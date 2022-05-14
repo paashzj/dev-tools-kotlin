@@ -21,10 +21,12 @@ package com.github.shoothzj.dev.util;
 
 import com.github.shoothzj.dev.constant.K8sCmdConst;
 import com.github.shoothzj.dev.constant.LinuxCmdConst;
+import com.github.shoothzj.dev.module.config.Settings;
 import com.github.shoothzj.dev.module.shell.FreeMemoryResult;
 import com.github.shoothzj.dev.module.shell.KubectlNodeResult;
 import com.github.shoothzj.dev.shell.FreeMemoryResultParser;
 import com.github.shoothzj.dev.shell.KubectlNodeResultParser;
+import com.github.shoothzj.dev.storage.StorageSettings;
 import com.github.shoothzj.javatool.util.CommonUtil;
 import com.github.shoothzj.javatool.util.IoUtil;
 import com.jcraft.jsch.ChannelSftp;
@@ -50,6 +52,8 @@ public class SshClient {
 
     private static final Pattern cmdEndPattern = Pattern.compile("((.*#)|(.*])|(.*]\\$)|(.*\\(yes/no\\)\\?))\\s$");
 
+    private final Settings config = StorageSettings.getInstance().getConfig();
+
     private final JSch jSch;
 
     private Session session;
@@ -74,13 +78,13 @@ public class SshClient {
         session.setConfig(properties);
         session.connect();
         channel = (ChannelShell) session.openChannel("shell");
-        channel.connect(15_000);
+        channel.connect(config.getSshLoginTimeoutSeconds());
         inputStream = channel.getInputStream();
         outputStream = channel.getOutputStream();
     }
 
     public FreeMemoryResult freeMemory() throws Exception {
-        List<String> result = this.execute(LinuxCmdConst.FREE_MEMORY, 15);
+        List<String> result = this.execute(LinuxCmdConst.FREE_MEMORY, config.getSshExecuteTimeoutSeconds());
         return FreeMemoryResultParser.parse(result);
     }
 
@@ -143,8 +147,8 @@ public class SshClient {
 
     public void jump(String host, String password) throws Exception {
         log.info("jump to host {}", host);
-        execute(LinuxCmdConst.SSH, 20, host);
-        execute(password, 10);
+        execute(LinuxCmdConst.SSH, config.getSshLoginTimeoutSeconds(), host);
+        execute(password, config.getSshExecuteTimeoutSeconds());
     }
 
     public void sftp(String srcFile, String remotePath) throws Exception {

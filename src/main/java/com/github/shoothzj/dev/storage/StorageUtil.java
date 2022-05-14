@@ -46,6 +46,8 @@ public class StorageUtil {
 
     public static final String LVS_CONF_PATH = STORAGE_PREFIX + "lvs-conf-v1.json";
 
+    public static final String SETTING_PATH = STORAGE_PREFIX + "dev-tools-kotlin-conf-v1.json";
+
     static {
         File storageDir = new File(STORAGE_DIR);
         storageDir.mkdirs();
@@ -62,6 +64,8 @@ public class StorageUtil {
         FileUtil.ensureFileExists(ZK_CONF_PATH);
 
         FileUtil.ensureFileExists(LVS_CONF_PATH);
+
+        FileUtil.ensureFileExists(SETTING_PATH);
     }
 
 }

@@ -78,7 +78,7 @@ public class SshClient {
         session.setConfig(properties);
         session.connect();
         channel = (ChannelShell) session.openChannel("shell");
-        channel.connect(config.getSshLoginTimeoutSeconds());
+        channel.connect(config.getSshLoginTimeoutSeconds() * 1000);
         inputStream = channel.getInputStream();
         outputStream = channel.getOutputStream();
     }

@@ -64,8 +64,6 @@ public class StorageUtil {
         FileUtil.ensureFileExists(ZK_CONF_PATH);
 
         FileUtil.ensureFileExists(LVS_CONF_PATH);
-
-        FileUtil.ensureFileExists(SETTING_PATH);
     }
 
 }

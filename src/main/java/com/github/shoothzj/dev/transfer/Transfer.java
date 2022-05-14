@@ -24,6 +24,7 @@ import com.github.shoothzj.dev.constant.LinuxCmdConst;
 import com.github.shoothzj.dev.module.shell.KubectlNodeResult;
 import com.github.shoothzj.dev.shell.KubectlNodeResultParser;
 import com.github.shoothzj.dev.state.State;
+import com.github.shoothzj.dev.storage.StorageSettings;
 import com.github.shoothzj.dev.util.SshClient;
 import com.github.shoothzj.dev.util.StringTool;
 import com.github.shoothzj.javatool.util.CommonUtil;
@@ -50,7 +51,7 @@ public class Transfer {
         try {
             sshClient = new SshClient(host, port, sshUsername, sshPassword);
 
-            List<String> body = sshClient.execute(K8sCmdConst.GET_NODE_LIST, 5);
+            List<String> body = sshClient.execute(K8sCmdConst.GET_NODE_LIST, StorageSettings.getConfig().getSshExecuteTimeoutSeconds());
             List<KubectlNodeResult> nodeResults = KubectlNodeResultParser.parseFull(body);
             List<FutureTask<String>> futureTasks = new ArrayList<>();
             for (KubectlNodeResult nodeResult : nodeResults) {
@@ -58,9 +59,10 @@ public class Transfer {
                     SshClient client = null;
                     try {
                         client = new SshClient(host, port, sshUsername, sshPassword);
-                        client.execute(LinuxCmdConst.scpCmd(masterFile, nodeResult.getInternalIp(), targetPath), 3);
+                        client.execute(LinuxCmdConst.scpCmd(masterFile,
+                                nodeResult.getInternalIp(), targetPath), StorageSettings.getConfig().getSshExecuteTimeoutSeconds());
                         CommonUtil.sleep(TimeUnit.SECONDS, 5);
-                        client.execute(sshPassword, 20);
+                        client.execute(sshPassword, StorageSettings.getConfig().getSshExecuteTimeoutSeconds());
                         CommonUtil.sleep(TimeUnit.SECONDS, 5);
                     } catch (Exception e) {
                         log.error("send file fail. ", e);
@@ -74,10 +76,12 @@ public class Transfer {
                     try {
                         jumpClient = new SshClient(host, port, sshUsername, sshPassword);
                         jumpClient.jump(nodeResult.getInternalIp(), sshPassword);
-                        List<String> list = jumpClient.execute(LinuxCmdConst.lsCmd(targetPath), 5);
+                        List<String> list =
+                                jumpClient.execute(LinuxCmdConst.lsCmd(targetPath), StorageSettings.getConfig().getSshExecuteTimeoutSeconds());
                         if (StringTool.anyLineContains(list, targetPath)) {
                             return String.format("send file to remote success. IP [%s]", nodeResult.getInternalIp());
                         } else {
+                            log.error("ls failed, content is {}", list);
                             return String.format("send file to remote fail. IP [%s]", nodeResult.getInternalIp());
                         }
                     } catch (Exception e) {
@@ -136,7 +140,7 @@ public class Transfer {
         SshClient sshClient = null;
         try {
             sshClient = new SshClient(host, port, sshUsername, sshPassword);
-            List<String> body = sshClient.execute(K8sCmdConst.GET_NODE_LIST, 5);
+            List<String> body = sshClient.execute(K8sCmdConst.GET_NODE_LIST, StorageSettings.getConfig().getSshExecuteTimeoutSeconds());
             List<KubectlNodeResult> nodeResults = KubectlNodeResultParser.parseFull(body);
             List<FutureTask<List<String>>> futureTasks = new ArrayList<>();
             for (KubectlNodeResult nodeResult : nodeResults) {
@@ -145,7 +149,7 @@ public class Transfer {
                     try {
                         client = new SshClient(host, port, sshUsername, sshPassword);
                         client.jump(nodeResult.getInternalIp(), sshPassword);
-                        return client.execute(cmd, 10);
+                        return client.execute(cmd, StorageSettings.getConfig().getSshExecuteTimeoutSeconds());
                     } catch (Exception e) {
                         log.error("execute cmd fail. {} ", cmd, e);
                     } finally {
@@ -188,7 +192,7 @@ public class Transfer {
         SshClient sshClient = null;
         try {
             sshClient = new SshClient(host, port, sshUsername, sshPassword);
-            List<String> body = sshClient.execute(K8sCmdConst.GET_NODE_LIST, 5);
+            List<String> body = sshClient.execute(K8sCmdConst.GET_NODE_LIST, StorageSettings.getConfig().getSshExecuteTimeoutSeconds());
             List<KubectlNodeResult> nodeResults = KubectlNodeResultParser.parseFull(body);
             return nodeResults.stream()
                     .map(result -> String.format("name=%s, status=%s, internalIp=%s",

@@ -38,6 +38,7 @@ import widget.TopBar
 import widget.bookkeeper.BookkeeperInstanceScreen
 import widget.cassandra.CassandraInstanceScreen
 import widget.command.CommandScreen
+import widget.config.Settings
 import widget.convert.ConvertScreen
 import widget.general.AboutAuthorScreen
 import widget.general.HomeScreen
@@ -123,6 +124,9 @@ fun main() = application {
                     }
                     NavigationEnum.Verify -> {
                         VerifyScreen()
+                    }
+                    NavigationEnum.Settings -> {
+                        Settings()
                     }
                     NavigationEnum.AboutAuthor -> {
                         AboutAuthorScreen()

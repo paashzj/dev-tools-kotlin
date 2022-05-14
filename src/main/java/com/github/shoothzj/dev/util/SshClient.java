@@ -25,6 +25,7 @@ import com.github.shoothzj.dev.module.shell.FreeMemoryResult;
 import com.github.shoothzj.dev.module.shell.KubectlNodeResult;
 import com.github.shoothzj.dev.shell.FreeMemoryResultParser;
 import com.github.shoothzj.dev.shell.KubectlNodeResultParser;
+import com.github.shoothzj.dev.storage.StorageSettings;
 import com.github.shoothzj.javatool.util.CommonUtil;
 import com.github.shoothzj.javatool.util.IoUtil;
 import com.jcraft.jsch.ChannelSftp;
@@ -74,13 +75,13 @@ public class SshClient {
         session.setConfig(properties);
         session.connect();
         channel = (ChannelShell) session.openChannel("shell");
-        channel.connect(15_000);
+        channel.connect(StorageSettings.getConfig().getSshLoginTimeoutSeconds() * 1000);
         inputStream = channel.getInputStream();
         outputStream = channel.getOutputStream();
     }
 
     public FreeMemoryResult freeMemory() throws Exception {
-        List<String> result = this.execute(LinuxCmdConst.FREE_MEMORY, 15);
+        List<String> result = this.execute(LinuxCmdConst.FREE_MEMORY, StorageSettings.getConfig().getSshExecuteTimeoutSeconds());
         return FreeMemoryResultParser.parse(result);
     }
 
@@ -143,8 +144,8 @@ public class SshClient {
 
     public void jump(String host, String password) throws Exception {
         log.info("jump to host {}", host);
-        execute(LinuxCmdConst.SSH, 20, host);
-        execute(password, 10);
+        execute(LinuxCmdConst.SSH, StorageSettings.getConfig().getSshLoginTimeoutSeconds(), host);
+        execute(password, StorageSettings.getConfig().getSshExecuteTimeoutSeconds());
     }
 
     public void sftp(String srcFile, String remotePath) throws Exception {

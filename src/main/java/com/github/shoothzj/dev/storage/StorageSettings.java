@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
@@ -50,8 +51,10 @@ public class StorageSettings {
                 return new Settings();
             }
             return settings;
-        } catch (IOException e) {
-            log.error("fail to get config ", e);
+        } catch (FileNotFoundException e) {
+            return new Settings();
+        } catch (IOException ex) {
+            log.error("fail to get config ", ex);
             return new Settings();
         }
     }

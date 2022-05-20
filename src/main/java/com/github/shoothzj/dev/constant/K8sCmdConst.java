@@ -26,6 +26,8 @@ public class K8sCmdConst {
 
     public static final String GET_NODE_LIST = "kubectl get node -o wide";
 
+    public static final String GET_PODS_LIST = "kubectl get pod -o wide  --all-namespaces";
+
     public static final String GET_NODE_LIST_GREP = GET_NODE_LIST + LinuxCmdConst.GREP;
 
     public static final String DESCRIBE_NODE = "kubectl describe node %s";

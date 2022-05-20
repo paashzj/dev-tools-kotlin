@@ -191,7 +191,6 @@ public class Transfer {
         }
     }
 
-
     public List<String> getNodeInfo(String sshUsername, String sshPassword, String host, int port) {
         SshClient sshClient = null;
         try {

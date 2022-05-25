@@ -28,14 +28,28 @@ public class Settings {
     private Integer sshExecuteTimeoutSeconds;
     private Integer sshJumpTimeoutSeconds;
     private Integer sshLoginTimeoutSeconds;
+    private String jdk8X86FilePath;
+    private String jdk11X86FilePath;
+    private String jdk17X86FilePath;
+    private String jdk8armFilePath;
+    private String jdk11armFilePath;
+    private String jdk17armFilePath;
+    private String dumpFileDir;
 
     public Settings() {
     }
 
-    public Settings(String sshExecuteTimeoutSeconds, String sshJumpTimeoutSeconds, String sshLoginTimeoutSeconds) {
+    public Settings(String sshExecuteTimeoutSeconds, String sshJumpTimeoutSeconds, String sshLoginTimeoutSeconds, String jdk8X86FilePath, String jdk11X86FilePath, String jdk17X86FilePath, String jdk8armilePath, String jdk11armFilePath, String jdk17armFilePath, String dumpFileDir) {
         this.sshExecuteTimeoutSeconds = Integer.parseInt(sshExecuteTimeoutSeconds);
         this.sshJumpTimeoutSeconds = Integer.parseInt(sshJumpTimeoutSeconds);
         this.sshLoginTimeoutSeconds = Integer.parseInt(sshLoginTimeoutSeconds);
+        this.jdk8X86FilePath = jdk8X86FilePath;
+        this.jdk11X86FilePath = jdk11X86FilePath;
+        this.jdk17X86FilePath = jdk17X86FilePath;
+        this.jdk8armFilePath = jdk8armilePath;
+        this.jdk11armFilePath = jdk11armFilePath;
+        this.jdk17armFilePath = jdk17armFilePath;
+        this.dumpFileDir = dumpFileDir;
     }
 
     public int getSshLoginTimeoutSeconds() {
@@ -60,6 +74,62 @@ public class Settings {
 
     public void setSshJumpTimeoutSeconds(int sshJumpTimeoutSeconds) {
         this.sshJumpTimeoutSeconds = sshJumpTimeoutSeconds;
+    }
+
+    public String getJdk8X86FilePath() {
+        return Objects.requireNonNullElse(jdk8X86FilePath, "");
+    }
+
+    public void setJdk8X86FilePath(String jdk8X86FilePath) {
+        this.jdk8X86FilePath = jdk8X86FilePath;
+    }
+
+    public String getJdk11X86FilePath() {
+        return Objects.requireNonNullElse(jdk11X86FilePath, "");
+    }
+
+    public void setJdk11X86FilePath(String jdk11X86FilePath) {
+        this.jdk11X86FilePath = jdk11X86FilePath;
+    }
+
+    public String getJdk17X86FilePath() {
+        return Objects.requireNonNullElse(jdk17X86FilePath, "");
+    }
+
+    public void setJdk17X86FilePath(String jdk17X86FilePath) {
+        this.jdk17X86FilePath = jdk17X86FilePath;
+    }
+
+    public String getJdk8armFilePath() {
+        return Objects.requireNonNullElse(jdk8armFilePath, "");
+    }
+
+    public void setJdk8armFilePath(String jdk8armFilePath) {
+        this.jdk8armFilePath = jdk8armFilePath;
+    }
+
+    public String getJdk11armFilePath() {
+        return Objects.requireNonNullElse(jdk11armFilePath, "");
+    }
+
+    public void setJdk11armFilePath(String jdk11armFilePath) {
+        this.jdk11armFilePath = jdk11armFilePath;
+    }
+
+    public String getJdk17armFilePath() {
+        return Objects.requireNonNullElse(jdk17armFilePath, "");
+    }
+
+    public void setJdk17armFilePath(String jdk17armFilePath) {
+        this.jdk17armFilePath = jdk17armFilePath;
+    }
+
+    public String getDumpFileDir() {
+        return Objects.requireNonNullElse(dumpFileDir, "");
+    }
+
+    public void setDumpFileDir(String dumpFileDir) {
+        this.dumpFileDir = dumpFileDir;
     }
 
     @Override

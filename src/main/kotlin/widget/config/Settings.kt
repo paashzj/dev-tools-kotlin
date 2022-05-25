@@ -36,6 +36,13 @@ fun Settings() {
     var editSshJumpTimeoutSeconds by remember { mutableStateOf(config.value.sshJumpTimeoutSeconds.toString()) }
     var editSshExecuteTimeoutSeconds by remember { mutableStateOf(config.value.sshExecuteTimeoutSeconds.toString()) }
     var editSshloginTimeoutSeconds by remember { mutableStateOf(config.value.sshLoginTimeoutSeconds.toString()) }
+    var editJdk8X86FilePath by remember { mutableStateOf(config.value.jdk8X86FilePath.toString()) }
+    var editJdk11X86FilePath by remember { mutableStateOf(config.value.jdk11X86FilePath.toString()) }
+    var editJdk17X86FilePath by remember { mutableStateOf(config.value.jdk17X86FilePath.toString()) }
+    var editJdk8armFilePath by remember { mutableStateOf(config.value.jdk8armFilePath.toString()) }
+    var editJdk11armFilePath by remember { mutableStateOf(config.value.jdk11armFilePath.toString()) }
+    var editJdk17armFilePath by remember { mutableStateOf(config.value.jdk17armFilePath.toString()) }
+    var editDumpFileDir by remember { mutableStateOf(config.value.dumpFileDir.toString()) }
     var res by remember { mutableStateOf("") }
     Column {
         Row {
@@ -69,13 +76,90 @@ fun Settings() {
         }
 
         Row {
+            OutlinedTextField(
+                value = editJdk8X86FilePath,
+                onValueChange = {
+                    editJdk8X86FilePath = it
+                },
+                label = { Text("jdk 8 x86 file path") }
+            )
+        }
+
+        Row {
+            OutlinedTextField(
+                value = editJdk11X86FilePath,
+                onValueChange = {
+                    editJdk11X86FilePath = it
+                },
+                label = { Text("jdk 11 x86 file path") }
+            )
+        }
+
+        Row {
+            OutlinedTextField(
+                value = editJdk17X86FilePath,
+                onValueChange = {
+                    editJdk17X86FilePath = it
+                },
+                label = { Text("jdk 17 x86 file path") }
+            )
+        }
+
+        Row {
+            OutlinedTextField(
+                value = editJdk8armFilePath,
+                onValueChange = {
+                    editJdk8armFilePath = it
+                },
+                label = { Text("jdk 8 arm file path") }
+            )
+        }
+
+        Row {
+            OutlinedTextField(
+                value = editJdk11armFilePath,
+                onValueChange = {
+                    editJdk11armFilePath = it
+                },
+                label = { Text("jdk 11 arm file path") }
+            )
+        }
+
+        Row {
+            OutlinedTextField(
+                value = editJdk17armFilePath,
+                onValueChange = {
+                    editJdk17armFilePath = it
+                },
+                label = { Text("jdk 17 arm file path") }
+            )
+        }
+
+        Row {
+            OutlinedTextField(
+                value = editDumpFileDir,
+                onValueChange = {
+                    editDumpFileDir = it
+                },
+                label = { Text("java dump file dir") }
+            )
+        }
+
+        Row {
             Button(
                 onClick = {
                     val bool = StorageSettings.saveConfig(
                         Settings(
                             editSshExecuteTimeoutSeconds,
                             editSshJumpTimeoutSeconds,
-                            editSshloginTimeoutSeconds
+                            editSshloginTimeoutSeconds,
+                            editJdk8X86FilePath,
+                            editJdk11X86FilePath,
+                            editJdk17X86FilePath,
+                            editJdk8armFilePath,
+                            editJdk11armFilePath,
+                            editJdk17armFilePath,
+                            editDumpFileDir,
                         )
                     )
                     if (bool) {

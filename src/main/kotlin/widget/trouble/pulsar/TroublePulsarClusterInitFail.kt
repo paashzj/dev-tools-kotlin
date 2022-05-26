@@ -29,8 +29,8 @@ import widget.trouble.TroubleShootBase
 fun TroublePulsarClusterInitFail() {
     TroubleShootBase(
         content = {
-            val PulsarNameList = StoragePulsar.getInstance().listConfigNames()
-            DropdownList(PulsarNameList, "Pulsar ${R.strings.instance}", editPulsarInstanceName)
+            val pulsarNameList = StoragePulsar.getInstance().listConfigNames()
+            DropdownList(pulsarNameList, "Pulsar ${R.strings.instance}", editPulsarInstanceName)
             ConfigGroupKubernetes(
                 editKubernetesHost,
                 editKubernetesPort,
@@ -43,10 +43,10 @@ fun TroublePulsarClusterInitFail() {
                 editPulsarDeployName,
             )
             if (editPulsarInstanceName.value != "") {
-                val PulsarConfig = StoragePulsar.getInstance().getConfig(editPulsarInstanceName.value)
-                editPulsarNamespace.value = PulsarConfig.namespace
-                editPulsarDeployName.value = PulsarConfig.deployName
-                val kubernetesConfig = StorageK8s.getInstance().getConfig(PulsarConfig.k8sName)
+                val pulsarConfig = StoragePulsar.getInstance().getConfig(editPulsarInstanceName.value)
+                editPulsarNamespace.value = pulsarConfig.namespace
+                editPulsarDeployName.value = pulsarConfig.deployName
+                val kubernetesConfig = StorageK8s.getInstance().getConfig(pulsarConfig.k8sName)
                 editKubernetesHost.value = kubernetesConfig.host
                 editKubernetesPort.value = kubernetesConfig.port.toString()
                 val sshStep = kubernetesConfig.sshStep

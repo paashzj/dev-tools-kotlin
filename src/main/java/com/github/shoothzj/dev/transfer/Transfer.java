@@ -172,15 +172,15 @@ public class Transfer {
                     log.error("execute cmd fail. ", e);
                     return new ArrayList<String>();
                 }
-            }).collect(Collectors.toList());
-            ArrayList<NodeInfo> nodeInfos = new ArrayList<>();
+            }).toList();
+            ArrayList<NodeInfo> nodeInfoList = new ArrayList<>();
             for (int i = 0; i < nodeResults.size(); i++) {
                 NodeInfo nodeInfo = new NodeInfo();
                 nodeInfo.setName(nodeResults.get(i).getInternalIp());
                 nodeInfo.setExecuteResult(collect.get(i));
-                nodeInfos.add(nodeInfo);
+                nodeInfoList.add(nodeInfo);
             }
-            return new TransferResp(State.HASCONTENT.getCode(), new ArrayList<>(), nodeInfos, "");
+            return new TransferResp(State.HASCONTENT.getCode(), new ArrayList<>(), nodeInfoList, "");
         } catch (Exception e) {
             return new TransferResp(State.NOCONTENT.getCode(),
                     new ArrayList<>(), new ArrayList<>(), String.format("fail to connector remote. host [%s]", host));
@@ -243,8 +243,8 @@ public class Transfer {
             List<String> body = sshClient.execute(K8sCmdConst.GET_PODS_LIST,
                     StorageSettings.getConfig().getSshExecuteTimeoutSeconds());
             HashSet<String> namespaces = new HashSet<>();
-            for (int i = 0; i < body.size(); i++) {
-                namespaces.add(body.get(i).split(" ")[0]);
+            for (String s : body) {
+                namespaces.add(s.split(" ")[0]);
             }
             return new ArrayList<>(namespaces);
         } catch (Exception e) {

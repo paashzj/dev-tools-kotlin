@@ -15,28 +15,13 @@
  * limitations under the license.
  */
 
-package module
+package constant
 
-enum class NavigationEnum {
-    AboutAuthor,
-    // ability
-    Command,
-    Convert,
-    Simulator,
-    TroubleShoot,
-    Verify,
-    Home,
-    Settings,
-    // vm application
-    Kubernetes,
-    Lvs,
-    // container application
-    Bookkeeper,
-    Cassandra,
-    Minio,
-    Mysql,
-    Nginx,
-    Pulsar,
-    Redis,
-    Zookeeper,
+class PulsarConst {
+
+    companion object {
+        const val defaultUrl = "pulsar://localhost:6650"
+        const val defaultTopic = "persistent://public/default/test"
+    }
+
 }

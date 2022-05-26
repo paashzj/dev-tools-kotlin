@@ -29,8 +29,8 @@ import widget.trouble.TroubleShootBase
 fun TroubleBookkeeperClusterInitFail() {
     TroubleShootBase(
         content = {
-            val BookkeeperNameList = StorageBookkeeper.getInstance().listConfigNames()
-            DropdownList(BookkeeperNameList, "Bookkeeper ${R.strings.instance}", editBookkeeperInstanceName)
+            val bookkeeperNameList = StorageBookkeeper.getInstance().listConfigNames()
+            DropdownList(bookkeeperNameList, "Bookkeeper ${R.strings.instance}", editBookkeeperInstanceName)
             ConfigGroupKubernetes(
                 editKubernetesHost,
                 editKubernetesPort,
@@ -43,10 +43,10 @@ fun TroubleBookkeeperClusterInitFail() {
                 editBookkeeperStatefulSetName,
             )
             if (editBookkeeperInstanceName.value != "") {
-                val BookkeeperConfig = StorageBookkeeper.getInstance().getConfig(editBookkeeperInstanceName.value)
-                editBookkeeperNamespace.value = BookkeeperConfig.namespace
-                editBookkeeperStatefulSetName.value = BookkeeperConfig.statefulSetName
-                val kubernetesConfig = StorageK8s.getInstance().getConfig(BookkeeperConfig.k8sName)
+                val bookkeeperConfig = StorageBookkeeper.getInstance().getConfig(editBookkeeperInstanceName.value)
+                editBookkeeperNamespace.value = bookkeeperConfig.namespace
+                editBookkeeperStatefulSetName.value = bookkeeperConfig.statefulSetName
+                val kubernetesConfig = StorageK8s.getInstance().getConfig(bookkeeperConfig.k8sName)
                 editKubernetesHost.value = kubernetesConfig.host
                 editKubernetesPort.value = kubernetesConfig.port.toString()
                 val sshStep = kubernetesConfig.sshStep

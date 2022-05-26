@@ -27,7 +27,7 @@ public class ShellUtil {
      * @return
      */
     public static String removeColor(String str) {
-        str = str.replaceAll("(\\x1B\\[[0-9;]*[a-zA-Z]|[ ]\r)", "");
+        str = str.replaceAll("(\\x1B\\[[\\d;]*[a-zA-Z]| \r)", "");
         return str.replaceAll("(.)\r\\1", "$1");
     }
 

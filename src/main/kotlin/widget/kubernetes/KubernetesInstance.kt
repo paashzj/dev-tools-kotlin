@@ -60,13 +60,13 @@ fun KubernetesInstanceScreen() {
             Text(text = "kubernetes ${k8sConfig.name}", fontSize = 40.sp)
         }
         Row {
-            if (buttoms.equals("nodes")) {
+            if (buttoms == "nodes") {
                 KubernetesNodes(
                     k8sConfig
                 )
             }
 
-            if (buttoms.equals("pods")) {
+            if (buttoms == "pods") {
                 KubernetesPods(
                     k8sConfig
                 )

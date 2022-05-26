@@ -51,7 +51,7 @@ fun KubernetesPods(
 
     var infoList: MutableList<String>
     val namespace = mutableStateOf("default")
-    var namespaceInfo = Transfer().getNamespaceInfo(
+    val namespaceInfo = Transfer().getNamespaceInfo(
         k8sConfig.sshStep.username, k8sConfig.sshStep.password,
         k8sConfig.host, k8sConfig.port
     )

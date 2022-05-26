@@ -26,9 +26,9 @@ import java.util.regex.Pattern;
 
 public class ValidateUtil {
 
-    private static final Pattern HOSTNAME_REGEX = Pattern.compile("^[a-z0-9A-Z_.\\-]+$");
+    private static final Pattern HOSTNAME_REGEX = Pattern.compile("^[a-z\\dA-Z_.\\-]+$");
 
-    private static final Pattern LIKE_IP_REGEX = Pattern.compile("^[0-9.]+$");
+    private static final Pattern LIKE_IP_REGEX = Pattern.compile("^[\\d.]+$");
 
     public static boolean isNotHost(String host) {
         return !isHost(host);

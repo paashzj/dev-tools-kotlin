@@ -29,13 +29,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.sp
 import com.github.shoothzj.dev.simulator.pulsar.PulsarClientSimulator
 import com.github.shoothzj.dev.simulator.pulsar.PulsarConsumerSimulator
+import constant.PulsarConst
 import widget.component.RowPaddingButton
 import widget.config.ConfigGroupPulsarTls
 
 @Composable
 fun PulsarConsumer() {
-    var topic by remember { mutableStateOf("persistent://public/default/test") }
-    var pulsarUrl by remember { mutableStateOf("http://127.0.0.1:8080") }
+    var topic by remember { mutableStateOf(PulsarConst.defaultTopic) }
+    var pulsarUrl by remember { mutableStateOf(PulsarConst.defaultUrl) }
     var msg by remember { mutableStateOf("") }
     var errMsg by remember { mutableStateOf("") }
     var simulator: PulsarConsumerSimulator? by remember { mutableStateOf(null) }

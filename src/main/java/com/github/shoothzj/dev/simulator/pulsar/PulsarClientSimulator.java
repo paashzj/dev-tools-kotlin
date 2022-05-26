@@ -49,19 +49,19 @@ public class PulsarClientSimulator {
 
     private static PulsarClient pulsarNoTlsClient;
 
-    private String pulsarUrl;
+    private final String pulsarUrl;
 
-    private String tlsSwitch;
+    private final String tlsSwitch;
 
-    private String keyStoreType;
+    private final String keyStoreType;
 
-    private String keyStorePath;
+    private final String keyStorePath;
 
-    private String keyStorePassword;
+    private final String keyStorePassword;
 
-    private String trustStorePath;
+    private final String trustStorePath;
 
-    private String trustStorePassword;
+    private final String trustStorePassword;
 
     public PulsarClientSimulator(String pulsarUrl, String tlsSwitch, String keyStoreType, String keyStorePath, String keyStorePassword, String trustStorePath, String trustStorePassword) {
         this.pulsarUrl = pulsarUrl;

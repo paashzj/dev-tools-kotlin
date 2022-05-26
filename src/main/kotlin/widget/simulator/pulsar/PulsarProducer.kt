@@ -39,7 +39,7 @@ fun PulsarProducer() {
     var msg by remember { mutableStateOf("") }
     var key by remember { mutableStateOf("") }
     var res by remember { mutableStateOf("") }
-    var producer: PulsarProducerSimulator? by remember { mutableStateOf(null) }
+    var simulator: PulsarProducerSimulator? by remember { mutableStateOf(null) }
 
     Column {
         OutlinedTextField(
@@ -90,7 +90,7 @@ fun PulsarProducer() {
             RowPaddingButton(
                 onClick = {
                     try {
-                        var client = PulsarClientSimulator(
+                        val client = PulsarClientSimulator(
                             pulsarUrl,
                             tlsSwitch.value,
                             keyStoreType.value,
@@ -99,7 +99,7 @@ fun PulsarProducer() {
                             trustStorePath.value,
                             trustStorePassword.value,
                         )
-                        producer = PulsarProducerSimulator(topic, client)
+                        simulator = PulsarProducerSimulator(topic, client)
                     } catch (e: Exception) {
                         res = e.message.toString()
                     }
@@ -108,14 +108,14 @@ fun PulsarProducer() {
 
             RowPaddingButton(
                 onClick = {
-                    res = producer?.produce(msg, key) ?: "please create pulsar producer"
+                    res = simulator?.produce(msg, key) ?: "please create pulsar producer"
                 },
             ) {
                 Text(text = R.strings.send, fontSize = 12.sp)
             }
             RowPaddingButton(
                 onClick = {
-                    res = (producer?.close() ?: "") as String
+                    res = (simulator?.close() ?: "")
                 },
             ) {
                 Text(text = R.strings.close, fontSize = 12.sp)

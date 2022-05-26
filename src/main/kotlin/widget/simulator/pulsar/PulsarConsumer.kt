@@ -38,7 +38,7 @@ fun PulsarConsumer() {
     var pulsarUrl by remember { mutableStateOf("http://127.0.0.1:8080") }
     var msg by remember { mutableStateOf("") }
     var errMsg by remember { mutableStateOf("") }
-    var consumer: PulsarConsumerSimulator? by remember { mutableStateOf(null) }
+    var simulator: PulsarConsumerSimulator? by remember { mutableStateOf(null) }
 
     Column {
         OutlinedTextField(
@@ -84,7 +84,7 @@ fun PulsarConsumer() {
                             trustStorePath.value,
                             trustStorePassword.value,
                         )
-                        consumer = PulsarConsumerSimulator(client)
+                        simulator = PulsarConsumerSimulator(client)
                     } catch (e: Exception) {
                         errMsg = e.message.toString()
                     }
@@ -92,21 +92,21 @@ fun PulsarConsumer() {
             ) { Text(text = R.strings.connect, fontSize = 12.sp) }
             RowPaddingButton(
                 onClick = {
-                    msg = consumer?.subscribe(topic) ?: "please create pulsar consumer"
+                    msg = simulator?.subscribe(topic) ?: "please create pulsar consumer"
                 },
             ) {
                 Text(text = R.strings.subscribe, fontSize = 12.sp)
             }
             RowPaddingButton(
                 onClick = {
-                    msg = consumer?.receive() ?: "consume pulsar msg failed"
+                    msg = simulator?.receive() ?: "consume pulsar msg failed"
                 },
             ) {
                 Text(text = R.strings.receive, fontSize = 12.sp)
             }
             RowPaddingButton(
                 onClick = {
-                    msg = (consumer?.close() ?: "")
+                    msg = (simulator?.close() ?: "")
                 },
             ) {
                 Text(text = R.strings.close, fontSize = 12.sp)

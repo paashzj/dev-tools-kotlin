@@ -36,7 +36,7 @@ public class PulsarConsumerSimulator {
 
     private static final Logger log = LoggerFactory.getLogger(PulsarConsumerSimulator.class);
 
-    private PulsarClientSimulator pulsarClientSimulator;
+    private final PulsarClientSimulator pulsarClientSimulator;
 
     private static final Integer MAX_RECEIVE_MSG = 100;
 
@@ -76,7 +76,7 @@ public class PulsarConsumerSimulator {
         try {
             consumer.close();
         } catch (PulsarClientException e) {
-            log.error("close producer failed. e : {}", ExceptionUtil.getException(e));
+            log.error("close consumer failed. e : {}", ExceptionUtil.getException(e));
         }
         try {
             pulsarClientSimulator.close();

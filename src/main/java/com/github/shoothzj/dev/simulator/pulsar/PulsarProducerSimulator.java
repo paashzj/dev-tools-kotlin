@@ -34,18 +34,18 @@ public class PulsarProducerSimulator {
 
     private static final Logger log = LoggerFactory.getLogger(PulsarProducerSimulator.class);
 
-    private String topic;
+    private final String topic;
 
-    private PulsarClientSimulator pulsarClientSimulator;
+    private final PulsarClientSimulator pulsarClientSimulator;
 
     private static final Integer MAX_PENDING_MSG = 1000;
 
     private Producer<byte[]> producer;
 
     public PulsarProducerSimulator(String topic, PulsarClientSimulator pulsarClientSimulator) {
+        this.topic = topic;
+        this.pulsarClientSimulator = pulsarClientSimulator;
         try {
-            this.topic = topic;
-            this.pulsarClientSimulator = pulsarClientSimulator;
             PulsarClient pulsarClient = pulsarClientSimulator.getPulsarClient();
             producer = pulsarClient.newProducer().topic(topic).maxPendingMessages(MAX_PENDING_MSG).autoUpdatePartitions(true).create();
         } catch (PulsarClientException e) {
@@ -73,7 +73,7 @@ public class PulsarProducerSimulator {
         }
 
         try {
-            pulsarClientSimulator.close();
+            this.pulsarClientSimulator.close();
         } catch (Exception e) {
             log.error("close pulsar client failed. e: {}", ExceptionUtil.getException(e));
         }

@@ -37,4 +37,3 @@ fun ConfigGroupPulsarTls(
         ConfigItemString(editPulsarTrustStorePassword, "pulsar trustStore password", singleLine = true)
     }
 }
-

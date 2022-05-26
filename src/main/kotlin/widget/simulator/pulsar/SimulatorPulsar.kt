@@ -15,7 +15,7 @@
  * limitations under the license.
  */
 
-package widget.simulator
+package widget.simulator.pulsar
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,45 +24,50 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.sp
-import module.SimulatorEnum
+import module.MqPatternEnum
 import widget.component.RowPaddingButton
-import widget.simulator.kafka.SimulatorKafka
-import widget.simulator.pulsar.SimulatorPulsar
 
-val idx = mutableStateOf(SimulatorEnum.Kafka)
+val pattern = mutableStateOf(MqPatternEnum.Producer)
+
+var tlsSwitch = mutableStateOf("OFF")
+val keyStoreType = mutableStateOf("JKS")
+val keyStorePath = mutableStateOf("")
+val keyStorePassword = mutableStateOf("")
+val trustStorePath = mutableStateOf("")
+val trustStorePassword = mutableStateOf("")
 
 @Composable
-fun SimulatorScreen() {
+fun SimulatorPulsar() {
     Column {
-        Head(idx)
-        when (idx.value) {
-            SimulatorEnum.Kafka -> {
-                SimulatorKafka()
+        Head(pattern)
+        when (pattern.value) {
+            MqPatternEnum.Producer -> {
+                PulsarProducer()
             }
-            SimulatorEnum.Pulsar -> {
-                SimulatorPulsar()
+            MqPatternEnum.Consumer -> {
+                PulsarConsumer()
             }
         }
     }
 }
 
 @Composable
-fun Head(idx: MutableState<SimulatorEnum>) {
+fun Head(pattern: MutableState<MqPatternEnum>) {
     Row {
-        Text(R.strings.SimulatorList, fontSize = 40.sp)
+        Text("MqPattern List", fontSize = 30.sp)
         RowPaddingButton(
             onClick = {
-                idx.value = SimulatorEnum.Kafka
+                pattern.value = MqPatternEnum.Producer
             },
         ) {
-            Text(text = "kafka")
+            Text(text = "producer", fontSize = 12.sp)
         }
         RowPaddingButton(
             onClick = {
-                idx.value = SimulatorEnum.Pulsar
+                pattern.value = MqPatternEnum.Consumer
             },
         ) {
-            Text(text = "pulsar")
+            Text(text = "consumer", fontSize = 12.sp)
         }
     }
 }

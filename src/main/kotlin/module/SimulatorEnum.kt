@@ -19,4 +19,5 @@ package module
 
 enum class SimulatorEnum {
     Kafka,
+    Pulsar
 }

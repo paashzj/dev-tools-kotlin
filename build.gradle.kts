@@ -50,7 +50,7 @@ configurations {
 val jacocoVersion = "0.8.8"
 val jschVersion = "0.2.1"
 val jsonPathVersion = "2.7.0"
-val kafkaVersion = "3.1.0"
+val kafkaVersion = "3.2.0"
 val log4jVersion = "2.17.2"
 val sdkVersion = "3.1.13"
 val sshdVersion = "2.8.0"

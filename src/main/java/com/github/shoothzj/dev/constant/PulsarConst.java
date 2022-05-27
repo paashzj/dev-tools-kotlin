@@ -21,6 +21,12 @@ package com.github.shoothzj.dev.constant;
 
 public class PulsarConst {
 
+    public static final String AUTH_TYPE_NONE = "NONE";
+
+    public static final String AUTH_TYPE_TLS = "TLS";
+
     public static final String AUTH_TYPE_JWT = "JWT";
+
+    public static final String DEFAULT_CERT_TYPE = "JKS";
 
 }

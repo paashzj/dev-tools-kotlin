@@ -24,6 +24,7 @@ import com.github.shoothzj.javatool.util.ExceptionUtil;
 import com.github.shoothzj.javatool.util.StreamUtil;
 import com.google.common.collect.Sets;
 import org.apache.pulsar.client.api.AuthenticationFactory;
+import org.apache.pulsar.client.api.ClientBuilder;
 import org.apache.pulsar.client.api.PulsarClient;
 import org.apache.pulsar.client.api.PulsarClientException;
 import org.apache.pulsar.client.impl.auth.AuthenticationKeyStoreTls;
@@ -38,8 +39,6 @@ public class PulsarClientSimulator {
 
     private static final Logger log = LoggerFactory.getLogger(PulsarClientSimulator.class);
 
-    private static final String TLS_SWITCH_OFF = "OFF";
-    private static final String TLS_SWITCH_ON = "ON";
     private static final Set<String> protocols = Sets.newHashSet("TLSv1.2");
     private static final Set<String> cipher = Sets.newHashSet(
             "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
@@ -55,11 +54,11 @@ public class PulsarClientSimulator {
 
     private final String pulsarUrl;
 
+    private final boolean enableTls;
+
+    private final boolean enableTlsHostNameVerification;
+
     private final String authType;
-
-    private final String tlsSwitch;
-
-    private final String keyStoreType;
 
     private final String keyStorePath;
 
@@ -71,11 +70,11 @@ public class PulsarClientSimulator {
 
     private final String jwtToken;
 
-    public PulsarClientSimulator(String pulsarUrl, String authType, String tlsSwitch, String keyStoreType, String keyStorePath, String keyStorePassword, String trustStorePath, String trustStorePassword, String jwtToken) {
+    public PulsarClientSimulator(String pulsarUrl, boolean enableTls, boolean enableTlsHostNameVerification, String authType, String keyStorePath, String keyStorePassword, String trustStorePath, String trustStorePassword, String jwtToken) {
         this.pulsarUrl = pulsarUrl;
+        this.enableTls = enableTls;
+        this.enableTlsHostNameVerification = enableTlsHostNameVerification;
         this.authType = authType;
-        this.tlsSwitch = tlsSwitch;
-        this.keyStoreType = keyStoreType;
         this.keyStorePath = keyStorePath;
         this.keyStorePassword = keyStorePassword;
         this.trustStorePath = trustStorePath;
@@ -87,40 +86,46 @@ public class PulsarClientSimulator {
         if (PulsarConst.AUTH_TYPE_JWT.equals(authType) && pulsarJwtClient != null) {
             return pulsarJwtClient;
         }
-        if (TLS_SWITCH_ON.equals(tlsSwitch) && pulsarTlsClient != null) {
+        if (enableTls && pulsarTlsClient != null) {
             return pulsarTlsClient;
         }
-        if (TLS_SWITCH_OFF.equals(tlsSwitch) && pulsarClient != null) {
+        if (!enableTls && pulsarClient != null) {
             return pulsarClient;
         }
         try {
-            if (PulsarConst.AUTH_TYPE_JWT.equals(authType)) {
-                pulsarJwtClient = PulsarClient.builder().serviceUrl(pulsarUrl)
-                        .allowTlsInsecureConnection(true).enableTlsHostnameVerification(false)
-                        .tlsProtocols(protocols).tlsCiphers(cipher)
-                        .useKeyStoreTls(true)
-                        .tlsTrustStorePath(trustStorePath)
-                        .tlsTrustStorePassword(trustStorePassword)
-                        .authentication(AuthenticationFactory.token(jwtToken)).build();
-                return pulsarJwtClient;
+            ClientBuilder clientBuilder = PulsarClient.builder();
+            clientBuilder.serviceUrl(pulsarUrl);
+            if (enableTls) {
+                clientBuilder.allowTlsInsecureConnection(false);
+                clientBuilder.enableTlsHostnameVerification(enableTlsHostNameVerification);
             }
-            if (TLS_SWITCH_OFF.equals(tlsSwitch)) {
-                pulsarClient = PulsarClient.builder().serviceUrl(pulsarUrl).build();
-                return pulsarClient;
-            }
-            if (TLS_SWITCH_ON.equals(tlsSwitch)) {
-                Map<String, String> map = new HashMap<>();
-                map.put(AuthenticationKeyStoreTls.KEYSTORE_TYPE, keyStoreType);
-                map.put(AuthenticationKeyStoreTls.KEYSTORE_PATH, keyStorePath);
-                map.put(AuthenticationKeyStoreTls.KEYSTORE_PW, keyStorePassword);
-                pulsarTlsClient = PulsarClient.builder().serviceUrl(pulsarUrl)
-                        .allowTlsInsecureConnection(true).enableTlsHostnameVerification(false)
-                        .tlsProtocols(protocols).tlsCiphers(cipher)
-                        .useKeyStoreTls(true)
-                        .tlsTrustStorePath(trustStorePath)
-                        .tlsTrustStorePassword(trustStorePassword)
-                        .authentication("org.apache.pulsar.client.impl.auth.AuthenticationKeyStoreTls", map).build();
-                return pulsarTlsClient;
+            switch (authType) {
+                case PulsarConst.AUTH_TYPE_NONE -> {
+                    pulsarClient = clientBuilder.build();
+                    return pulsarClient;
+                }
+                case PulsarConst.AUTH_TYPE_JWT -> {
+                    pulsarJwtClient = clientBuilder
+                            .tlsProtocols(protocols).tlsCiphers(cipher)
+                            .useKeyStoreTls(true)
+                            .tlsTrustStorePath(trustStorePath)
+                            .tlsTrustStorePassword(trustStorePassword)
+                            .authentication(AuthenticationFactory.token(jwtToken)).build();
+                    return pulsarJwtClient;
+                }
+                case PulsarConst.AUTH_TYPE_TLS -> {
+                    Map<String, String> map = new HashMap<>();
+                    map.put(AuthenticationKeyStoreTls.KEYSTORE_TYPE, PulsarConst.DEFAULT_CERT_TYPE);
+                    map.put(AuthenticationKeyStoreTls.KEYSTORE_PATH, keyStorePath);
+                    map.put(AuthenticationKeyStoreTls.KEYSTORE_PW, keyStorePassword);
+                    pulsarTlsClient = clientBuilder
+                            .tlsProtocols(protocols).tlsCiphers(cipher)
+                            .useKeyStoreTls(true)
+                            .tlsTrustStorePath(trustStorePath)
+                            .tlsTrustStorePassword(trustStorePassword)
+                            .authentication("org.apache.pulsar.client.impl.auth.AuthenticationKeyStoreTls", map).build();
+                    return pulsarTlsClient;
+                }
             }
         } catch (PulsarClientException e) {
             log.error("create pulsar client failed. e: {}", ExceptionUtil.getException(e));
@@ -130,8 +135,8 @@ public class PulsarClientSimulator {
 
     public void close() {
         closeClientIfNotNull(pulsarClient);
-        closeClientIfNotNull(pulsarTlsClient);
         closeClientIfNotNull(pulsarJwtClient);
+        closeClientIfNotNull(pulsarTlsClient);
     }
 
     private void closeClientIfNotNull(PulsarClient client) {

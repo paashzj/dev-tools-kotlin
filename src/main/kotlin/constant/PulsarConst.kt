@@ -23,5 +23,7 @@ class PulsarConst {
         const val defaultUrl = "pulsar://localhost:6650"
         const val defaultTopic = "persistent://public/default/test"
         const val authTypeJwt = "JWT"
+        const val authTypeTls = "TLS"
+        val authTypeList = listOf("NONE", authTypeJwt, authTypeTls)
     }
 }

@@ -20,13 +20,18 @@ package widget.config
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import widget.component.DropdownBool
 
 @Composable
-fun ConfigGroupPulsarTls(
-    editEnableTlsHostnameVerification: MutableState<Boolean>,
+fun ConfigGroupPulsarAuthTls(
+    editPulsarKeyStorePath: MutableState<String>,
+    editPulsarKeyStorePassword: MutableState<String>,
+    editPulsarTrustStorePath: MutableState<String>,
+    editPulsarTrustStorePassword: MutableState<String>,
 ) {
     Column {
-        DropdownBool("tls hostname verification", editEnableTlsHostnameVerification)
+        ConfigItemString(editPulsarKeyStorePath, "pulsar keyStore path", singleLine = true)
+        ConfigItemString(editPulsarKeyStorePassword, "pulsar keyStore password", singleLine = true)
+        ConfigItemString(editPulsarTrustStorePath, "pulsar trustStore path", singleLine = true)
+        ConfigItemString(editPulsarTrustStorePassword, "pulsar trustStore password", singleLine = true)
     }
 }

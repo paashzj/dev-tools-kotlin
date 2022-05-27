@@ -19,6 +19,8 @@ package widget.simulator.pulsar
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -26,12 +28,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import com.github.shoothzj.dev.simulator.pulsar.PulsarClientSimulator
 import com.github.shoothzj.dev.simulator.pulsar.PulsarConsumerSimulator
 import constant.PulsarConst
+import widget.component.DropdownBool
+import widget.component.DropdownList
 import widget.component.RowPaddingButton
-import widget.config.ConfigGroupPulsarJwt
+import widget.config.ConfigGroupPulsarAuthJwt
+import widget.config.ConfigGroupPulsarAuthTls
 import widget.config.ConfigGroupPulsarTls
 
 @Composable
@@ -42,7 +48,7 @@ fun PulsarConsumer() {
     var errMsg by remember { mutableStateOf("") }
     var simulator: PulsarConsumerSimulator? by remember { mutableStateOf(null) }
 
-    Column {
+    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         OutlinedTextField(
             value = pulsarUrl,
             onValueChange = {
@@ -50,29 +56,21 @@ fun PulsarConsumer() {
             },
             label = { Text("pulsar url") }
         )
-        OutlinedTextField(
-            value = authType.value,
-            onValueChange = {
-                authType.value = it
-            },
-            label = { Text("pulsar auth type") }
-        )
-        OutlinedTextField(
-            value = tlsSwitch.value,
-            onValueChange = {
-                tlsSwitch.value = it
-            },
-            label = { Text("tlsSwitch") }
-        )
+        DropdownBool("tls enable", tlsSwitch)
+        if (tlsSwitch.value) {
+            ConfigGroupPulsarTls(
+                tlsHostNameVerificationEnable
+            )
+        }
+        DropdownList(PulsarConst.authTypeList, "pulsar auth type", authType)
         if (authType.value == PulsarConst.authTypeJwt) {
-            ConfigGroupPulsarJwt(
+            ConfigGroupPulsarAuthJwt(
                 trustStorePath,
                 trustStorePassword,
                 jwtToken,
             )
-        } else if (tlsSwitch.value == "ON") {
-            ConfigGroupPulsarTls(
-                keyStoreType,
+        } else if (authType.value == PulsarConst.authTypeTls) {
+            ConfigGroupPulsarAuthTls(
                 keyStorePath,
                 keyStorePassword,
                 trustStorePath,
@@ -92,9 +90,9 @@ fun PulsarConsumer() {
                     try {
                         val client = PulsarClientSimulator(
                             pulsarUrl,
-                            authType.value,
                             tlsSwitch.value,
-                            keyStoreType.value,
+                            tlsHostNameVerificationEnable.value,
+                            authType.value,
                             keyStorePath.value,
                             keyStorePassword.value,
                             trustStorePath.value,

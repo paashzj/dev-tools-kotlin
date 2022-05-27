@@ -95,7 +95,8 @@ public class PulsarClientSimulator {
         }
         try {
             if (PulsarConst.AUTH_TYPE_JWT.equals(authType)) {
-                pulsarJwtClient = PulsarClient.builder().allowTlsInsecureConnection(false).enableTlsHostnameVerification(true)
+                pulsarJwtClient = PulsarClient.builder().serviceUrl(pulsarUrl)
+                        .allowTlsInsecureConnection(true).enableTlsHostnameVerification(false)
                         .tlsProtocols(protocols).tlsCiphers(cipher)
                         .useKeyStoreTls(true)
                         .tlsTrustStorePath(trustStorePath)
@@ -112,7 +113,8 @@ public class PulsarClientSimulator {
                 map.put(AuthenticationKeyStoreTls.KEYSTORE_TYPE, keyStoreType);
                 map.put(AuthenticationKeyStoreTls.KEYSTORE_PATH, keyStorePath);
                 map.put(AuthenticationKeyStoreTls.KEYSTORE_PW, keyStorePassword);
-                pulsarTlsClient = PulsarClient.builder().allowTlsInsecureConnection(false).enableTlsHostnameVerification(true)
+                pulsarTlsClient = PulsarClient.builder().serviceUrl(pulsarUrl)
+                        .allowTlsInsecureConnection(true).enableTlsHostnameVerification(false)
                         .tlsProtocols(protocols).tlsCiphers(cipher)
                         .useKeyStoreTls(true)
                         .tlsTrustStorePath(trustStorePath)

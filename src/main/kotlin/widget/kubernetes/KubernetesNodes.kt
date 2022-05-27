@@ -17,7 +17,6 @@
 
 package widget.kubernetes
 
-import R.strings
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.OutlinedTextField
@@ -84,7 +83,7 @@ fun KubernetesNodes(
                                 k8sConfig.host, k8sConfig.port, localFile, targetPath
                             )
                     }
-                ) { Text(text = strings.localTransfer, fontSize = 35.sp) }
+                ) { Text(text = R.strings.localTransfer, fontSize = 35.sp) }
             }
             // master publish
             Column {
@@ -119,7 +118,7 @@ fun KubernetesNodes(
                                 )
                             expended.value = true
                         }
-                    ) { Text(text = strings.broadcast, fontSize = 35.sp) }
+                    ) { Text(text = R.strings.broadcast, fontSize = 35.sp) }
                 }
             }
             // command
@@ -144,7 +143,7 @@ fun KubernetesNodes(
                             )
                             expended.value = true
                         }
-                    ) { Text(text = strings.execute, fontSize = 35.sp) }
+                    ) { Text(text = R.strings.execute, fontSize = 35.sp) }
                 }
             }
             //  sed command
@@ -189,7 +188,7 @@ fun KubernetesNodes(
                             )
                             expended.value = true
                         }
-                    ) { Text(text = strings.replace, fontSize = 35.sp) }
+                    ) { Text(text = R.strings.replace, fontSize = 35.sp) }
                 }
             }
         },

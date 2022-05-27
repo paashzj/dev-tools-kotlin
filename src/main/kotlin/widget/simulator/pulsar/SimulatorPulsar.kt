@@ -29,9 +29,9 @@ import widget.component.RowPaddingButton
 
 val pattern = mutableStateOf(MqPatternEnum.Producer)
 
-val tlsSwitch = mutableStateOf("OFF")
+val tlsSwitch = mutableStateOf(false)
+val tlsHostNameVerificationEnable = mutableStateOf(true)
 val authType = mutableStateOf("")
-val keyStoreType = mutableStateOf("JKS")
 val keyStorePath = mutableStateOf("")
 val keyStorePassword = mutableStateOf("")
 val trustStorePath = mutableStateOf("")

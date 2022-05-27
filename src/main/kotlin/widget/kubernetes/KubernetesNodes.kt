@@ -209,11 +209,11 @@ fun KubernetesNodes(
                     for (content in result!!.contents) {
                         Text(content, fontSize = 25.sp)
                     }
-                    val nodeInfos = result!!.nodeInfos
-                    repeat(nodeInfos.size) { idx ->
-                        val nodeInfo = nodeInfos[idx]
+                    val nodeInfoList = result!!.nodeInfos
+                    repeat(nodeInfoList.size) { idx ->
+                        val nodeInfo = nodeInfoList[idx]
                         val res = nodeInfo.executeResult
-                        Text(nodeInfos[idx].name, fontSize = 25.sp)
+                        Text(nodeInfoList[idx].name, fontSize = 25.sp)
                         repeat(res.size) { iidx ->
                             Text(res[iidx])
                         }

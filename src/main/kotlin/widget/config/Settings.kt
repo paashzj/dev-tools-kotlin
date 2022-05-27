@@ -162,9 +162,11 @@ fun Settings() {
                             editDumpFileDir,
                         )
                     )
-                    if (bool) {
-                        res = "save success."
-                    } else { res = "save fail." }
+                    res = if (bool) {
+                        "save success."
+                    } else {
+                        "save fail."
+                    }
                     config.value = StorageSettings.getConfig()
                 }
             ) {

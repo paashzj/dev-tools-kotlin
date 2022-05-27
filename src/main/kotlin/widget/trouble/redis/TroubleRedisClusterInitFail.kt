@@ -29,8 +29,8 @@ import widget.trouble.TroubleShootBase
 fun TroubleRedisClusterInitFail() {
     TroubleShootBase(
         content = {
-            val RedisNameList = StorageRedis.getInstance().listConfigNames()
-            DropdownList(RedisNameList, "redis ${R.strings.instance}", editRedisInstanceName)
+            val redisNameList = StorageRedis.getInstance().listConfigNames()
+            DropdownList(redisNameList, "redis ${R.strings.instance}", editRedisInstanceName)
             ConfigGroupKubernetes(
                 editKubernetesHost,
                 editKubernetesPort,
@@ -43,10 +43,10 @@ fun TroubleRedisClusterInitFail() {
                 editRedisStatefulSetName,
             )
             if (editRedisInstanceName.value != "") {
-                val RedisConfig = StorageRedis.getInstance().getConfig(editRedisInstanceName.value)
-                editRedisNamespace.value = RedisConfig.namespace
-                editRedisStatefulSetName.value = RedisConfig.statefulSetName
-                val kubernetesConfig = StorageK8s.getInstance().getConfig(RedisConfig.k8sName)
+                val redisConfig = StorageRedis.getInstance().getConfig(editRedisInstanceName.value)
+                editRedisNamespace.value = redisConfig.namespace
+                editRedisStatefulSetName.value = redisConfig.statefulSetName
+                val kubernetesConfig = StorageK8s.getInstance().getConfig(redisConfig.k8sName)
                 editKubernetesHost.value = kubernetesConfig.host
                 editKubernetesPort.value = kubernetesConfig.port.toString()
                 val sshStep = kubernetesConfig.sshStep

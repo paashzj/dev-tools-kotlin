@@ -29,8 +29,8 @@ import widget.trouble.TroubleShootBase
 fun TroubleMinioClusterInitFail() {
     TroubleShootBase(
         content = {
-            val MinioNameList = StorageMinio.getInstance().listConfigNames()
-            DropdownList(MinioNameList, "Minio ${R.strings.instance}", editMinioInstanceName)
+            val minioNameList = StorageMinio.getInstance().listConfigNames()
+            DropdownList(minioNameList, "Minio ${R.strings.instance}", editMinioInstanceName)
             ConfigGroupKubernetes(
                 editKubernetesHost,
                 editKubernetesPort,
@@ -43,10 +43,10 @@ fun TroubleMinioClusterInitFail() {
                 editMinioStatefulSetName,
             )
             if (editMinioInstanceName.value != "") {
-                val MinioConfig = StorageMinio.getInstance().getConfig(editMinioInstanceName.value)
-                editMinioNamespace.value = MinioConfig.namespace
-                editMinioStatefulSetName.value = MinioConfig.statefulSetName
-                val kubernetesConfig = StorageK8s.getInstance().getConfig(MinioConfig.k8sName)
+                val minioConfig = StorageMinio.getInstance().getConfig(editMinioInstanceName.value)
+                editMinioNamespace.value = minioConfig.namespace
+                editMinioStatefulSetName.value = minioConfig.statefulSetName
+                val kubernetesConfig = StorageK8s.getInstance().getConfig(minioConfig.k8sName)
                 editKubernetesHost.value = kubernetesConfig.host
                 editKubernetesPort.value = kubernetesConfig.port.toString()
                 val sshStep = kubernetesConfig.sshStep

@@ -29,8 +29,8 @@ import widget.trouble.TroubleShootBase
 fun TroubleCassandraClusterInitFail() {
     TroubleShootBase(
         content = {
-            val CassandraNameList = StorageCassandra.getInstance().listConfigNames()
-            DropdownList(CassandraNameList, "Cassandra ${R.strings.instance}", editCassandraInstanceName)
+            val cassandraNameList = StorageCassandra.getInstance().listConfigNames()
+            DropdownList(cassandraNameList, "Cassandra ${R.strings.instance}", editCassandraInstanceName)
             ConfigGroupKubernetes(
                 editKubernetesHost,
                 editKubernetesPort,
@@ -43,10 +43,10 @@ fun TroubleCassandraClusterInitFail() {
                 editCassandraStatefulSetName,
             )
             if (editCassandraInstanceName.value != "") {
-                val CassandraConfig = StorageCassandra.getInstance().getConfig(editCassandraInstanceName.value)
-                editCassandraNamespace.value = CassandraConfig.namespace
-                editCassandraStatefulSetName.value = CassandraConfig.statefulSetName
-                val kubernetesConfig = StorageK8s.getInstance().getConfig(CassandraConfig.k8sName)
+                val cassandraConfig = StorageCassandra.getInstance().getConfig(editCassandraInstanceName.value)
+                editCassandraNamespace.value = cassandraConfig.namespace
+                editCassandraStatefulSetName.value = cassandraConfig.statefulSetName
+                val kubernetesConfig = StorageK8s.getInstance().getConfig(cassandraConfig.k8sName)
                 editKubernetesHost.value = kubernetesConfig.host
                 editKubernetesPort.value = kubernetesConfig.port.toString()
                 val sshStep = kubernetesConfig.sshStep

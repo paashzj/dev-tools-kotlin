@@ -22,5 +22,6 @@ class PulsarConst {
     companion object {
         const val defaultUrl = "pulsar://localhost:6650"
         const val defaultTopic = "persistent://public/default/test"
+        const val authTypeJwt = "JWT"
     }
 }

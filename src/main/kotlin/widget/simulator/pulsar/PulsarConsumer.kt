@@ -27,7 +27,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.sp
-import com.github.shoothzj.dev.constant.PulsarConst
 import com.github.shoothzj.dev.simulator.pulsar.PulsarClientSimulator
 import com.github.shoothzj.dev.simulator.pulsar.PulsarConsumerSimulator
 import constant.PulsarConst
@@ -65,7 +64,7 @@ fun PulsarConsumer() {
             },
             label = { Text("tlsSwitch") }
         )
-        if (authType.value == PulsarConst.AUTH_TYPE_JWT) {
+        if (authType.value == PulsarConst.authTypeJwt) {
             ConfigGroupPulsarJwt(
                 trustStorePath,
                 trustStorePassword,

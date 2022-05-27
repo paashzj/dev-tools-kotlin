@@ -29,12 +29,14 @@ import widget.component.RowPaddingButton
 
 val pattern = mutableStateOf(MqPatternEnum.Producer)
 
-var tlsSwitch = mutableStateOf("OFF")
+val tlsSwitch = mutableStateOf("OFF")
+val authType = mutableStateOf("")
 val keyStoreType = mutableStateOf("JKS")
 val keyStorePath = mutableStateOf("")
 val keyStorePassword = mutableStateOf("")
 val trustStorePath = mutableStateOf("")
 val trustStorePassword = mutableStateOf("")
+val jwtToken = mutableStateOf("")
 
 @Composable
 fun SimulatorPulsar() {

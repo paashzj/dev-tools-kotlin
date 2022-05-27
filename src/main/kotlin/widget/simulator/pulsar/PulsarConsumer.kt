@@ -27,10 +27,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.sp
+import com.github.shoothzj.dev.constant.PulsarConst
 import com.github.shoothzj.dev.simulator.pulsar.PulsarClientSimulator
 import com.github.shoothzj.dev.simulator.pulsar.PulsarConsumerSimulator
 import constant.PulsarConst
 import widget.component.RowPaddingButton
+import widget.config.ConfigGroupPulsarJwt
 import widget.config.ConfigGroupPulsarTls
 
 @Composable
@@ -50,13 +52,26 @@ fun PulsarConsumer() {
             label = { Text("pulsar url") }
         )
         OutlinedTextField(
+            value = authType.value,
+            onValueChange = {
+                authType.value = it
+            },
+            label = { Text("pulsar auth type") }
+        )
+        OutlinedTextField(
             value = tlsSwitch.value,
             onValueChange = {
                 tlsSwitch.value = it
             },
             label = { Text("tlsSwitch") }
         )
-        if (tlsSwitch.value == "ON") {
+        if (authType.value == PulsarConst.AUTH_TYPE_JWT) {
+            ConfigGroupPulsarJwt(
+                trustStorePath,
+                trustStorePassword,
+                jwtToken,
+            )
+        } else if (tlsSwitch.value == "ON") {
             ConfigGroupPulsarTls(
                 keyStoreType,
                 keyStorePath,
@@ -78,12 +93,14 @@ fun PulsarConsumer() {
                     try {
                         val client = PulsarClientSimulator(
                             pulsarUrl,
+                            authType.value,
                             tlsSwitch.value,
                             keyStoreType.value,
                             keyStorePath.value,
                             keyStorePassword.value,
                             trustStorePath.value,
                             trustStorePassword.value,
+                            jwtToken.value,
                         )
                         simulator = PulsarConsumerSimulator(client)
                     } catch (e: Exception) {

@@ -15,13 +15,21 @@
  * limitations under the license.
  */
 
-package constant
+package widget.config
 
-class PulsarConst {
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 
-    companion object {
-        const val defaultUrl = "pulsar://localhost:6650"
-        const val defaultTopic = "persistent://public/default/test"
-        const val authTypeJwt = "JWT"
+@Composable
+fun ConfigGroupPulsarJwt(
+    editPulsarTrustStorePath: MutableState<String>,
+    editPulsarTrustStorePassword: MutableState<String>,
+    editPulsarJwtToken: MutableState<String>,
+) {
+    Column {
+        ConfigItemString(editPulsarTrustStorePath, "pulsar trustStore path", singleLine = true)
+        ConfigItemString(editPulsarTrustStorePassword, "pulsar trustStore password", singleLine = true)
+        ConfigItemString(editPulsarJwtToken, "pulsar jwt token", singleLine = true)
     }
 }

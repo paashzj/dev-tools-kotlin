@@ -19,8 +19,11 @@
 
 package com.github.shoothzj.dev.simulator.pulsar;
 
+import com.github.shoothzj.dev.constant.PulsarConst;
 import com.github.shoothzj.javatool.util.ExceptionUtil;
+import com.github.shoothzj.javatool.util.StreamUtil;
 import com.google.common.collect.Sets;
+import org.apache.pulsar.client.api.AuthenticationFactory;
 import org.apache.pulsar.client.api.PulsarClient;
 import org.apache.pulsar.client.api.PulsarClientException;
 import org.apache.pulsar.client.impl.auth.AuthenticationKeyStoreTls;
@@ -45,11 +48,14 @@ public class PulsarClientSimulator {
             "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
     );
 
+    private static PulsarClient pulsarClient;
     private static PulsarClient pulsarTlsClient;
 
-    private static PulsarClient pulsarNoTlsClient;
+    private static PulsarClient pulsarJwtClient;
 
     private final String pulsarUrl;
+
+    private final String authType;
 
     private final String tlsSwitch;
 
@@ -63,27 +69,43 @@ public class PulsarClientSimulator {
 
     private final String trustStorePassword;
 
-    public PulsarClientSimulator(String pulsarUrl, String tlsSwitch, String keyStoreType, String keyStorePath, String keyStorePassword, String trustStorePath, String trustStorePassword) {
+    private final String jwtToken;
+
+    public PulsarClientSimulator(String pulsarUrl, String authType, String tlsSwitch, String keyStoreType, String keyStorePath, String keyStorePassword, String trustStorePath, String trustStorePassword, String jwtToken) {
         this.pulsarUrl = pulsarUrl;
+        this.authType = authType;
         this.tlsSwitch = tlsSwitch;
         this.keyStoreType = keyStoreType;
         this.keyStorePath = keyStorePath;
         this.keyStorePassword = keyStorePassword;
         this.trustStorePath = trustStorePath;
         this.trustStorePassword = trustStorePassword;
+        this.jwtToken = jwtToken;
     }
 
     public PulsarClient getPulsarClient() {
+        if (PulsarConst.AUTH_TYPE_JWT.equals(authType) && pulsarJwtClient != null) {
+            return pulsarJwtClient;
+        }
         if (TLS_SWITCH_ON.equals(tlsSwitch) && pulsarTlsClient != null) {
             return pulsarTlsClient;
         }
-        if (TLS_SWITCH_OFF.equals(tlsSwitch) && pulsarNoTlsClient != null) {
-            return pulsarNoTlsClient;
+        if (TLS_SWITCH_OFF.equals(tlsSwitch) && pulsarClient != null) {
+            return pulsarClient;
         }
         try {
+            if (PulsarConst.AUTH_TYPE_JWT.equals(authType)) {
+                pulsarJwtClient = PulsarClient.builder().allowTlsInsecureConnection(false).enableTlsHostnameVerification(true)
+                        .tlsProtocols(protocols).tlsCiphers(cipher)
+                        .useKeyStoreTls(true)
+                        .tlsTrustStorePath(trustStorePath)
+                        .tlsTrustStorePassword(trustStorePassword)
+                        .authentication(AuthenticationFactory.token(jwtToken)).build();
+                return pulsarJwtClient;
+            }
             if (TLS_SWITCH_OFF.equals(tlsSwitch)) {
-                pulsarNoTlsClient = PulsarClient.builder().serviceUrl(pulsarUrl).build();
-                return pulsarNoTlsClient;
+                pulsarClient = PulsarClient.builder().serviceUrl(pulsarUrl).build();
+                return pulsarClient;
             }
             if (TLS_SWITCH_ON.equals(tlsSwitch)) {
                 Map<String, String> map = new HashMap<>();
@@ -105,17 +127,15 @@ public class PulsarClientSimulator {
     }
 
     public void close() {
-        try {
-            pulsarTlsClient.close();
-            pulsarTlsClient = null;
-        } catch (Exception e) {
-            log.error("close pulsar tls client failed.");
-        }
-        try {
-            pulsarNoTlsClient.close();
-            pulsarNoTlsClient = null;
-        } catch (PulsarClientException e) {
-            log.error("close pulsar no tls client failed.");
+        closeClientIfNotNull(pulsarClient);
+        closeClientIfNotNull(pulsarTlsClient);
+        closeClientIfNotNull(pulsarJwtClient);
+    }
+
+    private void closeClientIfNotNull(PulsarClient client) {
+        if (client != null) {
+            StreamUtil.close(client);
         }
     }
+
 }

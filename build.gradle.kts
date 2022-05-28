@@ -50,6 +50,7 @@ configurations {
 val jacocoVersion = "0.8.8"
 val jschVersion = "0.2.1"
 val jsonPathVersion = "2.7.0"
+val pulsarVersion = "2.10.0"
 val kafkaVersion = "3.2.0"
 val log4jVersion = "2.17.2"
 val sdkVersion = "3.1.13"
@@ -58,11 +59,13 @@ val sshdVersion = "2.8.0"
 dependencies {
     implementation(compose.desktop.currentOs)
     // middleware
+    implementation("org.apache.pulsar:pulsar-client-admin-original:$pulsarVersion")
+    implementation("org.apache.pulsar:pulsar-client-original:$pulsarVersion")
     implementation("org.apache.kafka:kafka-clients:$kafkaVersion")
     // embedded middleware
-    implementation("com.github.shoothzj:test-pulsar:$sdkVersion")
-    implementation("com.github.shoothzj:test-kafka:$sdkVersion")
-    implementation("com.github.shoothzj:test-zookeeper:$sdkVersion")
+    testImplementation("com.github.shoothzj:test-pulsar:$sdkVersion")
+    testImplementation("com.github.shoothzj:test-kafka:$sdkVersion")
+    testImplementation("com.github.shoothzj:test-zookeeper:$sdkVersion")
     // ssh
     implementation("com.github.mwiede:jsch:$jschVersion")
     // codec

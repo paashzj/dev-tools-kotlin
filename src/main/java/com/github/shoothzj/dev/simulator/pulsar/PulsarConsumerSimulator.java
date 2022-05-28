@@ -48,6 +48,9 @@ public class PulsarConsumerSimulator {
 
     public String subscribe(String topic) {
         try {
+            if (consumer != null) {
+                return "pulsar consumer already subscribe.";
+            }
             PulsarClient pulsarClient = pulsarClientSimulator.getPulsarClient();
             consumer = pulsarClient.newConsumer().topic(topic).subscriptionName(UUID.randomUUID().toString())
                     .receiverQueueSize(MAX_RECEIVE_MSG).autoUpdatePartitions(true).subscriptionType(SubscriptionType.Failover)
@@ -75,6 +78,7 @@ public class PulsarConsumerSimulator {
     public String close() {
         try {
             consumer.close();
+            consumer = null;
         } catch (PulsarClientException e) {
             log.error("close consumer failed. e : {}", ExceptionUtil.getException(e));
         }

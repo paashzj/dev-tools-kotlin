@@ -31,7 +31,7 @@ val pattern = mutableStateOf(MqPatternEnum.Producer)
 
 val tlsSwitch = mutableStateOf(false)
 val tlsHostNameVerificationEnable = mutableStateOf(true)
-val authType = mutableStateOf("")
+val authType = mutableStateOf("NONE")
 val keyStorePath = mutableStateOf("")
 val keyStorePassword = mutableStateOf("")
 val trustStorePath = mutableStateOf("")

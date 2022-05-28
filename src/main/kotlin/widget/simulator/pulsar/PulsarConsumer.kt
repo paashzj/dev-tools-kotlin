@@ -47,6 +47,7 @@ fun PulsarConsumer() {
     var msg by remember { mutableStateOf("") }
     var errMsg by remember { mutableStateOf("") }
     var simulator: PulsarConsumerSimulator? by remember { mutableStateOf(null) }
+    var isConnect by remember { mutableStateOf(PulsarConst.closed) }
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         OutlinedTextField(
@@ -55,6 +56,11 @@ fun PulsarConsumer() {
                 pulsarUrl = it
             },
             label = { Text("pulsar url") }
+        )
+        OutlinedTextField(
+            value = isConnect,
+            onValueChange = {},
+            label = { Text("pulsar consumer connect status") }
         )
         DropdownBool("tls enable", tlsSwitch)
         if (tlsSwitch.value) {
@@ -88,18 +94,23 @@ fun PulsarConsumer() {
             RowPaddingButton(
                 onClick = {
                     try {
-                        val client = PulsarClientSimulator(
-                            pulsarUrl,
-                            tlsSwitch.value,
-                            tlsHostNameVerificationEnable.value,
-                            authType.value,
-                            keyStorePath.value,
-                            keyStorePassword.value,
-                            trustStorePath.value,
-                            trustStorePassword.value,
-                            jwtToken.value,
-                        )
-                        simulator = PulsarConsumerSimulator(client)
+                        if (isConnect == PulsarConst.closed) {
+                            val client = PulsarClientSimulator(
+                                pulsarUrl,
+                                tlsSwitch.value,
+                                tlsHostNameVerificationEnable.value,
+                                authType.value,
+                                keyStorePath.value,
+                                keyStorePassword.value,
+                                trustStorePath.value,
+                                trustStorePassword.value,
+                                jwtToken.value,
+                            )
+                            simulator = PulsarConsumerSimulator(client)
+                            msg = "success connect pulsar"
+                        } else {
+                            msg = "consumer is already subscribe, please close consumer and retry connect."
+                        }
                     } catch (e: Exception) {
                         errMsg = e.message.toString()
                     }
@@ -107,21 +118,35 @@ fun PulsarConsumer() {
             ) { Text(text = R.strings.connect, fontSize = 12.sp) }
             RowPaddingButton(
                 onClick = {
-                    msg = simulator?.subscribe(topic) ?: "please create pulsar consumer"
+                    if (isConnect == PulsarConst.closed) {
+                        isConnect = PulsarConst.connected
+                        msg = simulator?.subscribe(topic) ?: "please create pulsar consumer"
+                    } else {
+                        msg = "consumer is already subscribe, please close and retry subscribe."
+                    }
                 },
             ) {
                 Text(text = R.strings.subscribe, fontSize = 12.sp)
             }
             RowPaddingButton(
                 onClick = {
-                    msg = simulator?.receive() ?: "consume pulsar msg failed"
+                    if (isConnect == PulsarConst.connected) {
+                        msg = simulator?.receive() ?: "consume pulsar msg failed"
+                    } else {
+                        msg = "pulsar consumer is not subscribe."
+                    }
                 },
             ) {
                 Text(text = R.strings.receive, fontSize = 12.sp)
             }
             RowPaddingButton(
                 onClick = {
-                    msg = (simulator?.close() ?: "")
+                    if (isConnect == PulsarConst.connected) {
+                        msg = (simulator?.close() ?: "")
+                        isConnect = PulsarConst.closed
+                    } else {
+                        msg = "consumer is already closed."
+                    }
                 },
             ) {
                 Text(text = R.strings.close, fontSize = 12.sp)

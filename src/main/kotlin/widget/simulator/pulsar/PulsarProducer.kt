@@ -48,6 +48,7 @@ fun PulsarProducer() {
     var key by remember { mutableStateOf("") }
     var res by remember { mutableStateOf("") }
     var simulator: PulsarProducerSimulator? by remember { mutableStateOf(null) }
+    var isConnect by remember { mutableStateOf(PulsarConst.closed) }
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         OutlinedTextField(
@@ -56,6 +57,11 @@ fun PulsarProducer() {
                 pulsarUrl = it
             },
             label = { Text("pulsar url") }
+        )
+        OutlinedTextField(
+            value = isConnect,
+            onValueChange = {},
+            label = { Text("pulsar producer connect status") }
         )
         DropdownBool("tls enable", tlsSwitch)
         if (tlsSwitch.value) {
@@ -103,18 +109,24 @@ fun PulsarProducer() {
             RowPaddingButton(
                 onClick = {
                     try {
-                        val client = PulsarClientSimulator(
-                            pulsarUrl,
-                            tlsSwitch.value,
-                            tlsHostNameVerificationEnable.value,
-                            authType.value,
-                            keyStorePath.value,
-                            keyStorePassword.value,
-                            trustStorePath.value,
-                            trustStorePassword.value,
-                            jwtToken.value,
-                        )
-                        simulator = PulsarProducerSimulator(topic, client)
+                        if (isConnect == PulsarConst.closed) {
+                            val client = PulsarClientSimulator(
+                                pulsarUrl,
+                                tlsSwitch.value,
+                                tlsHostNameVerificationEnable.value,
+                                authType.value,
+                                keyStorePath.value,
+                                keyStorePassword.value,
+                                trustStorePath.value,
+                                trustStorePassword.value,
+                                jwtToken.value,
+                            )
+                            simulator = PulsarProducerSimulator(topic, client)
+                            isConnect = PulsarConst.connected
+                            res = "success connect pulsar"
+                        } else {
+                            res = "pulsar is connected."
+                        }
                     } catch (e: Exception) {
                         res = e.message.toString()
                     }
@@ -123,14 +135,23 @@ fun PulsarProducer() {
 
             RowPaddingButton(
                 onClick = {
-                    res = simulator?.produce(msg, key) ?: "please create pulsar producer"
+                    if (isConnect == PulsarConst.connected) {
+                        res = simulator?.produce(msg, key) ?: "please create pulsar producer"
+                    } else {
+                        res = "please connect pulsar"
+                    }
                 },
             ) {
                 Text(text = R.strings.send, fontSize = 12.sp)
             }
             RowPaddingButton(
                 onClick = {
-                    res = (simulator?.close() ?: "")
+                    if (isConnect == PulsarConst.connected) {
+                        res = (simulator?.close() ?: "")
+                        isConnect = PulsarConst.closed
+                    } else {
+                        res = "pulsar is already closed."
+                    }
                 },
             ) {
                 Text(text = R.strings.close, fontSize = 12.sp)

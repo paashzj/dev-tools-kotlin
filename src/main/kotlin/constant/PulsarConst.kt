@@ -24,6 +24,8 @@ class PulsarConst {
         const val defaultTopic = "persistent://public/default/test"
         const val authTypeJwt = "JWT"
         const val authTypeTls = "TLS"
+        const val connected = "connected"
+        const val closed = "closed"
         val authTypeList = listOf("NONE", authTypeJwt, authTypeTls)
     }
 }

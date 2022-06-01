@@ -17,11 +17,15 @@
 package widget.kubernetes
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
@@ -39,10 +43,12 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import com.github.shoothzj.dev.module.config.KubernetesConfig
 import com.github.shoothzj.dev.transfer.Transfer
+import module.NavigationEnum
+import navigationContext
+import navigationIdx
 
 @Composable
 fun KubernetesPods(
@@ -102,13 +108,42 @@ fun KubernetesPods(
                 }
             }
         }
-        Row {
-            infoList = Transfer().getPodsInfo(
-                k8sConfig.sshStep.username, k8sConfig.sshStep.password,
-                k8sConfig.host, k8sConfig.port, namespace.value
-            )
-            repeat(infoList.size) {
-                Row { Text(infoList[it], fontSize = 25.sp) }
+        infoList = Transfer().getPodsInfo(
+            k8sConfig.sshStep.username, k8sConfig.sshStep.password,
+            k8sConfig.host, k8sConfig.port, namespace.value
+        )
+        repeat(infoList.size) {
+            if (infoList.size == 1 && infoList[0].contains("get pod info fail.")) {
+                Text(infoList[it])
+            } else {
+                val podNameField = infoList[it].split(",")[0]
+                Row {
+                    Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(2f)) {
+                        Row {
+                            Box(
+                                modifier = Modifier.clickable {
+                                    infoList[it]
+                                    navigationContext.value = listOf(podNameField.split("=")[1], namespace.value)
+                                    navigationIdx.value = NavigationEnum.KubernetesPodsDetail
+                                }
+                            ) {
+                                Text(infoList[it], modifier = Modifier.padding(15.dp))
+                            }
+                        }
+                    }
+                    Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(1f)) {
+                        Row {
+                            Button(
+                                onClick = {
+                                    navigationContext.value = listOf(podNameField.split("=")[1], namespace.value)
+                                    navigationIdx.value = NavigationEnum.KubernetesPodsDetail
+                                }
+                            ) {
+                                Text(R.strings.enter)
+                            }
+                        }
+                    }
+                }
             }
         }
     }

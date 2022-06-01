@@ -45,7 +45,7 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-public class SshClient {
+public class SshClient implements AutoCloseable {
 
     private static final Logger log = LoggerFactory.getLogger(SshClient.class);
 
@@ -171,6 +171,7 @@ public class SshClient {
         return kubectlNodeResult.get();
     }
 
+    @Override
     public void close() {
         if (channel != null) {
             channel.disconnect();

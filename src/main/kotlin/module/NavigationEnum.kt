@@ -29,6 +29,7 @@ enum class NavigationEnum {
     Settings,
     // vm application
     Kubernetes,
+    KubernetesPodsDetail,
     Lvs,
     // container application
     Bookkeeper,

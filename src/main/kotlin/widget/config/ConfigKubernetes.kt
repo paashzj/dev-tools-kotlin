@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import backContext
 import com.github.shoothzj.dev.module.config.KubernetesConfig
 import com.github.shoothzj.dev.storage.StorageK8s
 import module.NavigationEnum
@@ -89,6 +90,7 @@ fun ConfigKubernetes() {
                     Box(
                         modifier = Modifier.clickable {
                             navigationContext.value = StorageK8s.getInstance().deserializeConfig(kubernetes.value[it])
+                            backContext.value = kubernetes.value[it]
                             navigationIdx.value = NavigationEnum.Kubernetes
                         }
                     ) {

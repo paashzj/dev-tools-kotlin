@@ -43,6 +43,7 @@ import widget.convert.ConvertScreen
 import widget.general.AboutAuthorScreen
 import widget.general.HomeScreen
 import widget.kubernetes.KubernetesInstanceScreen
+import widget.kubernetes.KubernetesPodsDetailScreen
 import widget.lvs.LvsInstanceScreen
 import widget.minio.MinioInstanceScreen
 import widget.mysql.MysqlInstanceScreen
@@ -56,6 +57,7 @@ import widget.zookeeper.ZooKeeperInstanceScreen
 
 val navigationIdx = mutableStateOf(NavigationEnum.Home)
 val navigationContext: MutableState<Any> = mutableStateOf("")
+val backContext: MutableState<Any> = mutableStateOf("")
 
 fun main() = application {
     LogUtil.init()
@@ -88,6 +90,9 @@ fun main() = application {
                     }
                     NavigationEnum.Kubernetes -> {
                         KubernetesInstanceScreen()
+                    }
+                    NavigationEnum.KubernetesPodsDetail -> {
+                        KubernetesPodsDetailScreen()
                     }
                     NavigationEnum.Lvs -> {
                         LvsInstanceScreen()

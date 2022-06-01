@@ -32,6 +32,7 @@ interface Strings {
     val add: String
     val addKubernetesInstance: String
     val addNginxInstance: String
+    val back: String
     val backHome: String
     val broadcast: String
     val Commands: String
@@ -46,11 +47,13 @@ interface Strings {
     val convert: String
     val convertPage: String
     val decode: String
+    val details: String
     val delete: String
     val deployName: String
     val devTools: String
     val dismiss: String
     val encode: String
+    val enter: String
     val execute: String
     val generate: String
     val generatePath: String
@@ -112,6 +115,8 @@ object EnStrings : Strings {
         get() = "add kubernetes instance"
     override val addNginxInstance: String
         get() = "add nginx instance"
+    override val back: String
+        get() = "back"
     override val backHome: String
         get() = "back home"
     override val broadcast: String
@@ -140,6 +145,8 @@ object EnStrings : Strings {
         get() = "convert page"
     override val decode: String
         get() = "decode"
+    override val details: String
+        get() = "details list"
     override val delete: String
         get() = "delete"
     override val deployName: String
@@ -150,6 +157,8 @@ object EnStrings : Strings {
         get() = "dismiss"
     override val encode: String
         get() = "encode"
+    override val enter: String
+        get() = "enter"
     override val execute: String
         get() = "execute"
     override val generate: String
@@ -257,6 +266,8 @@ object ChStrings : Strings {
         get() = "添加kubernetes实例"
     override val addNginxInstance: String
         get() = "添加Nginx实例"
+    override val back: String
+        get() = "返回"
     override val backHome: String
         get() = "回到主页"
     override val broadcast: String
@@ -285,6 +296,8 @@ object ChStrings : Strings {
         get() = "转换界面"
     override val decode: String
         get() = "解码"
+    override val details: String
+        get() = "详情列表"
     override val delete: String
         get() = "删除"
     override val deployName: String
@@ -295,6 +308,8 @@ object ChStrings : Strings {
         get() = "取消"
     override val encode: String
         get() = "编码"
+    override val enter: String
+        get() = "进入"
     override val execute: String
         get() = "执行"
     override val generate: String

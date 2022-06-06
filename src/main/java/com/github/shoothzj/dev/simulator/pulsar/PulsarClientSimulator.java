@@ -51,6 +51,8 @@ public class PulsarClientSimulator {
     private final String pulsarUrl;
 
     private final boolean enableTls;
+    
+    private final boolean allowTlsInsecure;
 
     private final boolean enableTlsHostNameVerification;
 
@@ -66,11 +68,10 @@ public class PulsarClientSimulator {
 
     private final String jwtToken;
 
-    private final boolean allowTlsInsecure;
-
     public PulsarClientSimulator(String pulsarUrl, boolean enableTls, boolean allowTlsInsecure, boolean enableTlsHostNameVerification, String authType, String keyStorePath, String keyStorePassword, String trustStorePath, String trustStorePassword, String jwtToken) {
         this.pulsarUrl = pulsarUrl;
         this.enableTls = enableTls;
+        this.allowTlsInsecure = allowTlsInsecure;
         this.enableTlsHostNameVerification = enableTlsHostNameVerification;
         this.authType = authType;
         this.keyStorePath = keyStorePath;
@@ -78,7 +79,6 @@ public class PulsarClientSimulator {
         this.trustStorePath = trustStorePath;
         this.trustStorePassword = trustStorePassword;
         this.jwtToken = jwtToken;
-        this.allowTlsInsecure = allowTlsInsecure;
     }
 
     public PulsarClient getPulsarClient() {

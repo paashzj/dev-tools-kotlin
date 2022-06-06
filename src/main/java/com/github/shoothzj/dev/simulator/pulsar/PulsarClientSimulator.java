@@ -26,7 +26,6 @@ import com.google.common.collect.Sets;
 import org.apache.pulsar.client.api.AuthenticationFactory;
 import org.apache.pulsar.client.api.ClientBuilder;
 import org.apache.pulsar.client.api.PulsarClient;
-import org.apache.pulsar.client.api.PulsarClientException;
 import org.apache.pulsar.client.impl.auth.AuthenticationKeyStoreTls;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +66,9 @@ public class PulsarClientSimulator {
 
     private final String jwtToken;
 
-    public PulsarClientSimulator(String pulsarUrl, boolean enableTls, boolean enableTlsHostNameVerification, String authType, String keyStorePath, String keyStorePassword, String trustStorePath, String trustStorePassword, String jwtToken) {
+    private final boolean allowTlsInsecure;
+
+    public PulsarClientSimulator(String pulsarUrl, boolean enableTls, boolean allowTlsInsecure, boolean enableTlsHostNameVerification, String authType, String keyStorePath, String keyStorePassword, String trustStorePath, String trustStorePassword, String jwtToken) {
         this.pulsarUrl = pulsarUrl;
         this.enableTls = enableTls;
         this.enableTlsHostNameVerification = enableTlsHostNameVerification;
@@ -77,6 +78,7 @@ public class PulsarClientSimulator {
         this.trustStorePath = trustStorePath;
         this.trustStorePassword = trustStorePassword;
         this.jwtToken = jwtToken;
+        this.allowTlsInsecure = allowTlsInsecure;
     }
 
     public PulsarClient getPulsarClient() {
@@ -87,7 +89,7 @@ public class PulsarClientSimulator {
             ClientBuilder clientBuilder = PulsarClient.builder();
             clientBuilder.serviceUrl(pulsarUrl);
             if (enableTls) {
-                clientBuilder.allowTlsInsecureConnection(false);
+                clientBuilder.allowTlsInsecureConnection(allowTlsInsecure);
                 clientBuilder.enableTlsHostnameVerification(enableTlsHostNameVerification);
             }
             switch (authType) {
@@ -118,7 +120,7 @@ public class PulsarClientSimulator {
                     return pulsarClient;
                 }
             }
-        } catch (PulsarClientException e) {
+        } catch (Exception e) {
             log.error("create pulsar client failed. e: {}", ExceptionUtil.getException(e));
         }
         return null;

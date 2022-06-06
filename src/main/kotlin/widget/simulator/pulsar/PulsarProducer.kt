@@ -63,6 +63,7 @@ fun PulsarProducer() {
             onValueChange = {},
             label = { Text("pulsar producer connect status") }
         )
+        DropdownBool("allow tls insecure", allowTlsInsecure)
         DropdownBool("tls enable", tlsSwitch)
         if (tlsSwitch.value) {
             ConfigGroupPulsarTls(
@@ -113,6 +114,7 @@ fun PulsarProducer() {
                             val client = PulsarClientSimulator(
                                 pulsarUrl,
                                 tlsSwitch.value,
+                                allowTlsInsecure.value,
                                 tlsHostNameVerificationEnable.value,
                                 authType.value,
                                 keyStorePath.value,

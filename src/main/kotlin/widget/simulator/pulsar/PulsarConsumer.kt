@@ -62,6 +62,7 @@ fun PulsarConsumer() {
             onValueChange = {},
             label = { Text("pulsar consumer connect status") }
         )
+        DropdownBool("allow tls Insecure", allowTlsInsecure)
         DropdownBool("tls enable", tlsSwitch)
         if (tlsSwitch.value) {
             ConfigGroupPulsarTls(
@@ -98,6 +99,7 @@ fun PulsarConsumer() {
                             val client = PulsarClientSimulator(
                                 pulsarUrl,
                                 tlsSwitch.value,
+                                allowTlsInsecure.value,
                                 tlsHostNameVerificationEnable.value,
                                 authType.value,
                                 keyStorePath.value,

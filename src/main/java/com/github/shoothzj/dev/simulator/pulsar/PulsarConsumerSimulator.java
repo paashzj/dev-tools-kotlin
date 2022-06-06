@@ -23,7 +23,6 @@ import com.github.shoothzj.javatool.util.ExceptionUtil;
 import org.apache.pulsar.client.api.Consumer;
 import org.apache.pulsar.client.api.Message;
 import org.apache.pulsar.client.api.PulsarClient;
-import org.apache.pulsar.client.api.PulsarClientException;
 import org.apache.pulsar.client.api.SubscriptionInitialPosition;
 import org.apache.pulsar.client.api.SubscriptionType;
 import org.slf4j.Logger;
@@ -57,7 +56,7 @@ public class PulsarConsumerSimulator {
                     .subscriptionInitialPosition(SubscriptionInitialPosition.Latest)
                     .subscribe();
             return "pulsar subscribe success";
-        } catch (PulsarClientException e) {
+        } catch (Exception e) {
             return String.format("pulsar subscribe exception : %s", e.getMessage());
         }
     }
@@ -79,7 +78,7 @@ public class PulsarConsumerSimulator {
         try {
             consumer.close();
             consumer = null;
-        } catch (PulsarClientException e) {
+        } catch (Exception e) {
             log.error("close consumer failed. e : {}", ExceptionUtil.getException(e));
         }
         try {

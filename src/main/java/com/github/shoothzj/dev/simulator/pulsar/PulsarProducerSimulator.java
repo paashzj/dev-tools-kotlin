@@ -23,7 +23,6 @@ import com.github.shoothzj.javatool.util.ExceptionUtil;
 import org.apache.pulsar.client.api.MessageId;
 import org.apache.pulsar.client.api.Producer;
 import org.apache.pulsar.client.api.PulsarClient;
-import org.apache.pulsar.client.api.PulsarClientException;
 import org.apache.pulsar.client.api.TypedMessageBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +47,7 @@ public class PulsarProducerSimulator {
         try {
             PulsarClient pulsarClient = pulsarClientSimulator.getPulsarClient();
             producer = pulsarClient.newProducer().topic(topic).maxPendingMessages(MAX_PENDING_MSG).autoUpdatePartitions(true).create();
-        } catch (PulsarClientException e) {
+        } catch (Exception e) {
             log.error("producer msg failed. e : {}", ExceptionUtil.getException(e));
         }
     }
@@ -68,7 +67,7 @@ public class PulsarProducerSimulator {
     public String close() {
         try {
             producer.close();
-        } catch (PulsarClientException e) {
+        } catch (Exception e) {
             log.error("close producer failed. e : {}", ExceptionUtil.getException(e));
         }
 

@@ -53,7 +53,7 @@ val jsonPathVersion = "2.7.0"
 val pulsarVersion = "2.10.0"
 val kafkaVersion = "3.2.0"
 val log4jVersion = "2.17.2"
-val sdkVersion = "3.1.13"
+val sdkVersion = "3.1.14"
 val sshdVersion = "2.8.0"
 
 dependencies {

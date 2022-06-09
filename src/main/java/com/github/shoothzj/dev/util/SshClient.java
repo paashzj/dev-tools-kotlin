@@ -157,6 +157,15 @@ public class SshClient implements AutoCloseable {
         }
     }
 
+    public void sftpFromRemote(String remotePath, String dstPath) throws Exception {
+        ChannelSftp channel = (ChannelSftp) session.openChannel("sftp");
+        channel.connect();
+        channel.get(remotePath, dstPath);
+        if (!channel.isClosed()) {
+            channel.disconnect();
+        }
+    }
+
     /**
      * used when you have already login to a k8s machine
      * @param nodeName

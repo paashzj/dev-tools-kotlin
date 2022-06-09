@@ -51,7 +51,7 @@ public class PulsarClientSimulator {
     private final String pulsarUrl;
 
     private final boolean enableTls;
-    
+
     private final boolean allowTlsInsecure;
 
     private final boolean enableTlsHostNameVerification;

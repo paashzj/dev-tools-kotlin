@@ -56,14 +56,14 @@ public class K8sCmdConstTest {
 
     @Test
     public void testDescribeDefaultCoredns() {
-        String cmd = K8sCmdConst.describePodCmd("", "coredns");
-        Assert.assertEquals(cmd, "kubectl describe pod coredns -n default");
+        String cmd = K8sCmdConst.describePodCmd("", "coredns", "");
+        Assert.assertEquals(cmd, "kubectl describe pod coredns -n default ");
     }
 
     @Test
     public void testDescribeSystemCoredns() {
-        String cmd = K8sCmdConst.describePodCmd(K8sConst.SYSTEM_NS, "coredns");
-        Assert.assertEquals(cmd, "kubectl describe pod coredns -n kube-system");
+        String cmd = K8sCmdConst.describePodCmd(K8sConst.SYSTEM_NS, "coredns", "");
+        Assert.assertEquals(cmd, "kubectl describe pod coredns -n kube-system ");
     }
 
     @Test

@@ -57,8 +57,8 @@ public class K8sCmdConst {
     }
 
     @NotNull
-    public static String describePodCmd(@NotNull String namespace, @NotNull String podName) {
-        return String.format(DESCRIBE_POD, podName, namespaceHelper(namespace));
+    public static String describePodCmd(@NotNull String namespace, @NotNull String podName, String cmd) {
+        return String.format(DESCRIBE_POD + " %s", podName, namespaceHelper(namespace), cmd);
     }
 
     @NotNull

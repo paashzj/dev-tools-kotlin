@@ -16,33 +16,33 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.github.shoothzj.dev.transfer;
+package com.github.shoothzj.dev.module;
 
 import java.util.List;
 
-public class TransferResp {
+public class UiResponse<T> {
 
     private int code;
     private List<String> contents;
-    private List<NodeInfo> nodeInfos;
+    private List<T> body;
     private String reason;
 
-    public List<NodeInfo> getNodeInfos() {
-        return nodeInfos;
+    public List<T> getBody() {
+        return body;
     }
 
-    public void setNodeInfos(List<NodeInfo> nodeInfos) {
-        this.nodeInfos = nodeInfos;
+    public void setBody(List<T> body) {
+        this.body = body;
     }
 
-    TransferResp() {
+    public UiResponse() {
     }
 
 
-    TransferResp(int code, List<String> contents, List<NodeInfo> nodeInfos, String reason) {
+    public UiResponse(int code, List<String> contents, List<T> nodeInfos, String reason) {
         this.code = code;
         this.contents = contents;
-        this.nodeInfos = nodeInfos;
+        this.body = nodeInfos;
         this.reason = reason;
     }
 

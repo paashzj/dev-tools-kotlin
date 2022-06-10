@@ -27,10 +27,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.sp
+import com.github.shoothzj.dev.module.UiResponse
 import com.github.shoothzj.dev.module.config.KubernetesConfig
 import com.github.shoothzj.dev.state.State
+import com.github.shoothzj.dev.transfer.NodeInfo
 import com.github.shoothzj.dev.transfer.Transfer
-import com.github.shoothzj.dev.transfer.TransferResp
 import widget.component.RowPaddingButton
 import widget.component.ShowBase
 
@@ -47,7 +48,7 @@ fun KubernetesNodes(
     var target by remember { mutableStateOf("") }
     var filename by remember { mutableStateOf("") }
     val expended = mutableStateOf(false)
-    var result: TransferResp? = null
+    var result: UiResponse<NodeInfo>? = null
     var infoList: MutableList<String>
     ShowBase(
         leftContent = {
@@ -208,7 +209,7 @@ fun KubernetesNodes(
                     for (content in result!!.contents) {
                         Text(content, fontSize = 25.sp)
                     }
-                    val nodeInfoList = result!!.nodeInfos
+                    val nodeInfoList = result!!.body
                     repeat(nodeInfoList.size) { idx ->
                         val nodeInfo = nodeInfoList[idx]
                         val res = nodeInfo.executeResult

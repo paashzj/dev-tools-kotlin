@@ -34,12 +34,14 @@ public class Settings {
     private String jdk8armFilePath;
     private String jdk11armFilePath;
     private String jdk17armFilePath;
+    private String tcpDumpArmFilePath;
+    private String tcpDumpX86FilePath;
     private String dumpFileDir;
 
     public Settings() {
     }
 
-    public Settings(String sshExecuteTimeoutSeconds, String sshJumpTimeoutSeconds, String sshLoginTimeoutSeconds, String jdk8X86FilePath, String jdk11X86FilePath, String jdk17X86FilePath, String jdk8armilePath, String jdk11armFilePath, String jdk17armFilePath, String dumpFileDir) {
+    public Settings(String sshExecuteTimeoutSeconds, String sshJumpTimeoutSeconds, String sshLoginTimeoutSeconds, String jdk8X86FilePath, String jdk11X86FilePath, String jdk17X86FilePath, String jdk8armilePath, String jdk11armFilePath, String jdk17armFilePath, String dumpFileDir, String tcpDumpArmFilePath, String tcpDumpX86FilePath) {
         this.sshExecuteTimeoutSeconds = Integer.parseInt(sshExecuteTimeoutSeconds);
         this.sshJumpTimeoutSeconds = Integer.parseInt(sshJumpTimeoutSeconds);
         this.sshLoginTimeoutSeconds = Integer.parseInt(sshLoginTimeoutSeconds);
@@ -49,6 +51,8 @@ public class Settings {
         this.jdk8armFilePath = jdk8armilePath;
         this.jdk11armFilePath = jdk11armFilePath;
         this.jdk17armFilePath = jdk17armFilePath;
+        this.tcpDumpArmFilePath = tcpDumpArmFilePath;
+        this.tcpDumpX86FilePath = tcpDumpX86FilePath;
         this.dumpFileDir = dumpFileDir;
     }
 
@@ -130,6 +134,22 @@ public class Settings {
 
     public void setDumpFileDir(String dumpFileDir) {
         this.dumpFileDir = dumpFileDir;
+    }
+
+    public String getTcpDumpArmFilePath() {
+        return Objects.requireNonNullElse(tcpDumpArmFilePath, "");
+    }
+
+    public void setTcpDumpArmFilePath(String tcpDumpArmFilePath) {
+        this.tcpDumpArmFilePath = tcpDumpArmFilePath;
+    }
+
+    public String getTcpDumpX86FilePath() {
+        return Objects.requireNonNullElse(tcpDumpX86FilePath, "");
+    }
+
+    public void setTcpDumpX86FilePath(String tcpDumpX86FilePath) {
+        this.tcpDumpX86FilePath = tcpDumpX86FilePath;
     }
 
     @Override

@@ -42,6 +42,8 @@ fun Settings() {
     var editJdk8armFilePath by remember { mutableStateOf(config.value.jdk8armFilePath.toString()) }
     var editJdk11armFilePath by remember { mutableStateOf(config.value.jdk11armFilePath.toString()) }
     var editJdk17armFilePath by remember { mutableStateOf(config.value.jdk17armFilePath.toString()) }
+    var editTcpDumpArmFilePath by remember { mutableStateOf(config.value.tcpDumpArmFilePath.toString()) }
+    var editTcpDumpX86FilePath by remember { mutableStateOf(config.value.tcpDumpX86FilePath.toString()) }
     var editDumpFileDir by remember { mutableStateOf(config.value.dumpFileDir.toString()) }
     var res by remember { mutableStateOf("") }
     Column {
@@ -146,6 +148,26 @@ fun Settings() {
         }
 
         Row {
+            OutlinedTextField(
+                value = editTcpDumpArmFilePath,
+                onValueChange = {
+                    editTcpDumpArmFilePath = it
+                },
+                label = { Text("tcp dump arm file dir") }
+            )
+        }
+
+        Row {
+            OutlinedTextField(
+                value = editTcpDumpX86FilePath,
+                onValueChange = {
+                    editTcpDumpX86FilePath = it
+                },
+                label = { Text("tcp dump x86 file dir") }
+            )
+        }
+
+        Row {
             Button(
                 onClick = {
                     val bool = StorageSettings.saveConfig(
@@ -160,6 +182,8 @@ fun Settings() {
                             editJdk11armFilePath,
                             editJdk17armFilePath,
                             editDumpFileDir,
+                            editTcpDumpArmFilePath,
+                            editTcpDumpX86FilePath,
                         )
                     )
                     res = if (bool) {

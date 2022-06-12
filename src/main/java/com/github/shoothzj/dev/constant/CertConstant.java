@@ -50,6 +50,10 @@ public class CertConstant {
 
     public static final String KEY_P12_FILE_NAME = "key.p12";
 
+    public static final String OPENSSL_OUTPUT_PKCS12 = "openssl pkcs12 -export -in %s -inkey %s -out %s.p12 -passin pass:%s -passout pass:%s";
+
+    public static final String KEYTOOL_PKCS12_TO_JKS = "keytool -importkeystore -srckeystore %s.p12 -srcstoretype pkcs12 -destkeystore %s.jks -srcstorepass %s -deststorepass %s";
+
     public static String jks2P12Command(String trustFile, String path, String password, String fileName) {
         String genTrustPath = String.format(CertConstant.GENERATE_CERT_PATH, path, fileName);
         return String.format(CertConstant.KEYTOOL_JKS_P12_CONVERSION, trustFile, genTrustPath, password, password);

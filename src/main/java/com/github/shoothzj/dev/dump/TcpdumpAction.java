@@ -21,14 +21,14 @@ package com.github.shoothzj.dev.dump;
 
 import com.github.shoothzj.dev.storage.StorageSettings;
 
-public class TcpDumpAction {
+public class TcpdumpAction {
 
-    private String getTcpDumpPath(String vmArch) {
+    private String getTcpdumpPath(String vmArch) {
         String tcpDumpPath = "";
         if (vmArch.startsWith("x86")) {
-            tcpDumpPath = StorageSettings.getConfig().getTcpDumpX86FilePath();
+            tcpDumpPath = StorageSettings.getConfig().getTcpdumpX86FilePath();
         } else if (vmArch.startsWith("aarch64")) {
-            tcpDumpPath = StorageSettings.getConfig().getTcpDumpArmFilePath();
+            tcpDumpPath = StorageSettings.getConfig().getTcpdumpArmFilePath();
         }
         return tcpDumpPath;
     }

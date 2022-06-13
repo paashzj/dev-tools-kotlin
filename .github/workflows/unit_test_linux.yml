@@ -17,7 +17,7 @@
 # under the License.
 #
 
-name: unit test
+name: unit test linux
 on:
   push:
     branches:
@@ -27,7 +27,7 @@ on:
       - main
 
 jobs:
-  publish:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class FileUtil {
 
@@ -36,6 +37,15 @@ public class FileUtil {
         } catch (IOException e) {
             log.error("create file failed, exception is ", e);
         }
+    }
+
+    public static void openDirectory(String path) throws IOException {
+        ProcessBuilder pb = new ProcessBuilder();
+        ArrayList<String> commands = new ArrayList<>();
+        commands.add("explorer.exe");
+        commands.add(path);
+        pb.command(commands);
+        pb.start();
     }
 
 }

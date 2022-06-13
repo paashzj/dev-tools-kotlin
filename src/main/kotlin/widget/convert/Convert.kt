@@ -43,6 +43,9 @@ fun ConvertScreen() {
             ConvertEnum.Jks2Pem -> {
                 ConvertJks2Pem()
             }
+            ConvertEnum.Pem2Jks -> {
+                ConvertPem2Jks()
+            }
         }
     }
 }
@@ -71,6 +74,13 @@ fun Head(idx: MutableState<ConvertEnum>) {
             }
         ) {
             Text("jks2pem")
+        }
+        RowPaddingButton(
+            onClick = {
+                idx.value = ConvertEnum.Pem2Jks
+            }
+        ) {
+            Text("pem2jks")
         }
     }
 }

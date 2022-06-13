@@ -24,10 +24,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import backContext
+import com.github.shoothzj.dev.dump.DumpAction
+import com.github.shoothzj.dev.module.UiResponse
 import com.github.shoothzj.dev.storage.StorageK8s
 import com.github.shoothzj.dev.util.K8sSshUtil
 import module.NavigationEnum
@@ -41,6 +45,8 @@ fun KubernetesPodsDetailScreen() {
     val podName = value[0]
     val namespace = value[1]
     val k8sConfig = StorageK8s.getInstance().deserializeConfig(backContext.value.toString())
+    val dialogState = mutableStateOf(false)
+    var result: MutableState<UiResponse<String>> = mutableStateOf(UiResponse<String>())
     Column {
         Row {
             RowPaddingButton(
@@ -73,6 +79,11 @@ fun KubernetesPodsDetailScreen() {
                             Row {
                                 Button(
                                     onClick = {
+                                        result.value = DumpAction().dump(
+                                            k8sConfig.host, k8sConfig.port, k8sConfig.sshStep.username,
+                                            k8sConfig.sshStep.password, podName, namespace, detail[it].pid
+                                        )
+                                        dialogState.value = true
                                     }
                                 ) {
                                     Text("dump")
@@ -90,5 +101,6 @@ fun KubernetesPodsDetailScreen() {
         } else {
             Text("failed to get the pod container process.")
         }
+        PodsDetailResult(dialogState, result)
     }
 }

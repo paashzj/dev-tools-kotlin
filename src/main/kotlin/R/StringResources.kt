@@ -70,6 +70,7 @@ interface Strings {
     val nodeIp: String
     val notMatch: String
     val Params: String
+    val Prompt: String
     val pulsarBrokerHost: String
     val pulsarBrokerPort: String
     val pulsarFunctionHost: String
@@ -191,6 +192,8 @@ object EnStrings : Strings {
         get() = "not match"
     override val Params: String
         get() = "Params"
+    override val Prompt: String
+        get() = "prompt"
     override val pulsarBrokerHost: String
         get() = "pulsar broker host"
     override val pulsarBrokerPort: String
@@ -342,6 +345,8 @@ object ChStrings : Strings {
         get() = "不匹配"
     override val Params: String
         get() = "参数"
+    override val Prompt: String
+        get() = "提示"
     override val pulsarBrokerHost: String
         get() = "pulsar broker host"
     override val pulsarBrokerPort: String

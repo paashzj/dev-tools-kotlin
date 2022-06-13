@@ -65,6 +65,7 @@ interface Strings {
     val installTcpdumpFile: String
     val instance: String
     val kubernetesNodeName: String
+    val localTransfer: String
     val match: String
     val name: String
     val namespace: String
@@ -101,7 +102,6 @@ interface Strings {
     val troubleShootResult: String
     val VerifyList: String
     val verifyPage: String
-    val localTransfer: String
 }
 
 object EnStrings : Strings {
@@ -183,6 +183,8 @@ object EnStrings : Strings {
         get() = "instance"
     override val kubernetesNodeName: String
         get() = "kubernetes node name"
+    override val localTransfer: String
+        get() = "local transfer"
     override val match: String
         get() = "match"
     override val name: String
@@ -255,8 +257,6 @@ object EnStrings : Strings {
         get() = "Verify List"
     override val verifyPage: String
         get() = "verify page"
-    override val localTransfer: String
-        get() = "local transfer"
 }
 
 object ChStrings : Strings {
@@ -338,6 +338,8 @@ object ChStrings : Strings {
         get() = "实例"
     override val kubernetesNodeName: String
         get() = "kubernetes 节点名"
+    override val localTransfer: String
+        get() = "本地传输"
     override val match: String
         get() = "匹配"
     override val name: String
@@ -410,6 +412,4 @@ object ChStrings : Strings {
         get() = "验证列表"
     override val verifyPage: String
         get() = "验证界面"
-    override val localTransfer: String
-        get() = "本地传输"
 }

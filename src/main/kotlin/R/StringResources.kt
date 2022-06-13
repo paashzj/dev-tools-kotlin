@@ -62,6 +62,7 @@ interface Strings {
     val httpMethods: String
     val httpRequestUrl: String
     val imageVersion: String
+    val installTcpdumpFile: String
     val instance: String
     val kubernetesNodeName: String
     val match: String
@@ -176,6 +177,8 @@ object EnStrings : Strings {
         get() = "http request url"
     override val imageVersion: String
         get() = "image version"
+    override val installTcpdumpFile: String
+        get() = "install Tcpdump"
     override val instance: String
         get() = "instance"
     override val kubernetesNodeName: String
@@ -329,6 +332,8 @@ object ChStrings : Strings {
         get() = "http 请求 url"
     override val imageVersion: String
         get() = "镜像版本"
+    override val installTcpdumpFile: String
+        get() = "安装Tcpdump"
     override val instance: String
         get() = "实例"
     override val kubernetesNodeName: String

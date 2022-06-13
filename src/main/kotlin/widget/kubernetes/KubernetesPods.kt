@@ -44,6 +44,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import com.github.shoothzj.dev.dump.TcpdumpAction
 import com.github.shoothzj.dev.module.config.KubernetesConfig
 import com.github.shoothzj.dev.transfer.Transfer
 import module.NavigationEnum
@@ -61,6 +62,7 @@ fun KubernetesPods(
         k8sConfig.sshStep.username, k8sConfig.sshStep.password,
         k8sConfig.host, k8sConfig.port
     )
+    var res by remember { mutableStateOf("") }
     Column {
         Row {
             var expanded by remember { mutableStateOf(false) }
@@ -117,6 +119,7 @@ fun KubernetesPods(
                 Text(infoList[it])
             } else {
                 val podNameField = infoList[it].split(",")[0]
+                val ip = infoList[it].split(",")[2]
                 Row {
                     Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(2f)) {
                         Row {
@@ -143,8 +146,23 @@ fun KubernetesPods(
                             }
                         }
                     }
+                    Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(1f)) {
+                        Row {
+                            Button(
+                                onClick = {
+                                    res = TcpdumpAction().installTcpdump(
+                                        k8sConfig.host, k8sConfig.port, k8sConfig.sshStep.username, k8sConfig.sshStep.password,
+                                        podNameField.split("=")[1], namespace.value, ip.split("=")[1], k8sConfig.sshStep.password
+                                    )
+                                }
+                            ) {
+                                Text(R.strings.installTcpdumpFile)
+                            }
+                        }
+                    }
                 }
             }
         }
+        Text(res)
     }
 }

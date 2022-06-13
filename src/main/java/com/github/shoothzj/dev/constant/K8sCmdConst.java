@@ -46,6 +46,12 @@ public class K8sCmdConst {
 
     public static final String EXEC_POD = "kubectl exec -it %s -n %s";
 
+    public static final String CP_FILE = "kubectl cp %s %s -n %s";
+
+    public static String cpFile(@NotNull String srcPath, @NotNull String dstPath, String namespace) {
+        return String.format(CP_FILE, srcPath, dstPath, namespaceHelper(namespace));
+    }
+
     @NotNull
     public static String podListCmd(@NotNull String namespace) {
         return String.format(GET_POD_LIST, namespaceHelper(namespace));

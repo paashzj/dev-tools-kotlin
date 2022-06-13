@@ -39,9 +39,11 @@ fun Settings() {
     var editJdk8X86FilePath by remember { mutableStateOf(config.value.jdk8X86FilePath.toString()) }
     var editJdk11X86FilePath by remember { mutableStateOf(config.value.jdk11X86FilePath.toString()) }
     var editJdk17X86FilePath by remember { mutableStateOf(config.value.jdk17X86FilePath.toString()) }
-    var editJdk8armFilePath by remember { mutableStateOf(config.value.jdk8armFilePath.toString()) }
-    var editJdk11armFilePath by remember { mutableStateOf(config.value.jdk11armFilePath.toString()) }
-    var editJdk17armFilePath by remember { mutableStateOf(config.value.jdk17armFilePath.toString()) }
+    var editJdk8ArmFilePath by remember { mutableStateOf(config.value.jdk8ArmFilePath.toString()) }
+    var editJdk11ArmFilePath by remember { mutableStateOf(config.value.jdk11ArmFilePath.toString()) }
+    var editJdk17ArmFilePath by remember { mutableStateOf(config.value.jdk17ArmFilePath.toString()) }
+    var editTcpdumpArmFilePath by remember { mutableStateOf(config.value.tcpdumpArmFilePath.toString()) }
+    var editTcpdumpX86FilePath by remember { mutableStateOf(config.value.tcpdumpX86FilePath.toString()) }
     var editDumpFileDir by remember { mutableStateOf(config.value.dumpFileDir.toString()) }
     var res by remember { mutableStateOf("") }
     Column {
@@ -107,9 +109,9 @@ fun Settings() {
 
         Row {
             OutlinedTextField(
-                value = editJdk8armFilePath,
+                value = editJdk8ArmFilePath,
                 onValueChange = {
-                    editJdk8armFilePath = it
+                    editJdk8ArmFilePath = it
                 },
                 label = { Text("jdk 8 arm file path") }
             )
@@ -117,9 +119,9 @@ fun Settings() {
 
         Row {
             OutlinedTextField(
-                value = editJdk11armFilePath,
+                value = editJdk11ArmFilePath,
                 onValueChange = {
-                    editJdk11armFilePath = it
+                    editJdk11ArmFilePath = it
                 },
                 label = { Text("jdk 11 arm file path") }
             )
@@ -127,9 +129,9 @@ fun Settings() {
 
         Row {
             OutlinedTextField(
-                value = editJdk17armFilePath,
+                value = editJdk17ArmFilePath,
                 onValueChange = {
-                    editJdk17armFilePath = it
+                    editJdk17ArmFilePath = it
                 },
                 label = { Text("jdk 17 arm file path") }
             )
@@ -146,6 +148,26 @@ fun Settings() {
         }
 
         Row {
+            OutlinedTextField(
+                value = editTcpdumpArmFilePath,
+                onValueChange = {
+                    editTcpdumpArmFilePath = it
+                },
+                label = { Text("tcpdump arm file dir") }
+            )
+        }
+
+        Row {
+            OutlinedTextField(
+                value = editTcpdumpX86FilePath,
+                onValueChange = {
+                    editTcpdumpX86FilePath = it
+                },
+                label = { Text("tcpdump x86 file dir") }
+            )
+        }
+
+        Row {
             Button(
                 onClick = {
                     val bool = StorageSettings.saveConfig(
@@ -156,10 +178,12 @@ fun Settings() {
                             editJdk8X86FilePath,
                             editJdk11X86FilePath,
                             editJdk17X86FilePath,
-                            editJdk8armFilePath,
-                            editJdk11armFilePath,
-                            editJdk17armFilePath,
+                            editJdk8ArmFilePath,
+                            editJdk11ArmFilePath,
+                            editJdk17ArmFilePath,
                             editDumpFileDir,
+                            editTcpdumpArmFilePath,
+                            editTcpdumpX86FilePath,
                         )
                     )
                     res = if (bool) {

@@ -90,13 +90,13 @@ public class DumpAction {
             }
         } else if (vmArch.startsWith("aarch64")) {
             if (jdkVersion.startsWith("1.8")) {
-                jdkPath = StorageSettings.getConfig().getJdk8armFilePath();
+                jdkPath = StorageSettings.getConfig().getJdk8ArmFilePath();
             }
             if (jdkVersion.startsWith("11")) {
-                jdkPath = StorageSettings.getConfig().getJdk11armFilePath();
+                jdkPath = StorageSettings.getConfig().getJdk11ArmFilePath();
             }
             if (jdkVersion.startsWith("17")) {
-                jdkPath = StorageSettings.getConfig().getJdk17armFilePath();
+                jdkPath = StorageSettings.getConfig().getJdk17ArmFilePath();
             }
         }
         return jdkPath;

@@ -28,7 +28,3 @@ benchmark/**
 
 # log file
 logs/
-
-*.jks
-*.pem
-*.p12

@@ -16,7 +16,6 @@
  */
 package widget.kubernetes
 
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -67,7 +66,7 @@ fun KubernetesPodsDetailScreen() {
         if (detail.size != 0) {
             repeat(detail.size) {
                 if (detail[it].cmd.contains("java")) {
-                    Row(modifier = Modifier.horizontalScroll(rememberScrollState())) {
+                    Row {
                         Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(3f)) {
                             Row {
                                 Text(

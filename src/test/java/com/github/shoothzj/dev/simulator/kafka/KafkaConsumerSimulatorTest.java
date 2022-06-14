@@ -19,6 +19,8 @@
 package com.github.shoothzj.dev.simulator.kafka;
 
 import com.github.shoothzj.dev.test.BaseKafkaServer;
+import org.apache.commons.lang3.SystemUtils;
+import org.testng.SkipException;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -27,6 +29,9 @@ public class KafkaConsumerSimulatorTest extends BaseKafkaServer {
 
     @BeforeTest
     public void startServer() throws Exception {
+        if (SystemUtils.IS_OS_WINDOWS) {
+            throw new SkipException("skip kafka tests on windows");
+        }
         super.startServer();
     }
 

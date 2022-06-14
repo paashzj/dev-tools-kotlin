@@ -82,6 +82,43 @@ public class ConvertSecret {
         }
     }
 
+    /**
+     * convert pem file to jks
+     *
+     * @param crtFile  cert file path
+     * @param keyFile  key file path
+     * @param password key file password
+     * @return convert string result
+     */
+    public String pem2jks(String crtFile, String keyFile, String password) {
+        // step 1: pem to PKCS12.
+        // get file basename, target output filename
+        String pkcsFilename;
+        String[] pkcsFilenames = crtFile.split("\\.");
+        if (pkcsFilenames.length == 0) {
+            pkcsFilename = crtFile;
+        } else {
+            pkcsFilename = pkcsFilenames[0];
+        }
+
+        try {
+            // build a command string such as: openssl pkcs12 -export -in cert.pem -inkey key.pem -name "certificate" -passin pass:this_is_password -passout pass:this_is_password
+            exeCmd(String.format(CertConstant.OPENSSL_OUTPUT_PKCS12, crtFile, keyFile, pkcsFilename, password, password));
+        } catch (Exception e) {
+            log.error("pem failed to convert to pkcs12. ", e);
+            return "pem file convert to pkcs12 failed.";
+        }
+        // step 2: PKCS12 to jks.
+        try {
+            // build a command string such as: keytool -importkeystore -srckeystore cert.p12 -srcstoretype pkcs12 -destkeystore cert.jks -srcstorepass this_is_password -deststorepass this_is_password
+            exeCmd(String.format(CertConstant.KEYTOOL_PKCS12_TO_JKS, pkcsFilename, pkcsFilename, password, password));
+        } catch (Exception e) {
+            log.error("pkcs12 failed to convert to jks.", e);
+            return "pkcs12 file convert to jks failed.";
+        }
+        return "success";
+    }
+
     private void parseJksAndGeneratePemFile(InputStream is, String path) {
         String pemPath = path.replaceAll(".jks", ".pem");
         StringBuilder builder = new StringBuilder();

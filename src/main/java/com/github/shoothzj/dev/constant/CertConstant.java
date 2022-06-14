@@ -30,11 +30,15 @@ public class CertConstant {
 
     public static final String KEYTOOL_JKS_P12_CONVERSION = "keytool -importkeystore -srckeystore %s -destkeystore %s -srcstoretype JKS -deststoretype PKCS12 -srcstorepass %s -deststorepass %s  -noprompt";
 
+    public static final String KEYTOOL_PKCS12_TO_JKS = "keytool -importkeystore -srckeystore %s.p12 -srcstoretype pkcs12 -destkeystore %s.jks -srcstorepass %s -deststorepass %s";
+
     public static final String STOREPASS = "-storepass %s";
 
     public static final String OPENSSL_OUT_PUBLIC_PEM = "openssl pkcs12 -in %s -nokeys -out %s";
 
     public static final String OPENSSL_OUT_PRIVATE_PEM = "openssl pkcs12 -in %s -nodes -nocerts -out private1.pem";
+
+    public static final String OPENSSL_OUTPUT_PKCS12 = "openssl pkcs12 -export -in %s -inkey %s -out %s.p12 -passin pass:%s -passout pass:%s";
 
     public static final String BEGIN_CERTIFICATE = "BEGIN CERTIFICATE";
 

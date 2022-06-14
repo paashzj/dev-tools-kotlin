@@ -16,6 +16,7 @@
  */
 package widget.kubernetes
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -47,7 +48,7 @@ fun KubernetesPodsDetailScreen() {
     val k8sConfig = StorageK8s.getInstance().deserializeConfig(backContext.value.toString())
     val dialogState = mutableStateOf(false)
     var result: MutableState<UiResponse<String>> = mutableStateOf(UiResponse<String>())
-    Column {
+    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         Row {
             RowPaddingButton(
                 onClick = {
@@ -66,7 +67,7 @@ fun KubernetesPodsDetailScreen() {
         if (detail.size != 0) {
             repeat(detail.size) {
                 if (detail[it].cmd.contains("java")) {
-                    Row {
+                    Row(modifier = Modifier.horizontalScroll(rememberScrollState())) {
                         Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(3f)) {
                             Row {
                                 Text(

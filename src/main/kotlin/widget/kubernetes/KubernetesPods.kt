@@ -63,7 +63,7 @@ fun KubernetesPods(
         k8sConfig.host, k8sConfig.port
     )
     var res by remember { mutableStateOf("") }
-    Column {
+    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         Row {
             var expanded by remember { mutableStateOf(false) }
             var textFieldSize by remember { mutableStateOf(Size.Zero) }

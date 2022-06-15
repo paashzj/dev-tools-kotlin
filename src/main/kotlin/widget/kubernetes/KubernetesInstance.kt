@@ -25,7 +25,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.unit.sp
 import com.github.shoothzj.dev.module.config.KubernetesConfig
 import navigationContext
 import widget.TopBar
@@ -55,9 +54,6 @@ fun KubernetesInstanceScreen() {
             ) {
                 Text(text = "pods")
             }
-        }
-        Row {
-            Text(text = "kubernetes ${k8sConfig.name}", fontSize = 40.sp)
         }
         Row {
             if (buttoms == "nodes") {

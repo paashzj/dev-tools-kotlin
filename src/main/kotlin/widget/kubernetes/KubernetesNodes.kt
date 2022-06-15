@@ -50,180 +50,187 @@ fun KubernetesNodes(
     val expended = mutableStateOf(false)
     var result: UiResponse<NodeInfo>? = null
     var infoList: MutableList<String>
-    ShowBase(
-        leftContent = {
-
-            Column {
-                Row {
-                    Column {
-                        OutlinedTextField(
-                            value = localFile,
-                            onValueChange = {
-                                localFile = it
-                            },
-                            label = { Text("file path") }
-                        )
-                    }
+    Column {
+        Row {
+            Text(text = "kubernetes ${namespace.value}", fontSize = 40.sp)
+        }
+        Row {
+            ShowBase(
+                leftContent = {
 
                     Column {
-                        OutlinedTextField(
-                            value = targetPath,
-                            onValueChange = {
-                                targetPath = it
-                            },
-                            label = { Text("target path") }
-                        )
-                    }
-                }
-                RowPaddingButton(
-                    onClick = {
-                        expended.value = true
-                        result =
-                            Transfer().localTransfer(
-                                k8sConfig.sshStep.username, k8sConfig.sshStep.password,
-                                k8sConfig.host, k8sConfig.port, localFile, targetPath
-                            )
-                    }
-                ) { Text(text = R.strings.localTransfer, fontSize = 35.sp) }
-            }
-            // master publish
-            Column {
-                Row {
-                    Column {
-                        OutlinedTextField(
-                            value = masterFile,
-                            onValueChange = {
-                                masterFile = it
-                            },
-                            label = { Text("master file") }
-                        )
-                    }
-
-                    Column {
-                        OutlinedTextField(
-                            value = remotePath,
-                            onValueChange = {
-                                remotePath = it
-                            },
-                            label = { Text("remote path") }
-                        )
-                    }
-                }
-                Row {
-                    RowPaddingButton(
-                        onClick = {
-                            result =
-                                Transfer().masterTransfer(
-                                    k8sConfig.sshStep.username, k8sConfig.sshStep.password,
-                                    k8sConfig.host, k8sConfig.port, masterFile, remotePath
+                        Row {
+                            Column {
+                                OutlinedTextField(
+                                    value = localFile,
+                                    onValueChange = {
+                                        localFile = it
+                                    },
+                                    label = { Text("file path") }
                                 )
-                            expended.value = true
+                            }
+
+                            Column {
+                                OutlinedTextField(
+                                    value = targetPath,
+                                    onValueChange = {
+                                        targetPath = it
+                                    },
+                                    label = { Text("target path") }
+                                )
+                            }
                         }
-                    ) { Text(text = R.strings.broadcast, fontSize = 35.sp) }
-                }
-            }
-            // command
-            Column {
-                Row {
-                    Column {
-                        OutlinedTextField(
-                            value = command,
-                            onValueChange = {
-                                command = it
-                            },
-                            label = { Text("command") }
-                        )
+                        RowPaddingButton(
+                            onClick = {
+                                expended.value = true
+                                result =
+                                    Transfer().localTransfer(
+                                        k8sConfig.sshStep.username, k8sConfig.sshStep.password,
+                                        k8sConfig.host, k8sConfig.port, localFile, targetPath
+                                    )
+                            }
+                        ) { Text(text = R.strings.localTransfer, fontSize = 35.sp) }
                     }
-                }
-                Row {
-                    RowPaddingButton(
-                        onClick = {
-                            result = Transfer().execute(
-                                k8sConfig.sshStep.username, k8sConfig.sshStep.password,
-                                k8sConfig.host, k8sConfig.port, command
-                            )
-                            expended.value = true
+                    // master publish
+                    Column {
+                        Row {
+                            Column {
+                                OutlinedTextField(
+                                    value = masterFile,
+                                    onValueChange = {
+                                        masterFile = it
+                                    },
+                                    label = { Text("master file") }
+                                )
+                            }
+
+                            Column {
+                                OutlinedTextField(
+                                    value = remotePath,
+                                    onValueChange = {
+                                        remotePath = it
+                                    },
+                                    label = { Text("remote path") }
+                                )
+                            }
                         }
-                    ) { Text(text = R.strings.execute, fontSize = 35.sp) }
-                }
-            }
-            //  sed command
-            Column {
-                Row {
-                    Column {
-                        OutlinedTextField(
-                            value = resource,
-                            onValueChange = {
-                                resource = it
-                            },
-                            label = { Text("resource word") }
-                        )
-                    }
-                    Column {
-                        OutlinedTextField(
-                            value = target,
-                            onValueChange = {
-                                target = it
-                            },
-                            label = { Text("target word") }
-                        )
-                    }
-                }
-                Row {
-                    Column {
-                        OutlinedTextField(
-                            value = filename,
-                            onValueChange = {
-                                filename = it
-                            },
-                            label = { Text("filename") }
-                        )
-                    }
-                }
-                Row {
-                    RowPaddingButton(
-                        onClick = {
-                            result = Transfer().replaceWord(
-                                k8sConfig.sshStep.username, k8sConfig.sshStep.password,
-                                k8sConfig.host, k8sConfig.port, resource, target, filename
-                            )
-                            expended.value = true
+                        Row {
+                            RowPaddingButton(
+                                onClick = {
+                                    result =
+                                        Transfer().masterTransfer(
+                                            k8sConfig.sshStep.username, k8sConfig.sshStep.password,
+                                            k8sConfig.host, k8sConfig.port, masterFile, remotePath
+                                        )
+                                    expended.value = true
+                                }
+                            ) { Text(text = R.strings.broadcast, fontSize = 35.sp) }
                         }
-                    ) { Text(text = R.strings.replace, fontSize = 35.sp) }
-                }
-            }
-        },
-        rightContent = {
-            infoList = Transfer().getNodeInfo(
-                k8sConfig.sshStep.username, k8sConfig.sshStep.password,
-                k8sConfig.host, k8sConfig.port
+                    }
+                    // command
+                    Column {
+                        Row {
+                            Column {
+                                OutlinedTextField(
+                                    value = command,
+                                    onValueChange = {
+                                        command = it
+                                    },
+                                    label = { Text("command") }
+                                )
+                            }
+                        }
+                        Row {
+                            RowPaddingButton(
+                                onClick = {
+                                    result = Transfer().execute(
+                                        k8sConfig.sshStep.username, k8sConfig.sshStep.password,
+                                        k8sConfig.host, k8sConfig.port, command
+                                    )
+                                    expended.value = true
+                                }
+                            ) { Text(text = R.strings.execute, fontSize = 35.sp) }
+                        }
+                    }
+                    //  sed command
+                    Column {
+                        Row {
+                            Column {
+                                OutlinedTextField(
+                                    value = resource,
+                                    onValueChange = {
+                                        resource = it
+                                    },
+                                    label = { Text("resource word") }
+                                )
+                            }
+                            Column {
+                                OutlinedTextField(
+                                    value = target,
+                                    onValueChange = {
+                                        target = it
+                                    },
+                                    label = { Text("target word") }
+                                )
+                            }
+                        }
+                        Row {
+                            Column {
+                                OutlinedTextField(
+                                    value = filename,
+                                    onValueChange = {
+                                        filename = it
+                                    },
+                                    label = { Text("filename") }
+                                )
+                            }
+                        }
+                        Row {
+                            RowPaddingButton(
+                                onClick = {
+                                    result = Transfer().replaceWord(
+                                        k8sConfig.sshStep.username, k8sConfig.sshStep.password,
+                                        k8sConfig.host, k8sConfig.port, resource, target, filename
+                                    )
+                                    expended.value = true
+                                }
+                            ) { Text(text = R.strings.replace, fontSize = 35.sp) }
+                        }
+                    }
+                },
+                rightContent = {
+                    infoList = Transfer().getNodeInfo(
+                        k8sConfig.sshStep.username, k8sConfig.sshStep.password,
+                        k8sConfig.host, k8sConfig.port
+                    )
+
+                    repeat(infoList.size) {
+                        Row { Text(infoList[it], fontSize = 25.sp) }
+                    }
+                },
+                result = {
+                    if (expended.value) {
+                        if (result!!.code == State.HASCONTENT.code) {
+                            for (content in result!!.contents) {
+                                Text(content, fontSize = 25.sp)
+                            }
+                            val nodeInfoList = result!!.body
+                            repeat(nodeInfoList.size) { idx ->
+                                val nodeInfo = nodeInfoList[idx]
+                                val res = nodeInfo.executeResult
+                                Text(nodeInfoList[idx].name, fontSize = 25.sp)
+                                repeat(res.size) { iidx ->
+                                    Text(res[iidx])
+                                }
+                            }
+
+                            Text(result!!.reason, fontSize = 30.sp)
+                        } else {
+                            Text(result!!.reason, fontSize = 30.sp)
+                        }
+                    }
+                },
             )
-
-            repeat(infoList.size) {
-                Row { Text(infoList[it], fontSize = 25.sp) }
-            }
-        },
-        result = {
-            if (expended.value) {
-                if (result!!.code == State.HASCONTENT.code) {
-                    for (content in result!!.contents) {
-                        Text(content, fontSize = 25.sp)
-                    }
-                    val nodeInfoList = result!!.body
-                    repeat(nodeInfoList.size) { idx ->
-                        val nodeInfo = nodeInfoList[idx]
-                        val res = nodeInfo.executeResult
-                        Text(nodeInfoList[idx].name, fontSize = 25.sp)
-                        repeat(res.size) { iidx ->
-                            Text(res[iidx])
-                        }
-                    }
-
-                    Text(result!!.reason, fontSize = 30.sp)
-                } else {
-                    Text(result!!.reason, fontSize = 30.sp)
-                }
-            }
-        },
-    )
+        }
+    }
 }

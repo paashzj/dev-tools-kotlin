@@ -43,6 +43,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import com.github.shoothzj.dev.dump.TcpdumpAction
 import com.github.shoothzj.dev.module.config.KubernetesConfig
@@ -50,20 +51,22 @@ import com.github.shoothzj.dev.transfer.Transfer
 import module.NavigationEnum
 import navigationContext
 import navigationIdx
-
+val namespace = mutableStateOf("default")
 @Composable
 fun KubernetesPods(
     k8sConfig: KubernetesConfig
 ): @Composable Unit {
 
     var infoList: MutableList<String>
-    val namespace = mutableStateOf("default")
     val namespaceInfo = Transfer().getNamespaceInfo(
         k8sConfig.sshStep.username, k8sConfig.sshStep.password,
         k8sConfig.host, k8sConfig.port
     )
     var res by remember { mutableStateOf("") }
     Column {
+        Row {
+            Text(text = "kubernetes ${namespace.value}", fontSize = 40.sp)
+        }
         Row {
             var expanded by remember { mutableStateOf(false) }
             var textFieldSize by remember { mutableStateOf(Size.Zero) }

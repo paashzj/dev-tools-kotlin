@@ -11,6 +11,7 @@ English | [🇨🇳中文](README_ZH.md)
 ## 👁️ command lookup
 - [x] kafka command
 - [x] pulsar command
+- [x] maven command
 ## 🔄 data convert
 - [x] base64 encode/decode
 - [x] url encode/decode

@@ -30,7 +30,16 @@ fun CommandMaven() {
             arrayOf(
                 Command(
                     "checkstyle",
-                    "mvn checkstyle:checkstyle"
+                    "mvn checkstyle:check"
+                ),
+            )
+        ),
+        SubCommands(
+            "proxy",
+            arrayOf(
+                Command(
+                    "proxy",
+                    """export MAVEN_OPTS="-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080""""
                 ),
             )
         ),

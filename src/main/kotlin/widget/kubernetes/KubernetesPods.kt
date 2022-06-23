@@ -63,7 +63,7 @@ fun KubernetesPods(
         k8sConfig.host, k8sConfig.port
     )
     var res by remember { mutableStateOf("") }
-    Column {
+    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         Row {
             Text(text = "kubernetes ${namespace.value}", fontSize = 40.sp)
         }
@@ -124,7 +124,7 @@ fun KubernetesPods(
                 val podNameField = infoList[it].split(",")[0]
                 val ip = infoList[it].split(",")[2]
                 Row {
-                    Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(2f)) {
+                    Column(modifier = Modifier.weight(2f)) {
                         Row {
                             Box(
                                 modifier = Modifier.clickable {
@@ -137,7 +137,7 @@ fun KubernetesPods(
                             }
                         }
                     }
-                    Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(1f)) {
+                    Column(modifier = Modifier.weight(1f)) {
                         Row {
                             Button(
                                 onClick = {
@@ -149,7 +149,7 @@ fun KubernetesPods(
                             }
                         }
                     }
-                    Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(1f)) {
+                    Column(modifier = Modifier.weight(1f)) {
                         Row {
                             Button(
                                 onClick = {

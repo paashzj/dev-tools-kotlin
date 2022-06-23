@@ -67,7 +67,7 @@ fun KubernetesPodsDetailScreen() {
             repeat(detail.size) {
                 if (detail[it].cmd.contains("java")) {
                     Row {
-                        Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(3f)) {
+                        Column(modifier = Modifier.weight(3f)) {
                             Row {
                                 Text(
                                     detail[it].toString().substring(16, detail[it].toString().length - 1),
@@ -75,7 +75,7 @@ fun KubernetesPodsDetailScreen() {
                                 )
                             }
                         }
-                        Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(1f)) {
+                        Column(modifier = Modifier.weight(1f)) {
                             Row {
                                 Button(
                                     onClick = {

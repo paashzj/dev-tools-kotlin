@@ -15,12 +15,34 @@
  * limitations under the license.
  */
 
-package module
+package widget.command
 
-enum class CommandEnum {
-    Kafka,
-    Kubernetes,
-    Maven,
-    Pulsar,
-    Rpm,
+import androidx.compose.runtime.Composable
+import module.Command
+import module.CommandDto
+import module.CommandParam
+import module.SubCommands
+
+@Composable
+fun CommandRpm() {
+    val params = arrayOf(
+        CommandParam("package_name", "pkg"),
+    )
+    val subcommandsList = arrayOf(
+        SubCommands(
+            "lifecycle",
+            arrayOf(
+                Command(
+                    "install package",
+                    "rpm -ivh ${'$'}package_name"
+                ),
+                Command(
+                    "uninstall package",
+                    "rpm -e ${'$'}package_name"
+                ),
+            )
+        ),
+    )
+    val commandDto = CommandDto(subcommandsList)
+    CommandView(params, commandDto)
 }

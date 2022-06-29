@@ -37,6 +37,7 @@ val authors = arrayOf(
     Author("lovehzj", "TingTing Wang", "1922919664@qq.com"),
     Author("tracy-java", "Xue Li", "lixueworks@gmail.com"),
     Author("tyluffy", "ZhiXin Jin", "jinzhixin096@gmail.com"),
+    Author("xuthus5", "Ye Xu", "xuthus5@gmail.com"),
 )
 
 @OptIn(ExperimentalFoundationApi::class)

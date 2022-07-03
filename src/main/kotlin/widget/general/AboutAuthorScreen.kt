@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import module.Author
 
 val authors = arrayOf(
+    Author("cyruslo", "GaoYu Lao", "710058301@qq.com"),
     Author("fu_turer", "Tian Luo", "futurer@outlook.com"),
     Author("goflutterjava", "KeLe He", "goflutterjava@gmail.com"),
     Author("Lico-Tom", "ZhongHao Li", "583566138@qq.com"),

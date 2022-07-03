@@ -38,6 +38,7 @@ interface Strings {
     val Commands: String
     val close: String
     val commandPage: String
+    val componentPage: String
     val componentList: String
     val config: String
     val confirm: String
@@ -129,6 +130,8 @@ object EnStrings : Strings {
         get() = "close"
     override val commandPage: String
         get() = "command page"
+    override val componentPage: String
+        get() = "component page"
     override val componentList: String
         get() = "component list"
     override val config: String
@@ -286,6 +289,8 @@ object ChStrings : Strings {
         get() = "命令界面"
     override val componentList: String
         get() = "组件列表"
+    override val componentPage: String
+        get() = "组件界面"
     override val config: String
         get() = "配置"
     override val confirm: String

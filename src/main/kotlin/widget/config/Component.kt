@@ -15,17 +15,14 @@
  * limitations under the license.
  */
 
-package widget.general
+package widget.config
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.sp
 
 @Composable
-fun HomeScreen() {
+fun ConfigScreen() {
     Column {
-        Text(R.strings.AppWelcomeMessage, fontSize = 50.sp)
-        Text(R.strings.AppDescMessage, fontSize = 30.sp)
+        Config()
     }
 }

@@ -38,6 +38,7 @@ import widget.TopBar
 import widget.bookkeeper.BookkeeperInstanceScreen
 import widget.cassandra.CassandraInstanceScreen
 import widget.command.CommandScreen
+import widget.config.ConfigScreen
 import widget.config.Settings
 import widget.convert.ConvertScreen
 import widget.general.AboutAuthorScreen
@@ -123,6 +124,9 @@ fun main() = application {
                     }
                     NavigationEnum.Simulator -> {
                         SimulatorScreen()
+                    }
+                    NavigationEnum.Component -> {
+                        ConfigScreen()
                     }
                     NavigationEnum.TroubleShoot -> {
                         TroubleShootScreen()

@@ -21,6 +21,7 @@ enum class NavigationEnum {
     AboutAuthor,
     // ability
     Command,
+    Component,
     Convert,
     Simulator,
     TroubleShoot,

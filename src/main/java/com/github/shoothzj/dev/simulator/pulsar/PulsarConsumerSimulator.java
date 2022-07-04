@@ -25,9 +25,13 @@ import org.apache.pulsar.client.api.Message;
 import org.apache.pulsar.client.api.PulsarClient;
 import org.apache.pulsar.client.api.SubscriptionInitialPosition;
 import org.apache.pulsar.client.api.SubscriptionType;
+import org.apache.pulsar.client.api.MessageListener;
+import org.apache.pulsar.client.api.PulsarClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -40,6 +44,10 @@ public class PulsarConsumerSimulator {
     private static final Integer MAX_RECEIVE_MSG = 100;
 
     private Consumer<byte[]> consumer;
+
+    private String topicName = "";
+
+    public final List<String> top500Msg = new ArrayList<>();
 
     public PulsarConsumerSimulator(PulsarClientSimulator pulsarClientSimulator) {
         this.pulsarClientSimulator = pulsarClientSimulator;
@@ -72,6 +80,34 @@ public class PulsarConsumerSimulator {
             log.warn("consume msg failed. e : {}", ExceptionUtil.getException(e));
         }
         return "consume msg failed.";
+    }
+
+    public String autoReceive(String topic) {
+        if (top500Msg.size() != 0 && !(topicName.equalsIgnoreCase(topic))) {
+            top500Msg.clear();
+        }
+        try {
+            PulsarClient pulsarClient = pulsarClientSimulator.getPulsarClient();
+            pulsarClient.newConsumer().topic(topic).subscriptionName(UUID.randomUUID().toString())
+                    .receiverQueueSize(MAX_RECEIVE_MSG).autoUpdatePartitions(true).subscriptionType(SubscriptionType.Failover)
+                    .subscriptionInitialPosition(SubscriptionInitialPosition.Latest)
+                    .messageListener((MessageListener<byte[]>) (consumer, msg) -> {
+                                if (top500Msg.size() >= 500) {
+                                    top500Msg.remove(0);
+                                }
+                                top500Msg.add(new String(msg.getValue()));
+                                try {
+                                    consumer.acknowledge(msg);
+                                } catch (PulsarClientException e) {
+                                    log.error("ask message fail. messageId[{}]", msg.getMessageId());
+                                }
+                            }
+                    )
+                    .subscribe();
+        } catch (Exception e) {
+            log.error("auto consume msg failed. e : {}", ExceptionUtil.getException(e));
+        }
+        return "";
     }
 
     public String close() {

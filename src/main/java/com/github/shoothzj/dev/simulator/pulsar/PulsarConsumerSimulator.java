@@ -25,6 +25,8 @@ import org.apache.pulsar.client.api.Message;
 import org.apache.pulsar.client.api.PulsarClient;
 import org.apache.pulsar.client.api.SubscriptionInitialPosition;
 import org.apache.pulsar.client.api.SubscriptionType;
+import org.apache.pulsar.client.api.MessageListener;
+import org.apache.pulsar.client.api.PulsarClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,9 +71,37 @@ public class PulsarConsumerSimulator {
             }
             return new String(receive.getValue());
         } catch (Exception e) {
-            log.warn("consume msg failed. e : {}", ExceptionUtil.getException(e));
+            String errMsg = String.format("consume msg failed. e : %s", ExceptionUtil.getException(e));
+            log.error(errMsg);
+            return errMsg;
         }
-        return "consume msg failed.";
+    }
+
+    public String autoReceive(String topic) {
+        try {
+            PulsarClient pulsarClient = pulsarClientSimulator.getPulsarClient();
+            pulsarClient.newConsumer()
+                    .topic(topic)
+                    .subscriptionName(UUID.randomUUID().toString())
+                    .receiverQueueSize(MAX_RECEIVE_MSG)
+                    .autoUpdatePartitions(true)
+                    .subscriptionType(SubscriptionType.Failover)
+                    .subscriptionInitialPosition(SubscriptionInitialPosition.Latest)
+                    .messageListener((MessageListener<byte[]>) (consumer, msg) -> {
+                                try {
+                                    consumer.acknowledge(msg);
+                                } catch (PulsarClientException e) {
+                                    log.error("ask message fail. messageId[{}]", msg.getMessageId());
+                                }
+                            }
+                    )
+                    .subscribe();
+            return "auto consume success";
+        } catch (Exception e) {
+            String errMsg = String.format("auto consume msg failed. e : %s", ExceptionUtil.getException(e));
+            log.error(errMsg);
+            return errMsg;
+        }
     }
 
     public String close() {

@@ -131,7 +131,7 @@ fun PulsarConsumer() {
                             errMsg = e.message.toString()
                         }
                     },
-                    isOpenManual
+                    isOpenManual,
                 ) { Text(text = R.strings.connect, fontSize = 12.sp) }
                 RowPaddingButton(
                     onClick = {
@@ -143,7 +143,7 @@ fun PulsarConsumer() {
                             msg = "consumer is already subscribe, please close and retry subscribe."
                         }
                     },
-                    isOpenManual
+                    isOpenManual,
                 ) {
                     Text(text = R.strings.subscribe, fontSize = 12.sp)
                 }
@@ -162,7 +162,7 @@ fun PulsarConsumer() {
                             }
                         }
                     },
-                    isOpenManual
+                    isOpenManual,
                 ) {
                     Text(text = R.strings.receive, fontSize = 12.sp)
                 }
@@ -176,7 +176,7 @@ fun PulsarConsumer() {
                             msg = "consumer is already closed."
                         }
                     },
-                    isOpenManual
+                    isOpenManual,
                 ) {
                     Text(text = R.strings.close, fontSize = 12.sp)
                 }
@@ -222,7 +222,7 @@ fun PulsarConsumer() {
                             simulator?.autoReceive(topic)
                         }
                     },
-                    isOpenAuto
+                    isOpenAuto,
                 ) {
                     Text(text = R.strings.AutoConsume, fontSize = 12.sp)
                 }
@@ -236,7 +236,7 @@ fun PulsarConsumer() {
                         }
                         isOpenManual = true
                     },
-                    isOpenAuto
+                    isOpenAuto,
                 ) {
                     Text(text = R.strings.close, fontSize = 12.sp)
                 }

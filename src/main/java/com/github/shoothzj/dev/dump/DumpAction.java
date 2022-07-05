@@ -21,8 +21,7 @@ package com.github.shoothzj.dev.dump;
 
 import com.github.shoothzj.dev.constant.Constant;
 import com.github.shoothzj.dev.constant.K8sCmdConst;
-import com.github.shoothzj.dev.module.UiResponse;
-import com.github.shoothzj.dev.state.State;
+import com.github.shoothzj.dev.module.UiResp;
 import com.github.shoothzj.dev.storage.StorageSettings;
 import com.github.shoothzj.dev.util.SshClient;
 import com.github.shoothzj.javatool.util.ExceptionUtil;
@@ -33,28 +32,27 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DumpAction {
 
     private static final Logger log = LoggerFactory.getLogger(DumpAction.class);
 
-    public UiResponse<String> dump(String host, int port, String username, String password, String podName, String namespace, String pid) {
+    public UiResp<String> dump(String host, int port, String username, String password, String podName, String namespace, String pid) {
         try {
             SshClient sshClient = new SshClient(host, port, username, password);
             List<String> vmArch = sshClient.execute(K8sCmdConst.execPodCmd(namespace, podName, "uname -m"), 5);
             if (vmArch.isEmpty()) {
-                return new UiResponse<>(State.NOCONTENT.getCode(), new ArrayList<>(), new ArrayList<>(), "get vm arch failed.");
+                return new UiResp<>(false, "", "get vm arch failed.");
             }
             List<String> execute = sshClient.execute(K8sCmdConst.execPodCmd(namespace, podName, "java -version"), 5);
             if (execute.size() == 0) {
-                return new UiResponse<>(State.NOCONTENT.getCode(), new ArrayList<>(), new ArrayList<>(), "this pod is not a java instance.");
+                return new UiResp<>(false, "", "this pod is not a java instance.");
             }
             String jdkVersion = execute.get(0).split(" ")[2].replace("\r", "").replace("\"", "");
             String jdkPath = getJdkPath(vmArch.get(0), jdkVersion);
             if (StringUtil.isNullOrEmpty(jdkPath)) {
-                return new UiResponse<>(State.NOCONTENT.getCode(), new ArrayList<>(), new ArrayList<>(), "jdk path is not setting");
+                return new UiResp<>(false, "", "jdk path is not setting");
             }
             sshClient.sftp(jdkPath, "/root/");
             log.info("success to send jdk to remote.");
@@ -70,9 +68,9 @@ public class DumpAction {
             sshClient.sftpFromRemote("/root/" + podName + ".tar.gz", getDumpDirName());
         } catch (Exception e) {
             log.error("dump failed. e: {}", ExceptionUtil.getException(e));
-            return new UiResponse<>(State.NOCONTENT.getCode(), new ArrayList<>(), new ArrayList<>(), "dump failed. e :" + e.getMessage());
+            return new UiResp<>(false, "", "dump failed. e :" + e.getMessage());
         }
-        return new UiResponse<>(State.HASCONTENT.getCode(), List.of(getDumpDirName()), new ArrayList<>(), "dump file success");
+        return new UiResp<>(true, getDumpDirName(), "dump file success");
     }
 
 

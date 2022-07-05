@@ -23,20 +23,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.rememberDialogState
-import com.github.shoothzj.dev.module.UiResponse
-import com.github.shoothzj.dev.state.State
+import com.github.shoothzj.dev.module.UiResp
 import com.github.shoothzj.dev.util.FileUtil
 import constant.PixelConst.Companion.configDialogSize
 
 @Composable
 fun PodsDetailResult(
     dialogState: MutableState<Boolean>,
-    content: MutableState<UiResponse<String>>
+    content: MutableState<UiResp<String>>
 ): @Composable Unit {
     Column {
         if (dialogState.value) {
-            if (content.value.code == State.OK.code) {
-                FileUtil.openDirectory(content.value.contents[0])
+            if (content.value.isSuccess) {
+                FileUtil.openDirectory(content.value.t)
                 return
             }
             Dialog(
@@ -46,7 +45,7 @@ fun PodsDetailResult(
                 state = rememberDialogState(size = configDialogSize),
                 title = R.strings.Prompt,
             ) {
-                Text(content.value.reason)
+                Text(content.value.msg)
             }
         }
     }

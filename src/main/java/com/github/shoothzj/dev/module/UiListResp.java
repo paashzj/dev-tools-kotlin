@@ -23,8 +23,8 @@ import java.util.List;
 
 public class UiListResp<T> extends UiResp<List<T>> {
 
-    public UiListResp(List<T> ts, String errMsg) {
-        super(ts, errMsg);
+    public UiListResp(boolean success, List<T> ts, String errMsg) {
+        super(success, ts, errMsg);
     }
 
 }

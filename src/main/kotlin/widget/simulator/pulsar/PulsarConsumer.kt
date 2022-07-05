@@ -102,7 +102,7 @@ fun PulsarConsumer() {
                 label = { Text("pulsar topic") }
             )
             // manual
-            Text(R.strings.manualConsume, fontSize = 40.sp)
+            Text(R.strings.ManualConsume, fontSize = 40.sp)
             Row {
                 RowPaddingButton(
                     onClick = {

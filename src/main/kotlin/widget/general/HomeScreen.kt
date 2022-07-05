@@ -17,15 +17,90 @@
 
 package widget.general
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import module.NavigationEnum
+import navigationIdx
 
 @Composable
 fun HomeScreen() {
     Column {
         Text(R.strings.AppWelcomeMessage, fontSize = 50.sp)
         Text(R.strings.AppDescMessage, fontSize = 30.sp)
+        Row(
+            modifier = Modifier.padding(all = 32.dp).fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Card(
+                modifier = Modifier.weight(1f).height(150.dp).padding(8.dp),
+                backgroundColor = Color.Cyan,
+                shape = RoundedCornerShape(6.dp),
+                elevation = 6.dp
+            ) {
+                Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                    TextButton(
+                        onClick = {
+                            navigationIdx.value = NavigationEnum.Command
+                        },
+                        modifier = Modifier.size(width = 400.dp, height = 50.dp),
+                        content = {
+                            Text(R.strings.commandPage, fontSize = 24.sp)
+                        }
+                    )
+                }
+            }
+            Card(
+                modifier = Modifier.weight(1f).height(150.dp).padding(8.dp),
+                backgroundColor = Color.Green,
+                shape = RoundedCornerShape(6.dp),
+                elevation = 6.dp
+            ) {
+                Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                    TextButton(
+                        onClick = {
+                            navigationIdx.value = NavigationEnum.Simulator
+                        },
+                        modifier = Modifier.size(width = 400.dp, height = 50.dp),
+                        content = {
+                            Text(R.strings.simulatorPage, fontSize = 24.sp)
+                        }
+                    )
+                }
+            }
+            Card(
+                modifier = Modifier.weight(1f).height(150.dp).padding(8.dp),
+                backgroundColor = Color.Yellow,
+                shape = RoundedCornerShape(6.dp),
+                elevation = 6.dp
+            ) {
+                Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                    TextButton(
+                        onClick = {
+                            navigationIdx.value = NavigationEnum.Component
+                        },
+                        modifier = Modifier.size(width = 400.dp, height = 50.dp),
+                        content = {
+                            Text(R.strings.componentPage, fontSize = 24.sp)
+                        }
+                    )
+                }
+            }
+        }
     }
 }

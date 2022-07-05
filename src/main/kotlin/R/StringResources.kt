@@ -69,6 +69,7 @@ interface Strings {
     val kubernetesNodeName: String
     val localTransfer: String
     val match: String
+    val manualConsume: String
     val msgList: String
     val name: String
     val namespace: String
@@ -195,6 +196,8 @@ object EnStrings : Strings {
         get() = "local transfer"
     override val match: String
         get() = "match"
+    override val manualConsume: String
+        get() = "manual consume"
     override val msgList: String
         get() = "msg list"
     override val name: String
@@ -358,6 +361,8 @@ object ChStrings : Strings {
         get() = "本地传输"
     override val match: String
         get() = "匹配"
+    override val manualConsume: String
+        get() = "手动消费"
     override val msgList: String
         get() = "消息列表"
     override val name: String

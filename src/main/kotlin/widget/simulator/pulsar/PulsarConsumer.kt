@@ -54,10 +54,10 @@ fun PulsarConsumer() {
     var errMsg by remember { mutableStateOf("") }
     var simulator: PulsarConsumerSimulator? by remember { mutableStateOf(null) }
     var isConnect by remember { mutableStateOf(PulsarConst.closed) }
+
     var isOpenManual by remember { mutableStateOf(true) }
-    var isOpenAuto by remember {
-        mutableStateOf(true)
-    }
+    var isOpenAuto by remember { mutableStateOf(true) }
+
     Row {
         Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(1f)) {
             OutlinedTextField(
@@ -102,7 +102,7 @@ fun PulsarConsumer() {
                 label = { Text("pulsar topic") }
             )
             // manual
-            Text("manual receive", fontSize = 40.sp)
+            Text(R.strings.manualConsume, fontSize = 40.sp)
             Row {
                 RowPaddingButton(
                     onClick = {
@@ -181,8 +181,7 @@ fun PulsarConsumer() {
                     Text(text = R.strings.close, fontSize = 12.sp)
                 }
             }
-            // auto receive
-            Text("auto receive", fontSize = 40.sp)
+            Text(R.strings.AutoConsume, fontSize = 40.sp)
             Row {
                 RowPaddingButton(
                     onClick = {

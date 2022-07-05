@@ -102,8 +102,6 @@ fun PulsarConsumer() {
                 },
                 label = { Text("pulsar topic") }
             )
-            // manual
-            Text(R.strings.ManualConsume, fontSize = 40.sp)
             Row {
                 RowPaddingButton(
                     onClick = {
@@ -123,7 +121,6 @@ fun PulsarConsumer() {
                                 )
                                 simulator = PulsarConsumerSimulator(client)
                                 msg = "success connect pulsar"
-                                isOpenAuto = false
                                 clearMsg()
                             } else {
                                 msg = "consumer is already subscribe, please close consumer and retry connect."
@@ -132,137 +129,84 @@ fun PulsarConsumer() {
                             errMsg = e.message.toString()
                         }
                     },
-                    isOpenManual,
                 ) { Text(text = R.strings.connect, fontSize = 12.sp) }
                 RowPaddingButton(
                     onClick = {
                         if (isConnect == PulsarConst.closed) {
-                            isOpenAuto = false
                             isConnect = PulsarConst.connected
                             msg = simulator?.subscribe(topic) ?: "please create pulsar consumer"
                         } else {
                             msg = "consumer is already subscribe, please close and retry subscribe."
                         }
                     },
-                    isOpenManual,
                 ) {
                     Text(text = R.strings.subscribe, fontSize = 12.sp)
                 }
                 RowPaddingButton(
                     onClick = {
-                        if (simulator == null || isConnect != PulsarConst.connected) {
-                            msg = "pulsar consumer is not subscribe."
-                        } else {
-                            isOpenAuto = false
-                            val receiveResp = simulator!!.receive()
-                            if (receiveResp.isSuccess) {
-                                addPulsarMsg(receiveResp.t)
-                                receiveResp.t
-                            } else {
-                                receiveResp.msg
-                            }
-                        }
-                    },
-                    isOpenManual,
-                ) {
-                    Text(text = R.strings.receive, fontSize = 12.sp)
-                }
-                RowPaddingButton(
-                    onClick = {
-                        isOpenAuto = true
                         if (isConnect == PulsarConst.connected) {
                             msg = (simulator?.close() ?: "")
                             isConnect = PulsarConst.closed
                         } else {
                             msg = "consumer is already closed."
                         }
+                        isOpenAuto = false
+                        isOpenManual = true
                     },
-                    isOpenManual,
                 ) {
                     Text(text = R.strings.close, fontSize = 12.sp)
                 }
             }
-            Text(R.strings.AutoConsume, fontSize = 40.sp)
             Row {
-                RowPaddingButton(
-                    onClick = {
-                        try {
-                            if (isConnect == PulsarConst.closed) {
-                                val client = PulsarClientSimulator(
-                                    pulsarUrl,
-                                    tlsSwitch.value,
-                                    allowTlsInsecure.value,
-                                    tlsHostNameVerificationEnable.value,
-                                    authType.value,
-                                    keyStorePath.value,
-                                    keyStorePassword.value,
-                                    trustStorePath.value,
-                                    trustStorePassword.value,
-                                    jwtToken.value,
-                                )
-                                simulator = PulsarConsumerSimulator(client)
-                                msg = "success connect pulsar"
+                // manual
+                Text(R.strings.ManualConsume, fontSize = 40.sp)
+                Row {
+                    RowPaddingButton(
+                        onClick = {
+                            if (simulator == null || isConnect != PulsarConst.connected) {
+                                msg = "pulsar consumer is not subscribe."
                             } else {
-                                msg = "consumer is already subscribe, please close consumer and retry connect."
+                                isOpenAuto = false
+                                isOpenManual = true
+                                val receiveResp = simulator!!.receive()
+                                if (receiveResp.isSuccess) {
+                                    addPulsarMsg(receiveResp.t)
+                                    receiveResp.t
+                                } else {
+                                    receiveResp.msg
+                                }
                             }
-                        } catch (e: Exception) {
-                            errMsg = e.message.toString()
-                        }
-                        isOpenManual = false
-                    },
-                    isOpenAuto,
-                ) {
-                    Text(text = R.strings.connect, fontSize = 12.sp)
+                        },
+                        isOpenManual,
+                    ) {
+                        Text(text = R.strings.receive, fontSize = 12.sp)
+                    }
                 }
-                RowPaddingButton(
-                    onClick = {
-                        if (isConnect == PulsarConst.closed) {
-                            isOpenAuto = true
-                            isOpenManual = false
-                            isConnect = PulsarConst.connected
-                            msg = simulator?.subscribe(topic) ?: "please create pulsar consumer"
-                        } else {
-                            msg = "consumer is already subscribe, please close and retry subscribe."
-                        }
-                    },
-                    isOpenAuto,
-                ) {
-                    Text(text = R.strings.subscribe, fontSize = 12.sp)
-                }
-                RowPaddingButton(
-                    onClick = {
-                        if (isConnect == PulsarConst.connected) {
-                            isOpenManual = false
-                            msg = ""
-                            thread(start = true) {
-                                while (true) {
-                                    val receiveResp = simulator?.receive()
-                                    if (receiveResp != null) {
-                                        if (receiveResp.isSuccess) {
-                                            addPulsarMsg(receiveResp.t)
+            }
+            Row {
+                Text(R.strings.AutoConsume, fontSize = 40.sp)
+                Row {
+                    RowPaddingButton(
+                        onClick = {
+                            if (isConnect == PulsarConst.connected) {
+                                isOpenManual = false
+                                msg = ""
+                                thread(start = true) {
+                                    while (true) {
+                                        val receiveResp = simulator?.receive()
+                                        if (receiveResp != null) {
+                                            if (receiveResp.isSuccess) {
+                                                addPulsarMsg(receiveResp.t)
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                    },
-                    isOpenAuto,
-                ) {
-                    Text(text = R.strings.AutoConsume, fontSize = 12.sp)
-                }
-                RowPaddingButton(
-                    onClick = {
-                        if (isConnect == PulsarConst.connected) {
-                            msg = (simulator?.close() ?: "")
-                            isConnect = PulsarConst.closed
-                        } else {
-                            msg = "consumer is already closed."
-                        }
-                        isOpenManual = true
-                    },
-                    isOpenAuto,
-                ) {
-                    Text(text = R.strings.close, fontSize = 12.sp)
+                        },
+                        isOpenAuto,
+                    ) {
+                        Text(text = R.strings.AutoConsume, fontSize = 12.sp)
+                    }
                 }
             }
             Text(msg)

@@ -28,6 +28,7 @@ val strings = when (Locale.getDefault().language) {
 interface Strings {
     val AppDescMessage: String
     val AppWelcomeMessage: String
+    val AutoConsume: String
     val aboutAuthor: String
     val add: String
     val addKubernetesInstance: String
@@ -68,6 +69,7 @@ interface Strings {
     val kubernetesNodeName: String
     val localTransfer: String
     val match: String
+    val msgList: String
     val name: String
     val namespace: String
     val nodeIp: String
@@ -79,6 +81,7 @@ interface Strings {
     val pulsarFunctionHost: String
     val pulsarFunctionPort: String
     val receive: String
+    val receiveMsg: String
     val regex: String
     val regexExpression: String
     val replace: String
@@ -110,6 +113,8 @@ object EnStrings : Strings {
         get() = "↖️To explore tools, click the drawer"
     override val AppWelcomeMessage: String
         get() = "Welcome to Tool List, This is Home&Dashboard Page"
+    override val AutoConsume: String
+        get() = "Auto Consume"
     override val aboutAuthor: String
         get() = "about author"
     override val add: String
@@ -190,6 +195,8 @@ object EnStrings : Strings {
         get() = "local transfer"
     override val match: String
         get() = "match"
+    override val msgList: String
+        get() = "msg list"
     override val name: String
         get() = "name"
     override val namespace: String
@@ -212,6 +219,8 @@ object EnStrings : Strings {
         get() = "pulsar function port"
     override val receive: String
         get() = "receive"
+    override val receiveMsg: String
+        get() = "receive msg"
     override val regex: String
         get() = "regex"
     override val regexExpression: String
@@ -267,6 +276,8 @@ object ChStrings : Strings {
         get() = "↖️探索更多工具，请点击侧边栏"
     override val AppWelcomeMessage: String
         get() = "欢迎来到开发者工具集の主页面&dashboard界面"
+    override val AutoConsume: String
+        get() = "自动消费"
     override val aboutAuthor: String
         get() = "关于作者"
     override val add: String
@@ -347,6 +358,8 @@ object ChStrings : Strings {
         get() = "本地传输"
     override val match: String
         get() = "匹配"
+    override val msgList: String
+        get() = "消息列表"
     override val name: String
         get() = "名称"
     override val namespace: String
@@ -369,6 +382,8 @@ object ChStrings : Strings {
         get() = "pulsar function 端口"
     override val receive: String
         get() = "接受"
+    override val receiveMsg: String
+        get() = "接受消息"
     override val regex: String
         get() = "正则"
     override val regexExpression: String

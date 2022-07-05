@@ -17,25 +17,24 @@
 
 package widget.component
 
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 
 @Composable
-fun RowPaddingButton(
-    onClick: () -> Unit,
-    enabled: Boolean = true,
-    content: @Composable RowScope.() -> Unit
-) {
-    Button(
-        onClick = {
-            onClick()
-        },
-        enabled = enabled,
-        modifier = Modifier.padding(10.dp),
-        content = content,
-    )
+fun TextLogger(
+    contents: MutableState<List<String>>
+): @Composable Unit {
+    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+        repeat(contents.value.size) {
+            SelectionContainer {
+                Text(contents.value[it])
+            }
+        }
+    }
 }

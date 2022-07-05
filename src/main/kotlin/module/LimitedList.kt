@@ -15,27 +15,18 @@
  * limitations under the license.
  */
 
-package widget.component
+package module
 
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+class LimitedList(initialCapacity: Int, private val maxSize: Int) : ArrayList<String>(initialCapacity) {
 
-@Composable
-fun RowPaddingButton(
-    onClick: () -> Unit,
-    enabled: Boolean = true,
-    content: @Composable RowScope.() -> Unit
-) {
-    Button(
-        onClick = {
-            onClick()
-        },
-        enabled = enabled,
-        modifier = Modifier.padding(10.dp),
-        content = content,
-    )
+    override fun add(element: String): Boolean {
+        if (this.size == maxSize) {
+            this.removeAt(0)
+        }
+        return super.add(element)
+    }
+
+    fun getVal(): List<String> {
+        return this.toList()
+    }
 }

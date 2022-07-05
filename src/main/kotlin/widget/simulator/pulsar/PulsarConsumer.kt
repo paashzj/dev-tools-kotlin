@@ -54,7 +54,10 @@ fun PulsarConsumer() {
     var errMsg by remember { mutableStateOf("") }
     var simulator: PulsarConsumerSimulator? by remember { mutableStateOf(null) }
     var isConnect by remember { mutableStateOf(PulsarConst.closed) }
-
+    var isOpenManual by remember { mutableStateOf(true) }
+    var isOpenAuto by remember {
+        mutableStateOf(true)
+    }
     Row {
         Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(1f)) {
             OutlinedTextField(
@@ -98,6 +101,8 @@ fun PulsarConsumer() {
                 },
                 label = { Text("pulsar topic") }
             )
+            // manual
+            Text("manual receive", fontSize = 40.sp)
             Row {
                 RowPaddingButton(
                     onClick = {
@@ -117,6 +122,7 @@ fun PulsarConsumer() {
                                 )
                                 simulator = PulsarConsumerSimulator(client)
                                 msg = "success connect pulsar"
+                                isOpenAuto = false
                                 clearMsg()
                             } else {
                                 msg = "consumer is already subscribe, please close consumer and retry connect."
@@ -124,17 +130,20 @@ fun PulsarConsumer() {
                         } catch (e: Exception) {
                             errMsg = e.message.toString()
                         }
-                    }
+                    },
+                    isOpenManual
                 ) { Text(text = R.strings.connect, fontSize = 12.sp) }
                 RowPaddingButton(
                     onClick = {
                         if (isConnect == PulsarConst.closed) {
+                            isOpenAuto = false
                             isConnect = PulsarConst.connected
                             msg = simulator?.subscribe(topic) ?: "please create pulsar consumer"
                         } else {
                             msg = "consumer is already subscribe, please close and retry subscribe."
                         }
                     },
+                    isOpenManual
                 ) {
                     Text(text = R.strings.subscribe, fontSize = 12.sp)
                 }
@@ -143,6 +152,7 @@ fun PulsarConsumer() {
                         if (simulator == null || isConnect != PulsarConst.connected) {
                             msg = "pulsar consumer is not subscribe."
                         } else {
+                            isOpenAuto = false
                             val receiveMsg = simulator!!.receive()
                             msg = if (receiveMsg == null) {
                                 "consume pulsar msg failed"
@@ -152,8 +162,70 @@ fun PulsarConsumer() {
                             }
                         }
                     },
+                    isOpenManual
                 ) {
                     Text(text = R.strings.receive, fontSize = 12.sp)
+                }
+                RowPaddingButton(
+                    onClick = {
+                        isOpenAuto = true
+                        if (isConnect == PulsarConst.connected) {
+                            msg = (simulator?.close() ?: "")
+                            isConnect = PulsarConst.closed
+                        } else {
+                            msg = "consumer is already closed."
+                        }
+                    },
+                    isOpenManual
+                ) {
+                    Text(text = R.strings.close, fontSize = 12.sp)
+                }
+            }
+            // auto receive
+            Text("auto receive", fontSize = 40.sp)
+            Row {
+                RowPaddingButton(
+                    onClick = {
+                        try {
+                            if (isConnect == PulsarConst.closed) {
+                                val client = PulsarClientSimulator(
+                                    pulsarUrl,
+                                    tlsSwitch.value,
+                                    allowTlsInsecure.value,
+                                    tlsHostNameVerificationEnable.value,
+                                    authType.value,
+                                    keyStorePath.value,
+                                    keyStorePassword.value,
+                                    trustStorePath.value,
+                                    trustStorePassword.value,
+                                    jwtToken.value,
+                                )
+                                simulator = PulsarConsumerSimulator(client)
+                                msg = "success connect pulsar"
+                            } else {
+                                msg = "consumer is already subscribe, please close consumer and retry connect."
+                            }
+                        } catch (e: Exception) {
+                            errMsg = e.message.toString()
+                        }
+                        isOpenManual = false
+                    },
+                    isOpenAuto,
+
+                ) {
+                    Text(text = R.strings.connect, fontSize = 12.sp)
+                }
+                RowPaddingButton(
+                    onClick = {
+                        if (isConnect == PulsarConst.connected) {
+                            isOpenManual = false
+                            msg = ""
+                            simulator?.autoReceive(topic)
+                        }
+                    },
+                    isOpenAuto
+                ) {
+                    Text(text = R.strings.AutoConsume, fontSize = 12.sp)
                 }
                 RowPaddingButton(
                     onClick = {
@@ -163,7 +235,9 @@ fun PulsarConsumer() {
                         } else {
                             msg = "consumer is already closed."
                         }
+                        isOpenManual = true
                     },
+                    isOpenAuto
                 ) {
                     Text(text = R.strings.close, fontSize = 12.sp)
                 }

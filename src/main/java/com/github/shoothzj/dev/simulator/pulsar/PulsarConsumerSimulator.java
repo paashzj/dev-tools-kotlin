@@ -19,6 +19,7 @@
 
 package com.github.shoothzj.dev.simulator.pulsar;
 
+import com.github.shoothzj.dev.module.UiResp;
 import com.github.shoothzj.javatool.util.ExceptionUtil;
 import org.apache.pulsar.client.api.Consumer;
 import org.apache.pulsar.client.api.Message;
@@ -63,17 +64,17 @@ public class PulsarConsumerSimulator {
         }
     }
 
-    public String receive() {
+    public UiResp<String> receive() {
         try {
             Message<byte[]> receive = consumer.receive(100, TimeUnit.MILLISECONDS);
             if (receive == null) {
-                return "no msg available";
+                return new UiResp<>(false, "", "no msg available");
             }
-            return new String(receive.getValue());
+            return new UiResp<>(true, new String(receive.getValue()), "");
         } catch (Exception e) {
             String errMsg = String.format("consume msg failed. e : %s", ExceptionUtil.getException(e));
             log.error(errMsg);
-            return errMsg;
+            return new UiResp<>(false, "", errMsg);
         }
     }
 

@@ -42,6 +42,7 @@ import widget.component.TextLogger
 import widget.config.ConfigGroupPulsarAuthJwt
 import widget.config.ConfigGroupPulsarAuthTls
 import widget.config.ConfigGroupPulsarTls
+import kotlin.concurrent.thread
 
 val pulsarMsgListUi: MutableState<List<String>> = mutableStateOf(listOf())
 val pulsarMsgList = LimitedList(0, 500)
@@ -153,12 +154,12 @@ fun PulsarConsumer() {
                             msg = "pulsar consumer is not subscribe."
                         } else {
                             isOpenAuto = false
-                            val receiveMsg = simulator!!.receive()
-                            msg = if (receiveMsg == null) {
-                                "consume pulsar msg failed"
+                            val receiveResp = simulator!!.receive()
+                            if (receiveResp.isSuccess) {
+                                addPulsarMsg(receiveResp.t)
+                                receiveResp.t
                             } else {
-                                addPulsarMsg(msg)
-                                receiveMsg
+                                receiveResp.msg
                             }
                         }
                     },
@@ -210,16 +211,39 @@ fun PulsarConsumer() {
                         isOpenManual = false
                     },
                     isOpenAuto,
-
                 ) {
                     Text(text = R.strings.connect, fontSize = 12.sp)
+                }
+                RowPaddingButton(
+                    onClick = {
+                        if (isConnect == PulsarConst.closed) {
+                            isOpenAuto = true
+                            isOpenManual = false
+                            isConnect = PulsarConst.connected
+                            msg = simulator?.subscribe(topic) ?: "please create pulsar consumer"
+                        } else {
+                            msg = "consumer is already subscribe, please close and retry subscribe."
+                        }
+                    },
+                    isOpenAuto,
+                ) {
+                    Text(text = R.strings.subscribe, fontSize = 12.sp)
                 }
                 RowPaddingButton(
                     onClick = {
                         if (isConnect == PulsarConst.connected) {
                             isOpenManual = false
                             msg = ""
-                            simulator?.autoReceive(topic)
+                            thread(start = true) {
+                                while (true) {
+                                    val receiveResp = simulator?.receive()
+                                    if (receiveResp != null) {
+                                        if (receiveResp.isSuccess) {
+                                            addPulsarMsg(receiveResp.t)
+                                        }
+                                    }
+                                }
+                            }
                         }
                     },
                     isOpenAuto,

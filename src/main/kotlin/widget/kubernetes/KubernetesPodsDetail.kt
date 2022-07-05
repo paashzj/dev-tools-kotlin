@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import backContext
 import com.github.shoothzj.dev.dump.DumpAction
+import com.github.shoothzj.dev.module.UiResp
 import com.github.shoothzj.dev.module.UiResponse
 import com.github.shoothzj.dev.storage.StorageK8s
 import com.github.shoothzj.dev.util.K8sSshUtil
@@ -46,7 +47,7 @@ fun KubernetesPodsDetailScreen() {
     val namespace = value[1]
     val k8sConfig = StorageK8s.getInstance().deserializeConfig(backContext.value.toString())
     val dialogState = mutableStateOf(false)
-    var result: MutableState<UiResponse<String>> = mutableStateOf(UiResponse<String>())
+    val result: MutableState<UiResp<String>> = mutableStateOf(UiResp<String>(false, "", ""))
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         Row {
             RowPaddingButton(

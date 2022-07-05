@@ -22,8 +22,6 @@ package com.github.shoothzj.dev.dump;
 import com.github.shoothzj.dev.constant.Constant;
 import com.github.shoothzj.dev.constant.K8sCmdConst;
 import com.github.shoothzj.dev.module.UiResp;
-import com.github.shoothzj.dev.module.UiResponse;
-import com.github.shoothzj.dev.state.State;
 import com.github.shoothzj.dev.storage.StorageSettings;
 import com.github.shoothzj.dev.util.SshClient;
 import com.github.shoothzj.javatool.util.ExceptionUtil;
@@ -34,7 +32,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DumpAction {

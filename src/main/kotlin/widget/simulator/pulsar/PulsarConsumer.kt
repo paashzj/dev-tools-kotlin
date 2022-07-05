@@ -143,7 +143,7 @@ fun PulsarConsumer() {
                         if (simulator == null || isConnect != PulsarConst.connected) {
                             msg = "pulsar consumer is not subscribe."
                         } else {
-                            val receiveMsg = simulator!!.receive();
+                            val receiveMsg = simulator!!.receive()
                             msg = if (receiveMsg == null) {
                                 "consume pulsar msg failed"
                             } else {

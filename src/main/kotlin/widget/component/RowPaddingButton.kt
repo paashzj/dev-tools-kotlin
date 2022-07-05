@@ -27,12 +27,14 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun RowPaddingButton(
     onClick: () -> Unit,
+    enabled: Boolean = true,
     content: @Composable RowScope.() -> Unit
 ) {
     Button(
         onClick = {
             onClick()
         },
+        enabled = enabled,
         modifier = Modifier.padding(10.dp),
         content = content,
     )

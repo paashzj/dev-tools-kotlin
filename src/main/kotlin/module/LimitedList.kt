@@ -29,5 +29,4 @@ class LimitedList(initialCapacity: Int, private val maxSize: Int) : ArrayList<St
     fun getVal(): List<String> {
         return this.toList()
     }
-
 }

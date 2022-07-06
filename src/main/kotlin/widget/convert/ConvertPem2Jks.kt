@@ -37,7 +37,6 @@ fun ConvertPem2Jks() {
     var certFilePath by remember { mutableStateOf("") }
     var keyFilePath by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var result by remember { mutableStateOf("") }
     var outputPath by remember { mutableStateOf("") }
     Row {
         Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(3f)) {
@@ -107,7 +106,6 @@ fun ConvertPem2Jks() {
                         },
                         label = { Text("generate private key command") }
                     )
-                    Text(result)
                 }
             }
         }

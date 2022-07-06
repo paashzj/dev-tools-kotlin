@@ -150,7 +150,7 @@ fun PulsarConsumer() {
                         } else {
                             msg = "consumer is already closed."
                         }
-                        isOpenAuto = false
+                        isOpenAuto = true
                         isOpenManual = true
                     },
                 ) {

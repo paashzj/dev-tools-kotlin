@@ -22,5 +22,4 @@ package com.github.shoothzj.dev.module.shell;
 public enum KubectlNodeStatusEnum {
     Ready,
     Unknown,
-    ;
 }

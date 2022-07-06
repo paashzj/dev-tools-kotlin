@@ -24,5 +24,4 @@ public enum KubectlPodStatusEnum {
     Running,
     Terminating,
     Unknown,
-    ;
 }

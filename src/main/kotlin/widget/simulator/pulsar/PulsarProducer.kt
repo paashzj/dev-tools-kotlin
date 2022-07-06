@@ -19,6 +19,7 @@ package widget.simulator.pulsar
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.OutlinedTextField
@@ -29,6 +30,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.shoothzj.dev.simulator.pulsar.PulsarClientSimulator
 import com.github.shoothzj.dev.simulator.pulsar.PulsarProducerSimulator
@@ -57,11 +59,6 @@ fun PulsarProducer() {
                 pulsarUrl = it
             },
             label = { Text("pulsar url") }
-        )
-        OutlinedTextField(
-            value = isConnect,
-            onValueChange = {},
-            label = { Text("pulsar producer connect status") }
         )
         DropdownBool("allow tls insecure", allowTlsInsecure)
         DropdownBool("tls enable", tlsSwitch)
@@ -157,6 +154,10 @@ fun PulsarProducer() {
                 },
             ) {
                 Text(text = R.strings.close, fontSize = 12.sp)
+            }
+
+            Column(modifier = Modifier.padding(all = 23.dp)) {
+                Text("status :$isConnect", fontSize = 18.sp)
             }
         }
         Text(res)

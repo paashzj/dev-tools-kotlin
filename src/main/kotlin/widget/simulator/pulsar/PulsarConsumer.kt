@@ -120,23 +120,16 @@ fun PulsarConsumer() {
                                     jwtToken.value,
                                 )
                                 simulator = PulsarConsumerSimulator(client)
-                                msg = "success connect pulsar"
+                                msg = simulator?.subscribe(topic) ?: "please create pulsar consumer"
+                                if (!msg.contains("exception")) {
+                                    isConnect = PulsarConst.connected
+                                }
                                 clearMsg()
                             } else {
                                 msg = "consumer is already subscribe, please close consumer and retry connect."
                             }
                         } catch (e: Exception) {
                             errMsg = e.message.toString()
-                        }
-                    },
-                ) { Text(text = R.strings.connect, fontSize = 12.sp) }
-                RowPaddingButton(
-                    onClick = {
-                        if (isConnect == PulsarConst.closed) {
-                            isConnect = PulsarConst.connected
-                            msg = simulator?.subscribe(topic) ?: "please create pulsar consumer"
-                        } else {
-                            msg = "consumer is already subscribe, please close and retry subscribe."
                         }
                     },
                 ) {

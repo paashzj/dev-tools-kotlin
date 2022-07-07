@@ -30,6 +30,7 @@ import widget.component.RowPaddingButton
 
 val config = mutableStateOf(PulsarConfigStorage.getClientConfig())
 val pattern = mutableStateOf(MqPatternEnum.Producer)
+
 val allowTlsInsecure = mutableStateOf(config.value.isAllowTlsInsecure)
 val tlsSwitch = mutableStateOf(false)
 val tlsHostNameVerificationEnable = mutableStateOf(config.value.isEnableTlsHostNameVerification)

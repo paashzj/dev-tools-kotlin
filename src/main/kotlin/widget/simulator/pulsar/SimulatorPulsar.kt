@@ -24,20 +24,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.sp
+import com.github.shoothzj.dev.simulator.pulsar.PulsarConfigStorage
 import module.MqPatternEnum
 import widget.component.RowPaddingButton
 
+val config = mutableStateOf(PulsarConfigStorage.getClientConfig())
 val pattern = mutableStateOf(MqPatternEnum.Producer)
-
-val allowTlsInsecure = mutableStateOf(false)
+val allowTlsInsecure = mutableStateOf(config.value.isAllowTlsInsecure)
 val tlsSwitch = mutableStateOf(false)
-val tlsHostNameVerificationEnable = mutableStateOf(true)
-val authType = mutableStateOf("NONE")
-val keyStorePath = mutableStateOf("")
-val keyStorePassword = mutableStateOf("")
-val trustStorePath = mutableStateOf("")
-val trustStorePassword = mutableStateOf("")
-val jwtToken = mutableStateOf("")
+val tlsHostNameVerificationEnable = mutableStateOf(config.value.isEnableTlsHostNameVerification)
+val authType = mutableStateOf(config.value.authType)
+val keyStorePath = mutableStateOf(config.value.keyStorePath)
+val keyStorePassword = mutableStateOf(config.value.keyStorePassword)
+val trustStorePath = mutableStateOf(config.value.trustStorePath)
+val trustStorePassword = mutableStateOf(config.value.trustStorePassword)
+val jwtToken = mutableStateOf(config.value.jwtToken)
+var topic = mutableStateOf(config.value.topic)
+var pulsarUrl = mutableStateOf(config.value.pulsarUrl)
 
 @Composable
 fun SimulatorPulsar() {

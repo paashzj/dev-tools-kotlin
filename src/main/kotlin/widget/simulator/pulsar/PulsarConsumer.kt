@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.shoothzj.dev.simulator.pulsar.PulsarClientSimulator
+import com.github.shoothzj.dev.simulator.pulsar.PulsarConfigStorage
 import com.github.shoothzj.dev.simulator.pulsar.PulsarConsumerSimulator
 import constant.PulsarConst
 import module.LimitedList
@@ -51,22 +52,20 @@ val pulsarMsgList = LimitedList(0, 500)
 
 @Composable
 fun PulsarConsumer() {
-    var topic by remember { mutableStateOf(PulsarConst.defaultTopic) }
-    var pulsarUrl by remember { mutableStateOf(PulsarConst.defaultUrl) }
     var msg by remember { mutableStateOf("") }
     var errMsg by remember { mutableStateOf("") }
     var simulator: PulsarConsumerSimulator? by remember { mutableStateOf(null) }
-    var isConnect by remember { mutableStateOf(PulsarConst.closed) }
 
+    var isConnect by remember { mutableStateOf(PulsarConst.closed) }
     var isOpenManual by remember { mutableStateOf(true) }
     var isOpenAuto by remember { mutableStateOf(true) }
 
     Row {
         Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(1f)) {
             OutlinedTextField(
-                value = pulsarUrl,
+                value = pulsarUrl.value,
                 onValueChange = {
-                    pulsarUrl = it
+                    pulsarUrl.value = it
                 },
                 label = { Text("pulsar url") }
             )
@@ -93,9 +92,9 @@ fun PulsarConsumer() {
                 )
             }
             OutlinedTextField(
-                value = topic,
+                value = topic.value,
                 onValueChange = {
-                    topic = it
+                    topic.value = it
                 },
                 label = { Text("pulsar topic") }
             )
@@ -105,7 +104,7 @@ fun PulsarConsumer() {
                         try {
                             if (isConnect == PulsarConst.closed) {
                                 val client = PulsarClientSimulator(
-                                    pulsarUrl,
+                                    pulsarUrl.value,
                                     tlsSwitch.value,
                                     allowTlsInsecure.value,
                                     tlsHostNameVerificationEnable.value,
@@ -115,9 +114,11 @@ fun PulsarConsumer() {
                                     trustStorePath.value,
                                     trustStorePassword.value,
                                     jwtToken.value,
+                                    topic.value
                                 )
+                                PulsarConfigStorage.saveClientConfig(client)
                                 simulator = PulsarConsumerSimulator(client)
-                                msg = simulator?.subscribe(topic) ?: "please create pulsar consumer"
+                                msg = simulator?.subscribe(topic.value) ?: "please create pulsar consumer"
                                 if (!msg.contains("exception")) {
                                     isConnect = PulsarConst.connected
                                 }

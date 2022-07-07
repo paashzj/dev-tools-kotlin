@@ -19,6 +19,8 @@
 
 package com.github.shoothzj.dev.simulator.pulsar;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.shoothzj.dev.constant.PulsarConst;
 import com.github.shoothzj.javatool.util.ExceptionUtil;
 import com.github.shoothzj.javatool.util.StreamUtil;
@@ -32,13 +34,19 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
+@JsonIgnoreProperties(value = "pulsarClient")
 public class PulsarClientSimulator {
 
     private static final Logger log = LoggerFactory.getLogger(PulsarClientSimulator.class);
 
+    private static final String DEFAULT_URL = "pulsar://127.0.0.1:6650";
+    private static final String DEFAULT_AUTH_TYPE = "NONE";
+
     private static final Set<String> protocols = Sets.newHashSet("TLSv1.2");
+
     private static final Set<String> cipher = Sets.newHashSet(
             "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
             "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
@@ -46,29 +54,42 @@ public class PulsarClientSimulator {
             "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
     );
 
-    private static PulsarClient pulsarClient;
+    private PulsarClient pulsarClient;
 
-    private final String pulsarUrl;
+    private String pulsarUrl;
 
-    private final boolean enableTls;
+    private boolean enableTls;
 
-    private final boolean allowTlsInsecure;
+    private boolean allowTlsInsecure;
 
-    private final boolean enableTlsHostNameVerification;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private boolean enableTlsHostNameVerification;
 
-    private final String authType;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String authType;
 
-    private final String keyStorePath;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String keyStorePath;
 
-    private final String keyStorePassword;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String keyStorePassword;
 
-    private final String trustStorePath;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String trustStorePath;
 
-    private final String trustStorePassword;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String trustStorePassword;
 
-    private final String jwtToken;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String jwtToken;
 
-    public PulsarClientSimulator(String pulsarUrl, boolean enableTls, boolean allowTlsInsecure, boolean enableTlsHostNameVerification, String authType, String keyStorePath, String keyStorePassword, String trustStorePath, String trustStorePassword, String jwtToken) {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String topic;
+
+    public PulsarClientSimulator() {
+    }
+
+    public PulsarClientSimulator(String pulsarUrl, boolean enableTls, boolean allowTlsInsecure, boolean enableTlsHostNameVerification, String authType, String keyStorePath, String keyStorePassword, String trustStorePath, String trustStorePassword, String jwtToken, String topic) {
         this.pulsarUrl = pulsarUrl;
         this.enableTls = enableTls;
         this.allowTlsInsecure = allowTlsInsecure;
@@ -79,6 +100,7 @@ public class PulsarClientSimulator {
         this.trustStorePath = trustStorePath;
         this.trustStorePassword = trustStorePassword;
         this.jwtToken = jwtToken;
+        this.topic = topic;
     }
 
     public PulsarClient getPulsarClient() {
@@ -137,4 +159,97 @@ public class PulsarClientSimulator {
         }
     }
 
+
+    public String getPulsarUrl() {
+        return Objects.requireNonNullElse(pulsarUrl, DEFAULT_URL);
+    }
+
+    public void setPulsarUrl(String pulsarUrl) {
+        this.pulsarUrl = pulsarUrl;
+    }
+
+    public boolean isEnableTls() {
+        return Objects.requireNonNullElse(enableTls, false);
+    }
+
+    public void setEnableTls(boolean enableTls) {
+        this.enableTls = enableTls;
+    }
+
+    public boolean isAllowTlsInsecure() {
+        return Objects.requireNonNullElse(allowTlsInsecure, false);
+    }
+
+    public void setAllowTlsInsecure(boolean allowTlsInsecure) {
+        this.allowTlsInsecure = allowTlsInsecure;
+    }
+
+    public boolean isEnableTlsHostNameVerification() {
+        return Objects.requireNonNullElse(enableTlsHostNameVerification, false);
+    }
+
+    public void setEnableTlsHostNameVerification(boolean enableTlsHostNameVerification) {
+        this.enableTlsHostNameVerification = enableTlsHostNameVerification;
+    }
+
+    public String getAuthType() {
+        return Objects.requireNonNullElse(authType, DEFAULT_AUTH_TYPE);
+    }
+
+    public void setAuthType(String authType) {
+        this.authType = authType;
+    }
+
+    public String getKeyStorePath() {
+        return Objects.requireNonNullElse(keyStorePath, "");
+    }
+
+    public void setKeyStorePath(String keyStorePath) {
+        this.keyStorePath = keyStorePath;
+    }
+
+    public String getKeyStorePassword() {
+        return Objects.requireNonNullElse(keyStorePassword, "");
+    }
+
+    public void setKeyStorePassword(String keyStorePassword) {
+        this.keyStorePassword = keyStorePassword;
+    }
+
+    public String getTrustStorePath() {
+        return Objects.requireNonNullElse(trustStorePath, "");
+    }
+
+    public void setTrustStorePath(String trustStorePath) {
+        this.trustStorePath = trustStorePath;
+    }
+
+    public String getTrustStorePassword() {
+        return Objects.requireNonNullElse(trustStorePassword, "");
+    }
+
+    public void setTrustStorePassword(String trustStorePassword) {
+        this.trustStorePassword = trustStorePassword;
+    }
+
+    public String getJwtToken() {
+        return Objects.requireNonNullElse(jwtToken, "");
+    }
+
+    public void setJwtToken(String jwtToken) {
+        this.jwtToken = jwtToken;
+    }
+
+    public String getTopic() {
+        return Objects.requireNonNullElse(topic, "default");
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public void setPulsarClient(PulsarClient pulsarClient) {
+        this.pulsarClient = pulsarClient;
+    }
 }
+

@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.shoothzj.dev.simulator.pulsar.PulsarClientSimulator
+import com.github.shoothzj.dev.simulator.pulsar.PulsarConfigStorage
 import com.github.shoothzj.dev.simulator.pulsar.PulsarProducerSimulator
 import constant.PulsarConst
 import widget.component.DropdownBool
@@ -44,8 +45,6 @@ import widget.config.ConfigGroupPulsarTls
 
 @Composable
 fun PulsarProducer() {
-    var topic by remember { mutableStateOf(PulsarConst.defaultTopic) }
-    var pulsarUrl by remember { mutableStateOf(PulsarConst.defaultUrl) }
     var msg by remember { mutableStateOf("") }
     var key by remember { mutableStateOf("") }
     var res by remember { mutableStateOf("") }
@@ -54,9 +53,9 @@ fun PulsarProducer() {
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         OutlinedTextField(
-            value = pulsarUrl,
+            value = pulsarUrl.value,
             onValueChange = {
-                pulsarUrl = it
+                pulsarUrl.value = it
             },
             label = { Text("pulsar url") }
         )
@@ -83,9 +82,9 @@ fun PulsarProducer() {
             )
         }
         OutlinedTextField(
-            value = topic,
+            value = topic.value,
             onValueChange = {
-                topic = it
+                topic.value = it
             },
             label = { Text("pulsar topic") }
         )
@@ -109,7 +108,7 @@ fun PulsarProducer() {
                     try {
                         if (isConnect == PulsarConst.closed) {
                             val client = PulsarClientSimulator(
-                                pulsarUrl,
+                                pulsarUrl.value,
                                 tlsSwitch.value,
                                 allowTlsInsecure.value,
                                 tlsHostNameVerificationEnable.value,
@@ -119,8 +118,10 @@ fun PulsarProducer() {
                                 trustStorePath.value,
                                 trustStorePassword.value,
                                 jwtToken.value,
+                                topic.value
                             )
-                            simulator = PulsarProducerSimulator(topic, client)
+                            PulsarConfigStorage.saveClientConfig(client)
+                            simulator = PulsarProducerSimulator(topic.value, client)
                             isConnect = PulsarConst.connected
                             res = "success connect pulsar"
                         } else {

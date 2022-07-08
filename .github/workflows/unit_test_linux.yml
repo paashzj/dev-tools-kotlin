@@ -38,7 +38,7 @@ jobs:
           distribution: 'temurin'
       - name: test
         run: gradle test
-      - uses: codecov/codecov-action@v2
+      - uses: codecov/codecov-action@v3
         with:
           files: ./build/jacocoXml/report.xml
           flags: unittests

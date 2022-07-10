@@ -21,12 +21,11 @@ package com.github.shoothzj.dev.transfer;
 
 import com.github.shoothzj.dev.constant.K8sCmdConst;
 import com.github.shoothzj.dev.constant.LinuxCmdConst;
-import com.github.shoothzj.dev.module.UiResponse;
+import com.github.shoothzj.dev.module.UiListResp;
 import com.github.shoothzj.dev.module.shell.KubectlNodeResult;
 import com.github.shoothzj.dev.module.shell.KubectlPodResult;
 import com.github.shoothzj.dev.shell.KubectlNodeResultParser;
 import com.github.shoothzj.dev.shell.KubectlPodResultParser;
-import com.github.shoothzj.dev.state.State;
 import com.github.shoothzj.dev.storage.StorageSettings;
 import com.github.shoothzj.dev.util.SshClient;
 import com.github.shoothzj.dev.util.StringTool;
@@ -49,8 +48,8 @@ public class Transfer {
 
     private static final ExecutorService fixedPool = Executors.newFixedThreadPool(2);
 
-    public UiResponse<NodeInfo> masterTransfer(String sshUsername, String sshPassword, String host,
-                                               int port, String masterFile, String targetPath) {
+    public UiListResp<String> masterTransfer(String sshUsername, String sshPassword, String host,
+                                             int port, String masterFile, String targetPath) {
         SshClient sshClient = null;
         try {
             sshClient = new SshClient(host, port, sshUsername, sshPassword);
@@ -108,12 +107,10 @@ public class Transfer {
                     return "";
                 }
             }).collect(Collectors.toList());
-            return new UiResponse<>(State.HASCONTENT.getCode(),
-                    content, new ArrayList<>(), "send file to virtual machine success.");
+            return new UiListResp<>(true, content, "send file to virtual machine success.");
         } catch (Exception e) {
             log.error("master transfer fail.", e);
-            return new UiResponse<>(State.NOCONTENT.getCode(),
-                    new ArrayList<>(), new ArrayList<>(), "send file to virtual machine fail.");
+            return new UiListResp<>(false, new ArrayList<>(), "send file to virtual machine fail.");
         } finally {
             fixedPool.shutdown();
             if (sshClient != null) {
@@ -123,16 +120,16 @@ public class Transfer {
 
     }
 
-    public UiResponse<NodeInfo> localTransfer(String sshUsername, String sshPassword, String host,
+    public UiListResp<NodeInfo> localTransfer(String sshUsername, String sshPassword, String host,
                                               int port, String localFile, String targetPath) {
         SshClient sshClient = null;
         try {
             sshClient = new SshClient(host, port, sshUsername, sshPassword);
             sshClient.sftp(localFile, targetPath);
-            return new UiResponse<>(State.NOCONTENT.getCode(), new ArrayList<>(), new ArrayList<>(), "success");
+            return new UiListResp<>(true, new ArrayList<>(), "success");
         } catch (Exception e) {
             log.error("send file to remote machine fail. ", e);
-            return new UiResponse<>(State.NOCONTENT.getCode(), new ArrayList<>(), new ArrayList<>(), "fail.");
+            return new UiListResp<>(false, new ArrayList<>(), "fail.");
         } finally {
             if (sshClient != null) {
                 sshClient.close();
@@ -140,7 +137,7 @@ public class Transfer {
         }
     }
 
-    public UiResponse<NodeInfo> execute(String sshUsername, String sshPassword, String host, int port, String cmd) {
+    public UiListResp<NodeInfo> execute(String sshUsername, String sshPassword, String host, int port, String cmd) {
         SshClient sshClient = null;
         try {
             sshClient = new SshClient(host, port, sshUsername, sshPassword);
@@ -181,10 +178,10 @@ public class Transfer {
                 nodeInfo.setExecuteResult(collect.get(i));
                 nodeInfoList.add(nodeInfo);
             }
-            return new UiResponse<>(State.HASCONTENT.getCode(), new ArrayList<>(), nodeInfoList, "");
+            return new UiListResp<>(true, nodeInfoList, "");
         } catch (Exception e) {
-            return new UiResponse<>(State.NOCONTENT.getCode(),
-                    new ArrayList<>(), new ArrayList<>(), String.format("fail to connector remote. host [%s]", host));
+            return new UiListResp<>(false,
+                    new ArrayList<>(), String.format("fail to connector remote. host [%s]", host));
         } finally {
             if (sshClient != null) {
                 sshClient.close();
@@ -260,18 +257,18 @@ public class Transfer {
         }
     }
 
-    public UiResponse<NodeInfo> replaceWord(String sshUsername, String sshPassword, String host, int port,
+    public UiListResp<NodeInfo> replaceWord(String sshUsername, String sshPassword, String host, int port,
                                             String resource, String target, String filename) {
         String cmd = LinuxCmdConst.sedCmd(resource, target, filename);
-        UiResponse<NodeInfo> transferResp = execute(sshUsername, sshPassword, host, port, cmd);
-        List<NodeInfo> collect = transferResp.getBody().stream().peek(nodeInfo -> {
+        UiListResp<NodeInfo> transferResp = execute(sshUsername, sshPassword, host, port, cmd);
+        List<NodeInfo> collect = transferResp.getT().stream().peek(nodeInfo -> {
             if (nodeInfo.getExecuteResult().isEmpty()) {
                 List<String> res = new ArrayList<>();
                 res.add("replace success.");
                 nodeInfo.setExecuteResult(res);
             }
         }).collect(Collectors.toList());
-        transferResp.setBody(collect);
+        transferResp.setT(collect);
         return transferResp;
     }
 }

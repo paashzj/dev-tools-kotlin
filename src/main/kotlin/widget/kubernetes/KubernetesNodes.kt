@@ -27,9 +27,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.sp
-import com.github.shoothzj.dev.module.UiResponse
+import com.github.shoothzj.dev.module.UiListResp
 import com.github.shoothzj.dev.module.config.KubernetesConfig
-import com.github.shoothzj.dev.state.State
 import com.github.shoothzj.dev.transfer.NodeInfo
 import com.github.shoothzj.dev.transfer.Transfer
 import widget.component.RowPaddingButton
@@ -48,7 +47,8 @@ fun KubernetesNodes(
     var target by remember { mutableStateOf("") }
     var filename by remember { mutableStateOf("") }
     val expended = mutableStateOf(false)
-    var result: UiResponse<NodeInfo>? = null
+    var scpResp: UiListResp<String>? = null
+    var nodeInfoResp: UiListResp<NodeInfo>? = null
     var infoList: MutableList<String>
     Column {
         Row {
@@ -83,7 +83,7 @@ fun KubernetesNodes(
                         RowPaddingButton(
                             onClick = {
                                 expended.value = true
-                                result =
+                                nodeInfoResp =
                                     Transfer().localTransfer(
                                         k8sConfig.sshStep.username, k8sConfig.sshStep.password,
                                         k8sConfig.host, k8sConfig.port, localFile, targetPath
@@ -117,7 +117,7 @@ fun KubernetesNodes(
                         Row {
                             RowPaddingButton(
                                 onClick = {
-                                    result =
+                                    scpResp =
                                         Transfer().masterTransfer(
                                             k8sConfig.sshStep.username, k8sConfig.sshStep.password,
                                             k8sConfig.host, k8sConfig.port, masterFile, remotePath
@@ -143,7 +143,7 @@ fun KubernetesNodes(
                         Row {
                             RowPaddingButton(
                                 onClick = {
-                                    result = Transfer().execute(
+                                    nodeInfoResp = Transfer().execute(
                                         k8sConfig.sshStep.username, k8sConfig.sshStep.password,
                                         k8sConfig.host, k8sConfig.port, command
                                     )
@@ -188,7 +188,7 @@ fun KubernetesNodes(
                         Row {
                             RowPaddingButton(
                                 onClick = {
-                                    result = Transfer().replaceWord(
+                                    nodeInfoResp = Transfer().replaceWord(
                                         k8sConfig.sshStep.username, k8sConfig.sshStep.password,
                                         k8sConfig.host, k8sConfig.port, resource, target, filename
                                     )
@@ -210,11 +210,11 @@ fun KubernetesNodes(
                 },
                 result = {
                     if (expended.value) {
-                        if (result!!.code == State.HASCONTENT.code) {
-                            for (content in result!!.contents) {
+                        if (scpResp!!.isSuccess) {
+                            for (content in scpResp!!.t) {
                                 Text(content, fontSize = 25.sp)
                             }
-                            val nodeInfoList = result!!.body
+                            val nodeInfoList = nodeInfoResp!!.t
                             repeat(nodeInfoList.size) { idx ->
                                 val nodeInfo = nodeInfoList[idx]
                                 val res = nodeInfo.executeResult
@@ -223,10 +223,9 @@ fun KubernetesNodes(
                                     Text(res[iidx])
                                 }
                             }
-
-                            Text(result!!.reason, fontSize = 30.sp)
+                            Text(scpResp!!.msg, fontSize = 30.sp)
                         } else {
-                            Text(result!!.reason, fontSize = 30.sp)
+                            Text(scpResp!!.msg, fontSize = 30.sp)
                         }
                     }
                 },

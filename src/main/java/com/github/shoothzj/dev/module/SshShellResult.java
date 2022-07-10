@@ -19,9 +19,6 @@
 
 package com.github.shoothzj.dev.module;
 
-/**
- * @author hezhangjian
- */
 public class SshShellResult {
 
     private int returnCode;

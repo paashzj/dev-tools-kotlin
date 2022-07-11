@@ -118,7 +118,8 @@ fun PulsarProducer() {
                                 trustStorePath.value,
                                 trustStorePassword.value,
                                 jwtToken.value,
-                                topic.value
+                                topic.value,
+                                true
                             )
                             PulsarConfigStorage.saveClientConfig(client)
                             simulator = PulsarProducerSimulator(topic.value, client)

@@ -86,10 +86,12 @@ public class PulsarClientSimulator {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String topic;
 
+    private boolean allowSaveMsg;
+
     public PulsarClientSimulator() {
     }
 
-    public PulsarClientSimulator(String pulsarUrl, boolean enableTls, boolean allowTlsInsecure, boolean enableTlsHostNameVerification, String authType, String keyStorePath, String keyStorePassword, String trustStorePath, String trustStorePassword, String jwtToken, String topic) {
+    public PulsarClientSimulator(String pulsarUrl, boolean enableTls, boolean allowTlsInsecure, boolean enableTlsHostNameVerification, String authType, String keyStorePath, String keyStorePassword, String trustStorePath, String trustStorePassword, String jwtToken, String topic, boolean allowSaveMsg) {
         this.pulsarUrl = pulsarUrl;
         this.enableTls = enableTls;
         this.allowTlsInsecure = allowTlsInsecure;
@@ -101,6 +103,7 @@ public class PulsarClientSimulator {
         this.trustStorePassword = trustStorePassword;
         this.jwtToken = jwtToken;
         this.topic = topic;
+        this.allowSaveMsg = allowSaveMsg;
     }
 
     public PulsarClient getPulsarClient() {
@@ -250,6 +253,14 @@ public class PulsarClientSimulator {
 
     public void setPulsarClient(PulsarClient pulsarClient) {
         this.pulsarClient = pulsarClient;
+    }
+
+    public boolean isAllowSaveMsg() {
+        return allowSaveMsg;
+    }
+
+    public void setAllowSaveMsg(boolean allowSaveMsg) {
+        this.allowSaveMsg = allowSaveMsg;
     }
 }
 

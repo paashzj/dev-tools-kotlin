@@ -19,8 +19,8 @@
 
 package com.github.shoothzj.dev.constant;
 
-public class Constant {
+public class FileConst {
 
-    public static final String DEFAULT_TIME_FORMAT = "yyyyMMddHHmmss";
-    public static final String SIMPLE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String LINE_SEP = System.getProperty("line.separator");
+
 }

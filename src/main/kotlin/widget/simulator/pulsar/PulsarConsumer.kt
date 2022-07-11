@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import com.github.shoothzj.dev.simulator.pulsar.PulsarClientSimulator
 import com.github.shoothzj.dev.simulator.pulsar.PulsarConfigStorage
 import com.github.shoothzj.dev.simulator.pulsar.PulsarConsumerSimulator
+import com.github.shoothzj.dev.storage.StorageUtil
 import constant.PulsarConst
 import module.LimitedList
 import widget.component.DropdownBool
@@ -59,6 +60,7 @@ fun PulsarConsumer() {
     var isConnect by remember { mutableStateOf(PulsarConst.closed) }
     var isOpenManual by remember { mutableStateOf(true) }
     var isOpenAuto by remember { mutableStateOf(true) }
+    val allowSaveMsg = mutableStateOf(false)
 
     Row {
         Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(1f)) {
@@ -71,6 +73,7 @@ fun PulsarConsumer() {
             )
             DropdownBool("allow tls Insecure", allowTlsInsecure)
             DropdownBool("tls enable", tlsSwitch)
+            DropdownBool("allow save msg to file. file path : " + StorageUtil.SIMULATOR_PULSAR_MSG_STORAGE_PATH, allowSaveMsg)
             if (tlsSwitch.value) {
                 ConfigGroupPulsarTls(
                     tlsHostNameVerificationEnable
@@ -114,7 +117,8 @@ fun PulsarConsumer() {
                                     trustStorePath.value,
                                     trustStorePassword.value,
                                     jwtToken.value,
-                                    topic.value
+                                    topic.value,
+                                    allowSaveMsg.value,
                                 )
                                 PulsarConfigStorage.saveClientConfig(client)
                                 simulator = PulsarConsumerSimulator(client)
@@ -164,7 +168,7 @@ fun PulsarConsumer() {
                             } else {
                                 isOpenAuto = false
                                 isOpenManual = true
-                                val receiveResp = simulator!!.receive()
+                                val receiveResp = simulator!!.receive(allowSaveMsg.value)
                                 if (receiveResp.isSuccess) {
                                     addPulsarMsg(receiveResp.t)
                                     receiveResp.t
@@ -189,7 +193,7 @@ fun PulsarConsumer() {
                                 msg = ""
                                 thread(start = true) {
                                     while (true) {
-                                        val receiveResp = simulator?.receive()
+                                        val receiveResp = simulator?.receive(allowSaveMsg.value)
                                         if (receiveResp != null) {
                                             if (receiveResp.isSuccess) {
                                                 addPulsarMsg(receiveResp.t)

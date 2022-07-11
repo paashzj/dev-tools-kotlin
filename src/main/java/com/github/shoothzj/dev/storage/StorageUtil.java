@@ -50,6 +50,8 @@ public class StorageUtil {
 
     public static final String SIMULATOR_PULSAR_CONFIG_PATH = STORAGE_PREFIX + "simulator-pulsar-conf-v1.json";
 
+    public static final String SIMULATOR_PULSAR_MSG_STORAGE_PATH = STORAGE_PREFIX + "simulator-pulsar-msg.txt";
+
     static {
         File storageDir = new File(STORAGE_DIR);
         storageDir.mkdirs();
@@ -67,6 +69,7 @@ public class StorageUtil {
         FileUtil.ensureFileExists(LVS_CONF_PATH);
 
         FileUtil.ensureFileExists(SIMULATOR_PULSAR_CONFIG_PATH);
+        FileUtil.ensureFileExists(SIMULATOR_PULSAR_MSG_STORAGE_PATH);
     }
 
 }

@@ -20,13 +20,13 @@ package widget.config
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import widget.component.DropdownBool
+import widget.component.CheckboxInput
 
 @Composable
 fun ConfigGroupPulsarTls(
     editEnableTlsHostnameVerification: MutableState<Boolean>,
 ) {
     Column {
-        DropdownBool("tls hostname verification", editEnableTlsHostnameVerification)
+        CheckboxInput("tls hostname verification", editEnableTlsHostnameVerification)
     }
 }

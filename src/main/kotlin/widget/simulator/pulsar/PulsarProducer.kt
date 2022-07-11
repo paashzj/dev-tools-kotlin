@@ -36,7 +36,7 @@ import com.github.shoothzj.dev.simulator.pulsar.PulsarClientSimulator
 import com.github.shoothzj.dev.simulator.pulsar.PulsarConfigStorage
 import com.github.shoothzj.dev.simulator.pulsar.PulsarProducerSimulator
 import constant.PulsarConst
-import widget.component.DropdownBool
+import widget.component.CheckboxInput
 import widget.component.DropdownList
 import widget.component.RowPaddingButton
 import widget.config.ConfigGroupPulsarAuthJwt
@@ -59,8 +59,8 @@ fun PulsarProducer() {
             },
             label = { Text("pulsar url") }
         )
-        DropdownBool("allow tls insecure", allowTlsInsecure)
-        DropdownBool("tls enable", tlsSwitch)
+        CheckboxInput("allow tls Insecure", allowTlsInsecure)
+        CheckboxInput("tls enable", tlsSwitch)
         if (tlsSwitch.value) {
             ConfigGroupPulsarTls(
                 tlsHostNameVerificationEnable

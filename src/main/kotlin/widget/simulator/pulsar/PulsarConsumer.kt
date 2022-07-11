@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -39,7 +40,7 @@ import com.github.shoothzj.dev.simulator.pulsar.PulsarConsumerSimulator
 import com.github.shoothzj.dev.storage.StorageUtil
 import constant.PulsarConst
 import module.LimitedList
-import widget.component.DropdownBool
+import widget.component.CheckboxInput
 import widget.component.DropdownList
 import widget.component.RowPaddingButton
 import widget.component.TextLogger
@@ -71,9 +72,12 @@ fun PulsarConsumer() {
                 },
                 label = { Text("pulsar url") }
             )
-            DropdownBool("allow tls Insecure", allowTlsInsecure)
-            DropdownBool("tls enable", tlsSwitch)
-            DropdownBool("allow save msg to file. file path : " + StorageUtil.SIMULATOR_PULSAR_MSG_STORAGE_PATH, allowSaveMsg)
+            CheckboxInput("allow tls Insecure", allowTlsInsecure)
+            CheckboxInput("tls enable", tlsSwitch)
+            CheckboxInput("allow save msg to filex", allowSaveMsg)
+            SelectionContainer {
+                Text("file path: " + StorageUtil.SIMULATOR_PULSAR_MSG_STORAGE_PATH)
+            }
             if (tlsSwitch.value) {
                 ConfigGroupPulsarTls(
                     tlsHostNameVerificationEnable

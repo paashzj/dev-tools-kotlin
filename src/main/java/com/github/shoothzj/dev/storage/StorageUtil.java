@@ -47,9 +47,10 @@ public class StorageUtil {
     public static final String LVS_CONF_PATH = STORAGE_PREFIX + "lvs-conf-v1.json";
 
     public static final String SETTING_PATH = STORAGE_PREFIX + "dev-tools-kotlin-conf-v1.json";
+
     public static final String SIMULATOR_PULSAR_CONFIG_PATH = STORAGE_PREFIX + "simulator-pulsar-conf-v1.json";
 
-    public static final String PULSAR_MSG_STORAGE_PATH = STORAGE_PREFIX + "pulsar-msg.txt";
+    public static final String SIMULATOR_PULSAR_MSG_STORAGE_PATH = STORAGE_PREFIX + "simulator-pulsar-msg.txt";
 
     static {
         File storageDir = new File(STORAGE_DIR);
@@ -68,7 +69,7 @@ public class StorageUtil {
         FileUtil.ensureFileExists(LVS_CONF_PATH);
 
         FileUtil.ensureFileExists(SIMULATOR_PULSAR_CONFIG_PATH);
-        FileUtil.ensureFileExists(PULSAR_MSG_STORAGE_PATH);
+        FileUtil.ensureFileExists(SIMULATOR_PULSAR_MSG_STORAGE_PATH);
     }
 
 }

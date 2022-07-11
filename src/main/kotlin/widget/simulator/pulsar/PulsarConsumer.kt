@@ -60,7 +60,7 @@ fun PulsarConsumer() {
     var isConnect by remember { mutableStateOf(PulsarConst.closed) }
     var isOpenManual by remember { mutableStateOf(true) }
     var isOpenAuto by remember { mutableStateOf(true) }
-    var allowSaveMsg = mutableStateOf(true)
+    val allowSaveMsg = mutableStateOf(false)
 
     Row {
         Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(1f)) {
@@ -73,7 +73,7 @@ fun PulsarConsumer() {
             )
             DropdownBool("allow tls Insecure", allowTlsInsecure)
             DropdownBool("tls enable", tlsSwitch)
-            DropdownBool("allow save msg to file. file path : " + StorageUtil.PULSAR_MSG_STORAGE_PATH, allowSaveMsg)
+            DropdownBool("allow save msg to file. file path : " + StorageUtil.SIMULATOR_PULSAR_MSG_STORAGE_PATH, allowSaveMsg)
             if (tlsSwitch.value) {
                 ConfigGroupPulsarTls(
                     tlsHostNameVerificationEnable
@@ -118,7 +118,7 @@ fun PulsarConsumer() {
                                     trustStorePassword.value,
                                     jwtToken.value,
                                     topic.value,
-                                    allowSaveMsg.value
+                                    allowSaveMsg.value,
                                 )
                                 PulsarConfigStorage.saveClientConfig(client)
                                 simulator = PulsarConsumerSimulator(client)

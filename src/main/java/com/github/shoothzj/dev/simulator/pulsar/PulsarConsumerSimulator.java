@@ -20,6 +20,7 @@
 package com.github.shoothzj.dev.simulator.pulsar;
 
 import com.github.shoothzj.dev.constant.Constant;
+import com.github.shoothzj.dev.constant.FileConst;
 import com.github.shoothzj.dev.module.UiResp;
 import com.github.shoothzj.dev.storage.StorageUtil;
 import com.github.shoothzj.javatool.util.ExceptionUtil;
@@ -70,7 +71,7 @@ public class PulsarConsumerSimulator {
                     .receiverQueueSize(MAX_RECEIVE_MSG).autoUpdatePartitions(true).subscriptionType(SubscriptionType.Failover)
                     .subscriptionInitialPosition(SubscriptionInitialPosition.Latest)
                     .subscribe();
-            outputStreamWriter = new OutputStreamWriter(new FileOutputStream(StorageUtil.PULSAR_MSG_STORAGE_PATH, true), StandardCharsets.UTF_8);
+            outputStreamWriter = new OutputStreamWriter(new FileOutputStream(StorageUtil.SIMULATOR_PULSAR_MSG_STORAGE_PATH, true), StandardCharsets.UTF_8);
             return "pulsar subscribe success";
         } catch (Exception e) {
             return String.format("pulsar subscribe exception : %s", e.getMessage());
@@ -87,8 +88,7 @@ public class PulsarConsumerSimulator {
             String time = formatter.format(LocalDateTime.ofEpochSecond(publishTime / 1000, 0, ZoneOffset.ofHours(8)));
             String msg = time + " : " + new String(receive.getValue());
             if (allowSaveMsg) {
-                String str = System.getProperty("line.separator");
-                outputStreamWriter.write(msg + str);
+                outputStreamWriter.write(msg + FileConst.LINE_SEP);
                 outputStreamWriter.flush();
             }
             return new UiResp<>(true, msg, "");

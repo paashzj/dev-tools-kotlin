@@ -51,6 +51,7 @@ val jschVersion = "0.2.2"
 val jsonPathVersion = "2.7.0"
 val pulsarVersion = "2.10.1"
 val kafkaVersion = "3.2.0"
+val mqttVersion = "1.2.5"
 val protonj2Version = "1.0.0-M7"
 val log4jVersion = "2.18.0"
 val sdkVersion = "3.1.15"
@@ -63,6 +64,7 @@ dependencies {
     implementation("org.apache.pulsar:pulsar-client-original:$pulsarVersion")
     implementation("org.apache.kafka:kafka-clients:$kafkaVersion")
     implementation("org.apache.qpid:protonj2-client:$protonj2Version")
+    implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:$mqttVersion")
     // embedded middleware
     testImplementation("com.github.shoothzj:test-pulsar:$sdkVersion")
     testImplementation("com.github.shoothzj:test-kafka:$sdkVersion")

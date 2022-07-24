@@ -86,12 +86,15 @@ public class PulsarClientSimulator {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String topic;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String position;
+
     private boolean allowSaveMsg;
 
     public PulsarClientSimulator() {
     }
 
-    public PulsarClientSimulator(String pulsarUrl, boolean enableTls, boolean allowTlsInsecure, boolean enableTlsHostNameVerification, String authType, String keyStorePath, String keyStorePassword, String trustStorePath, String trustStorePassword, String jwtToken, String topic, boolean allowSaveMsg) {
+    public PulsarClientSimulator(String pulsarUrl, boolean enableTls, boolean allowTlsInsecure, boolean enableTlsHostNameVerification, String authType, String keyStorePath, String keyStorePassword, String trustStorePath, String trustStorePassword, String jwtToken, String topic, boolean allowSaveMsg, String position) {
         this.pulsarUrl = pulsarUrl;
         this.enableTls = enableTls;
         this.allowTlsInsecure = allowTlsInsecure;
@@ -104,6 +107,7 @@ public class PulsarClientSimulator {
         this.jwtToken = jwtToken;
         this.topic = topic;
         this.allowSaveMsg = allowSaveMsg;
+        this.position = position;
     }
 
     public PulsarClient getPulsarClient() {
@@ -261,6 +265,14 @@ public class PulsarClientSimulator {
 
     public void setAllowSaveMsg(boolean allowSaveMsg) {
         this.allowSaveMsg = allowSaveMsg;
+    }
+
+    public String getPosition() {
+        return Objects.requireNonNullElse(position, PulsarConst.LATEST);
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 }
 

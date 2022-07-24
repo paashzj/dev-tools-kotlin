@@ -62,6 +62,7 @@ fun PulsarConsumer() {
     var isOpenManual by remember { mutableStateOf(true) }
     var isOpenAuto by remember { mutableStateOf(true) }
     val allowSaveMsg = mutableStateOf(false)
+    var position = mutableStateOf(PulsarConst.Latest)
 
     Row {
         Column(modifier = Modifier.verticalScroll(rememberScrollState()).weight(1f)) {
@@ -98,6 +99,7 @@ fun PulsarConsumer() {
                     trustStorePassword,
                 )
             }
+            DropdownList(PulsarConst.positionList, "consume position", position)
             OutlinedTextField(
                 value = topic.value,
                 onValueChange = {
@@ -123,10 +125,11 @@ fun PulsarConsumer() {
                                     jwtToken.value,
                                     topic.value,
                                     allowSaveMsg.value,
+                                    position.value,
                                 )
                                 PulsarConfigStorage.saveClientConfig(client)
                                 simulator = PulsarConsumerSimulator(client)
-                                msg = simulator?.subscribe(topic.value) ?: "please create pulsar consumer"
+                                msg = simulator?.subscribe(topic.value, position.value) ?: "please create pulsar consumer"
                                 if (!msg.contains("exception")) {
                                     isConnect = PulsarConst.connected
                                 }

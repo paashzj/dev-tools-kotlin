@@ -120,6 +120,7 @@ fun PulsarProducer() {
                                 jwtToken.value,
                                 topic.value,
                                 false,
+                                "",
                             )
                             PulsarConfigStorage.saveClientConfig(client)
                             simulator = PulsarProducerSimulator(topic.value, client)

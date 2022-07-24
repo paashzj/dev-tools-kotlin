@@ -29,4 +29,8 @@ public class PulsarConst {
 
     public static final String DEFAULT_CERT_TYPE = "JKS";
 
+    public static final String EARLIEST = "Earliest";
+
+    public static final String LATEST = "Latest";
+
 }

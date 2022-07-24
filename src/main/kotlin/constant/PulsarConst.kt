@@ -26,6 +26,9 @@ class PulsarConst {
         const val authTypeTls = "TLS"
         const val connected = "connected"
         const val closed = "closed"
+        const val Earliest = "Earliest"
+        const val Latest = "Latest"
         val authTypeList = listOf("NONE", authTypeJwt, authTypeTls)
+        val positionList = listOf(Earliest, Latest)
     }
 }

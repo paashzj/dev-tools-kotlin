@@ -21,10 +21,12 @@ package com.github.shoothzj.dev.simulator.pulsar;
 
 import com.github.shoothzj.dev.constant.Constant;
 import com.github.shoothzj.dev.constant.FileConst;
+import com.github.shoothzj.dev.constant.PulsarConst;
 import com.github.shoothzj.dev.module.UiResp;
 import com.github.shoothzj.dev.storage.StorageUtil;
 import com.github.shoothzj.javatool.util.ExceptionUtil;
 import org.apache.pulsar.client.api.Consumer;
+import org.apache.pulsar.client.api.ConsumerBuilder;
 import org.apache.pulsar.client.api.Message;
 import org.apache.pulsar.client.api.PulsarClient;
 import org.apache.pulsar.client.api.SubscriptionInitialPosition;
@@ -61,16 +63,20 @@ public class PulsarConsumerSimulator {
         this.pulsarClientSimulator = pulsarClientSimulator;
     }
 
-    public String subscribe(String topic) {
+    public String subscribe(String topic, String position) {
         try {
             if (consumer != null) {
                 return "pulsar consumer already subscribe.";
             }
             PulsarClient pulsarClient = pulsarClientSimulator.getPulsarClient();
-            consumer = pulsarClient.newConsumer().topic(topic).subscriptionName(UUID.randomUUID().toString())
-                    .receiverQueueSize(MAX_RECEIVE_MSG).autoUpdatePartitions(true).subscriptionType(SubscriptionType.Failover)
-                    .subscriptionInitialPosition(SubscriptionInitialPosition.Latest)
-                    .subscribe();
+            ConsumerBuilder<byte[]> consumerBuilder = pulsarClient.newConsumer().topic(topic).subscriptionName(UUID.randomUUID().toString())
+                    .receiverQueueSize(MAX_RECEIVE_MSG).autoUpdatePartitions(true).subscriptionType(SubscriptionType.Failover);
+            if (PulsarConst.EARLIEST.equals(position)) {
+                consumerBuilder.subscriptionInitialPosition(SubscriptionInitialPosition.Earliest);
+            } else {
+                consumerBuilder.subscriptionInitialPosition(SubscriptionInitialPosition.Latest);
+            }
+            consumer = consumerBuilder.subscribe();
             outputStreamWriter = new OutputStreamWriter(new FileOutputStream(StorageUtil.SIMULATOR_PULSAR_MSG_STORAGE_PATH, true), StandardCharsets.UTF_8);
             return "pulsar subscribe success";
         } catch (Exception e) {

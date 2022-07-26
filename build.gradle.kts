@@ -55,7 +55,7 @@ val mqttVersion = "1.2.5"
 val protonj2Version = "1.0.0-M7"
 val log4jVersion = "2.18.0"
 val sdkVersion = "3.1.15"
-val sshdVersion = "2.8.0"
+val sshdVersion = "2.9.0"
 
 dependencies {
     implementation(compose.desktop.currentOs)

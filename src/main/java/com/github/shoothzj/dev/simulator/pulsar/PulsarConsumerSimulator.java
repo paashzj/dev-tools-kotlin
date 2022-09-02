@@ -28,11 +28,11 @@ import com.github.shoothzj.javatool.util.ExceptionUtil;
 import org.apache.pulsar.client.api.Consumer;
 import org.apache.pulsar.client.api.ConsumerBuilder;
 import org.apache.pulsar.client.api.Message;
+import org.apache.pulsar.client.api.MessageListener;
 import org.apache.pulsar.client.api.PulsarClient;
+import org.apache.pulsar.client.api.PulsarClientException;
 import org.apache.pulsar.client.api.SubscriptionInitialPosition;
 import org.apache.pulsar.client.api.SubscriptionType;
-import org.apache.pulsar.client.api.MessageListener;
-import org.apache.pulsar.client.api.PulsarClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -137,12 +137,12 @@ public class PulsarConsumerSimulator {
             consumer.close();
             consumer = null;
         } catch (Exception e) {
-            log.error("close consumer failed. e : {}", ExceptionUtil.getException(e));
+            log.error("close consumer failed. ", e);
         }
         try {
             pulsarClientSimulator.close();
         } catch (Exception e) {
-            log.error("close pulsar client failed. e: {}", ExceptionUtil.getException(e));
+            log.error("close pulsar client failed. ", e);
         }
 
 
@@ -151,7 +151,7 @@ public class PulsarConsumerSimulator {
                 outputStreamWriter.close();
             }
         } catch (Exception e) {
-            log.error("close out put stream failed. e: {}", ExceptionUtil.getException(e));
+            log.error("close out put stream failed. ", e);
         }
         return "success";
     }

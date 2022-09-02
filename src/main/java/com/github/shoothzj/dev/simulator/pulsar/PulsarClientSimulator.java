@@ -22,7 +22,6 @@ package com.github.shoothzj.dev.simulator.pulsar;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.shoothzj.dev.constant.PulsarConst;
-import com.github.shoothzj.javatool.util.ExceptionUtil;
 import com.github.shoothzj.javatool.util.StreamUtil;
 import com.google.common.collect.Sets;
 import org.apache.pulsar.client.api.AuthenticationFactory;
@@ -150,7 +149,7 @@ public class PulsarClientSimulator {
                 }
             }
         } catch (Exception e) {
-            log.error("create pulsar client failed. e: {}", ExceptionUtil.getException(e));
+            log.error("create pulsar client failed. ", e);
         }
         return null;
     }

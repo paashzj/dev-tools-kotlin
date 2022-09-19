@@ -53,7 +53,7 @@ val pulsarVersion = "2.10.1"
 val kafkaVersion = "3.2.2"
 val mqttVersion = "1.2.5"
 val protonj2Version = "1.0.0-M8"
-val log4jVersion = "2.18.0"
+val log4jVersion = "2.19.0"
 val sdkVersion = "3.1.15"
 val sshdVersion = "2.9.1"
 

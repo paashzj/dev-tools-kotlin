@@ -20,23 +20,14 @@ package widget.config
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import org.apache.kafka.common.security.auth.SecurityProtocol
-import widget.component.DropdownList
 
 @Composable
-fun ConfigGroupKafkaRaw(
-    editKafkaHost: MutableState<String>,
-    editKafkaPort: MutableState<String>,
-    editKafkaSaslMechanism: MutableState<String>,
-    editKafkaUsername: MutableState<String>,
-    editKafkaPassword: MutableState<String>,
+fun ConfigGroupKafkaTls(
+    editKafkaKeyStorePath: MutableState<String>,
+    editKafkaKeyStorePassword: MutableState<String>,
 ) {
     Column {
-        ConfigItemHost(editKafkaHost, "kafka host", mutableStateOf(""))
-        ConfigItemPort(editKafkaPort, "kafka port", mutableStateOf(""))
-        DropdownList(arrayListOf("", SecurityProtocol.SASL_PLAINTEXT.name, SecurityProtocol.SASL_SSL.name), "kafka sasl mechanism", editKafkaSaslMechanism)
-        ConfigItemString(editKafkaUsername, "kafka username", singleLine = true)
-        ConfigItemString(editKafkaPassword, "kafka password", singleLine = true)
+        ConfigItemString(editKafkaKeyStorePath, "kafka key store path", singleLine = true)
+        ConfigItemString(editKafkaKeyStorePassword, "kafka key store password", singleLine = true)
     }
 }

@@ -27,14 +27,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.sp
+import com.github.shoothzj.dev.simulator.kafka.KafkaConfigStorage
 import com.github.shoothzj.dev.simulator.kafka.KafkaConsumerSimulator
+import widget.component.CheckboxInput
 import widget.component.RowPaddingButton
 import widget.config.ConfigGroupKafkaRaw
+import widget.config.ConfigGroupKafkaTls
 
 @Composable
 fun KafkaConsumer() {
-    var topic by remember { mutableStateOf("") }
     var msg by remember { mutableStateOf("") }
+    var consumer: KafkaConsumerSimulator? by remember { mutableStateOf(null) }
 
     Column {
         ConfigGroupKafkaRaw(
@@ -45,24 +48,35 @@ fun KafkaConsumer() {
             password,
         )
         OutlinedTextField(
-            value = topic,
+            value = topic.value,
             onValueChange = {
-                topic = it
+                topic.value = it
             },
             label = { Text("kafka topic") }
         )
+        CheckboxInput("tls enable", enableTls)
+        if (enableTls.value) {
+            ConfigGroupKafkaTls(
+                keyStorePath,
+                keyStorePassword,
+            )
+        }
         Row {
-            var consumer: KafkaConsumerSimulator? = null
             RowPaddingButton(
                 onClick = {
                     try {
                         consumer = KafkaConsumerSimulator(
+                            topic.value,
                             host.value,
                             port.value,
                             saslMechanism.value,
                             username.value,
-                            password.value
+                            password.value,
+                            enableTls.value,
+                            keyStorePath.value,
+                            keyStorePassword.value,
                         )
+                        KafkaConfigStorage.saveClientConfig(consumer)
                     } catch (e: Exception) {
                         msg = e.message.toString()
                     }
@@ -70,21 +84,21 @@ fun KafkaConsumer() {
             ) { Text(text = R.strings.connect, fontSize = 12.sp) }
             RowPaddingButton(
                 onClick = {
-                    msg = consumer?.subscribe(topic) ?: "please create kafka consumer"
+                    msg = consumer?.subscribe(topic.value) ?: "please create kafka consumer"
                 },
             ) {
                 Text(text = R.strings.subscribe, fontSize = 12.sp)
             }
             RowPaddingButton(
                 onClick = {
-                    msg = consumer?.receive(topic) ?: "please create kafka consumer"
+                    msg = consumer?.receive(topic.value) ?: "please create kafka consumer"
                 },
             ) {
                 Text(text = R.strings.receive, fontSize = 12.sp)
             }
             RowPaddingButton(
                 onClick = {
-                    msg = (consumer?.close() ?: "") as String
+                    msg = consumer?.close() ?: "close consumer failed."
                 },
             ) {
                 Text(text = R.strings.close, fontSize = 12.sp)

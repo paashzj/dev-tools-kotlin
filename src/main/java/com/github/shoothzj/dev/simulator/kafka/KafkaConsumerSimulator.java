@@ -35,20 +35,21 @@ import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
-public class KafkaConsumerSimulator {
+public class KafkaConsumerSimulator extends KafkaConfigSimulator {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaConsumerSimulator.class);
 
     private final Consumer<String, String> consumer;
 
-    public KafkaConsumerSimulator(String host, String port) {
-        this(host, port, "", "", "");
+    public KafkaConsumerSimulator(String topic, String host, String port) {
+        this(topic, host, port, "", "", "", false, "", "");
     }
 
-    public KafkaConsumerSimulator(String host, String port, String saslMechanism, String username, String password) {
+    public KafkaConsumerSimulator(String topic, String host, String port, String saslMechanism, String username, String password, boolean enableTls, String trustStorePath, String trustStorePwd) {
+        super(host, port, username, password, enableTls, trustStorePath, trustStorePwd, topic, saslMechanism);
         Preconditions.checkArgument(ValidateUtil.isHost(host), String.format("host [%s] is illegal", host));
         Preconditions.checkArgument(ValidateUtil.isPort(port), String.format("port [%s] is illegal", port));
-        Properties consumerConf = KafkaConfFactory.acquireConsumerConf(host, port, saslMechanism, username, password);
+        Properties consumerConf = KafkaConfFactory.acquireConsumerConf(host, port, saslMechanism, username, password, enableTls, trustStorePath, trustStorePwd);
         consumer = new KafkaConsumer<>(consumerConf);
     }
 
@@ -64,7 +65,7 @@ public class KafkaConsumerSimulator {
 
     public String receive(String topic) {
         try {
-            ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1000));
+            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(1000));
             if (records == null || records.count() == 0) {
                 return "receive empty list of message";
             }
@@ -80,7 +81,8 @@ public class KafkaConsumerSimulator {
         }
     }
 
-    public void close() {
+    public String close() {
         consumer.close();
+        return "success close consumer";
     }
 }

@@ -27,16 +27,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.sp
+import com.github.shoothzj.dev.simulator.kafka.KafkaConfigStorage
 import com.github.shoothzj.dev.simulator.kafka.KafkaProducerSimulator
+import widget.component.CheckboxInput
 import widget.component.RowPaddingButton
 import widget.config.ConfigGroupKafkaRaw
+import widget.config.ConfigGroupKafkaTls
 
 @Composable
 fun KafkaProducer() {
-    var topic by remember { mutableStateOf("") }
     var msg by remember { mutableStateOf("") }
     var key by remember { mutableStateOf("") }
     var res by remember { mutableStateOf("") }
+    var producer: KafkaProducerSimulator? by remember { mutableStateOf(null) }
 
     Column {
         ConfigGroupKafkaRaw(
@@ -46,10 +49,17 @@ fun KafkaProducer() {
             username,
             password,
         )
+        CheckboxInput("tls enable", enableTls)
+        if (enableTls.value) {
+            ConfigGroupKafkaTls(
+                keyStorePath,
+                keyStorePassword,
+            )
+        }
         OutlinedTextField(
-            value = topic,
+            value = topic.value,
             onValueChange = {
-                topic = it
+                topic.value = it
             },
             label = { Text("kafka topic") }
         )
@@ -68,17 +78,21 @@ fun KafkaProducer() {
             label = { Text("kafka message") }
         )
         Row {
-            var producer: KafkaProducerSimulator? = null
             RowPaddingButton(
                 onClick = {
                     try {
                         producer = KafkaProducerSimulator(
+                            topic.value,
                             host.value,
                             port.value,
                             saslMechanism.value,
                             username.value,
-                            password.value
+                            password.value,
+                            enableTls.value,
+                            keyStorePath.value,
+                            keyStorePassword.value,
                         )
+                        KafkaConfigStorage.saveClientConfig(producer)
                     } catch (e: Exception) {
                         res = e.message.toString()
                     }
@@ -86,14 +100,14 @@ fun KafkaProducer() {
             ) { Text(text = R.strings.connect, fontSize = 12.sp) }
             RowPaddingButton(
                 onClick = {
-                    res = producer?.send(topic, key, msg) ?: "please create kafka consumer"
+                    res = producer?.send(topic.value, key, msg) ?: "please create kafka producer"
                 },
             ) {
                 Text(text = R.strings.send, fontSize = 12.sp)
             }
             RowPaddingButton(
                 onClick = {
-                    res = (producer?.close() ?: "") as String
+                    res = producer?.close() ?: "close producer failed."
                 },
             ) {
                 Text(text = R.strings.close, fontSize = 12.sp)

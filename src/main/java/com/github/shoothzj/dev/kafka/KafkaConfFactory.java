@@ -21,6 +21,7 @@ package com.github.shoothzj.dev.kafka;
 
 import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.common.config.SaslConfigs;
+import org.apache.kafka.common.config.SslConfigs;
 import org.apache.kafka.common.security.auth.SecurityProtocol;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -34,8 +35,8 @@ public class KafkaConfFactory {
      * @param port example 9092
      * @return
      */
-    public static Properties acquireProducerConf(String host, String port, String saslMechanism, String username, String password) {
-        Properties producerConfig = acquireConf(host, port, saslMechanism, username, password);
+    public static Properties acquireProducerConf(String host, String port, String saslMechanism, String username, String password, boolean enableTls, String trustStorePath, String trustStorePwd) {
+        Properties producerConfig = acquireConf(host, port, saslMechanism, username, password, enableTls, trustStorePath, trustStorePwd);
         producerConfig.put("transaction.timeout.ms", 3000);
         producerConfig.put("acks", "all");
         producerConfig.put("retries", 0);
@@ -50,8 +51,8 @@ public class KafkaConfFactory {
      * @param port example 9092
      * @return
      */
-    public static Properties acquireConsumerConf(String host, String port, String saslMechanism, String username, String password) {
-        Properties consumerConfig = acquireConf(host, port, saslMechanism, username, password);
+    public static Properties acquireConsumerConf(String host, String port, String saslMechanism, String username, String password, boolean enableTls, String keyStorePath, String keyStorePwd) {
+        Properties consumerConfig = acquireConf(host, port, saslMechanism, username, password, enableTls, keyStorePath, keyStorePwd);
         consumerConfig.put("enable.auto.commit", "true");
         consumerConfig.put("auto.commit.interval.ms", "1000");
         consumerConfig.put("session.timeout.ms", "30000");
@@ -63,7 +64,7 @@ public class KafkaConfFactory {
         return consumerConfig;
     }
 
-    private static Properties acquireConf(String host, String port, String saslMechanism, String username, String password) {
+    private static Properties acquireConf(String host, String port, String saslMechanism, String username, String password, boolean enableTls, String trustStorePath, String trustStorePwd) {
         Properties props = new Properties();
         props.put("bootstrap.servers", String.format("%s:%s", host, port));
         if (saslMechanism.equals(SecurityProtocol.SASL_PLAINTEXT.name)) {
@@ -74,6 +75,18 @@ public class KafkaConfFactory {
                     username="%s"\s
                     password="%s";""", username, password);
             props.put(SaslConfigs.SASL_JAAS_CONFIG, saslJaasConfig);
+            return props;
+        }
+        if (enableTls) {
+            props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, saslMechanism);
+            props.put(SaslConfigs.SASL_MECHANISM, "PLAIN");
+            String saslJaasConfig = String.format("""
+                    org.apache.kafka.common.security.plain.PlainLoginModule required\s
+                    username="%s"\s
+                    password="%s";""", username, password);
+            props.put(SaslConfigs.SASL_JAAS_CONFIG, saslJaasConfig);
+            props.put(SslConfigs.SSL_TRUSTSTORE_LOCATION_CONFIG, trustStorePath);
+            props.put(SslConfigs.SSL_TRUSTSTORE_PASSWORD_CONFIG, trustStorePwd);
         }
         return props;
     }

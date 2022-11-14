@@ -31,20 +31,21 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
-public class KafkaProducerSimulator {
+public class KafkaProducerSimulator extends KafkaConfigSimulator {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaProducerSimulator.class);
 
     private final Producer<String, String> producer;
 
-    public KafkaProducerSimulator(String host, String port) {
-        this(host, port, "", "", "");
+    public KafkaProducerSimulator(String topic, String host, String port) {
+        this(topic, host, port, "", "", "", false, "", "");
     }
 
-    public KafkaProducerSimulator(String host, String port, String saslMechanism, String username, String password) {
+    public KafkaProducerSimulator(String topic, String host, String port, String saslMechanism, String username, String password, boolean enableTls, String trustStorePath, String trustStorePwd) {
+        super(host, port, username, password, enableTls, trustStorePath, trustStorePwd, topic, saslMechanism);
         Preconditions.checkArgument(ValidateUtil.isHost(host), String.format("host [%s] is illegal", host));
         Preconditions.checkArgument(ValidateUtil.isPort(port), String.format("port [%s] is illegal", port));
-        Properties properties = KafkaConfFactory.acquireProducerConf(host, port, saslMechanism, username, password);
+        Properties properties = KafkaConfFactory.acquireProducerConf(host, port, saslMechanism, username, password, enableTls, trustStorePath, trustStorePwd);
         producer = new KafkaProducer<>(properties);
     }
 
@@ -52,14 +53,15 @@ public class KafkaProducerSimulator {
         ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, msg);
         try {
             RecordMetadata metadata = producer.send(record).get();
-            return String.format("send message to kafka success. topic [%s], key [%s]", metadata.topic(), key);
+            return String.format("send message to kafka success. topic [%s], key [%s], msg [%s]", metadata.topic(), key, msg);
         } catch (Exception e) {
             log.error("kafka produce exception is ", e);
             return String.format("send message to kafka fail. topic [%s], key [%s], reason [%s]", topic, key, e.getMessage());
         }
     }
 
-    public void close() {
+    public String close() {
         producer.close();
+        return "success close producer";
     }
 }

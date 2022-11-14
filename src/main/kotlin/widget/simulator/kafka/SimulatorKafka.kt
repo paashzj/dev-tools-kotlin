@@ -24,16 +24,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.sp
+import com.github.shoothzj.dev.simulator.kafka.KafkaConfigStorage
 import module.MqPatternEnum
 import widget.component.RowPaddingButton
 
+var config = mutableStateOf(KafkaConfigStorage.getClientConfig())
 val pattern = mutableStateOf(MqPatternEnum.Producer)
-
-val host = mutableStateOf("localhost")
-val port = mutableStateOf("9092")
-val saslMechanism = mutableStateOf("")
-val username = mutableStateOf("")
-val password = mutableStateOf("")
+val host = mutableStateOf(config.value.host)
+val port = mutableStateOf(config.value.port)
+val saslMechanism = mutableStateOf(config.value.saslMechanism)
+val username = mutableStateOf(config.value.username)
+val password = mutableStateOf(config.value.password)
+var keyStorePath = mutableStateOf(config.value.trustStorePath)
+var keyStorePassword = mutableStateOf(config.value.trustStorePassword)
+var enableTls = mutableStateOf(config.value.enableTls)
+var topic = mutableStateOf(config.value.topic)
 
 @Composable
 fun SimulatorKafka() {

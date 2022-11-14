@@ -50,6 +50,8 @@ public class StorageUtil {
 
     public static final String SIMULATOR_PULSAR_CONFIG_PATH = STORAGE_PREFIX + "simulator-pulsar-conf-v1.json";
 
+    public static final String SIMULATOR_KAFKA_CONFIG_PATH = STORAGE_PREFIX + "simulator-kafka-conf-v1.json";
+
     public static final String SIMULATOR_PULSAR_MSG_STORAGE_PATH = STORAGE_PREFIX + "simulator-pulsar-msg.txt";
 
     static {
@@ -68,6 +70,7 @@ public class StorageUtil {
         FileUtil.ensureFileExists(ZK_CONF_PATH);
         FileUtil.ensureFileExists(LVS_CONF_PATH);
 
+        FileUtil.ensureFileExists(SIMULATOR_KAFKA_CONFIG_PATH);
         FileUtil.ensureFileExists(SIMULATOR_PULSAR_CONFIG_PATH);
         FileUtil.ensureFileExists(SIMULATOR_PULSAR_MSG_STORAGE_PATH);
     }

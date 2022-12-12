@@ -46,7 +46,7 @@ jobs:
         run: gradle packageMsi -x checkstyleMain -x checkstyleTest
       - name: rename msi
         run: Move-Item build/compose/binaries/main/msi/dev-tools-kotlin-1.0.0.msi dev-tools-kotlin.msi
-      - uses: dev-drprasad/delete-tag-and-release@v0.2.0
+      - uses: dev-drprasad/delete-tag-and-release@v0.2.1
         with:
           delete_release: true
           tag_name: latest_windows_msi

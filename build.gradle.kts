@@ -47,7 +47,7 @@ configurations {
 }
 
 val jacocoVersion = "0.8.8"
-val jschVersion = "0.2.5"
+val jschVersion = "0.2.6"
 val jsonPathVersion = "2.7.0"
 val pulsarVersion = "2.10.2"
 val kafkaVersion = "3.2.3"

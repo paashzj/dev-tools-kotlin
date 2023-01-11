@@ -49,7 +49,7 @@ configurations {
 val jacocoVersion = "0.8.8"
 val jschVersion = "0.2.6"
 val jsonPathVersion = "2.7.0"
-val pulsarVersion = "2.10.2"
+val pulsarVersion = "2.11.0"
 val kafkaVersion = "3.2.3"
 val mqttVersion = "1.2.5"
 val protonj2Version = "1.0.0-M11"
